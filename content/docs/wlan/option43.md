@@ -1,5 +1,5 @@
 ---
-title: "Huawei Option 43 Online Calculator"
+title: "Huawei Option 43"
 weight: 1
 ---
 
@@ -10,11 +10,11 @@ In WLAN deployment, APs typically obtain the WAC's IP address through the DHCP O
 <div style="margin-top: 2rem; padding: 2rem; border: 1px solid var(--gray-200); border-radius: 8px; background-color: var(--gray-100);">
   <div style="margin-bottom: 1rem;">
     <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">WAC IP Address 1:</label>
-    <input type="text" id="ip1" placeholder="e.g. 10.5.204.10" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
+    <input type="text" id="ip1" placeholder="e.g. 192.168.1.1" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
   </div>
   <div style="margin-bottom: 1rem;">
     <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">WAC IP Address 2 (Optional, active/standby scenario):</label>
-    <input type="text" id="ip2" placeholder="e.g. 192.168.1.1" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
+    <input type="text" id="ip2" placeholder="e.g. 192.168.1.2" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
   </div>
   <button onclick="calculateOption43()" style="background-color: #CF0A2C; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
     Calculate Option 43
