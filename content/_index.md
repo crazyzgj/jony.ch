@@ -95,6 +95,7 @@ bookToC: false
     display: flex;
     gap: 1rem;
     margin-top: 1.5rem;
+    width:40%;
   }
 
   .btn-primary {
@@ -115,19 +116,12 @@ bookToC: false
 
 </style>
 
-<div class="text-center" style="margin: 4rem 0;">
-  <h1 style="font-size: 3rem; color: #CF0A2C;">Jonys Tech Book</h1>
-  <p style="font-size: 1.25rem; color: var(--gray-500);">Sharing Networking, Data Center and Automation Programming Technologies</p>
-  <br/>
-</div>
-
-
 <div class="hero-section">
   <!-- 左侧文案 -->
   <div class="hero-text">
-    <h1>My Tech Book</h1>
+    <h1>Jonys Tech Book</h1>
     <h2>Systematic summary, Reject invalid involution.</h2>
-    <p>Here I recorded my practical experience from entry to mastery. Not only configuration commands, but also in-depth analysis of underlying logic. Abandon useless empty talk, leaving only dry goods.</p>
+    <p>Sharing Networking, Data Center and Automation Programming Technologie</p>
     <div class="hero-buttons">
       <a href="/docs/sdwan/" class="btn-primary">Read Now</a>
       <a href="/about/" class="btn-outline">About Me</a>
