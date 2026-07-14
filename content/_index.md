@@ -1,5 +1,5 @@
 ---
-title: "Jonys Book Tech Blog"
+title: "Jonys Tech Book"
 type: docs
 bookToC: false
 ---
@@ -64,49 +64,49 @@ bookToC: false
 </style>
 
 <div class="text-center" style="margin: 4rem 0;">
-  <h1 style="font-size: 3rem; color: #CF0A2C;">Jonys Book Tech Blog</h1>
+  <h1 style="font-size: 3rem; color: #CF0A2C;">Jonys Tech Book</h1>
   <p style="font-size: 1.25rem; color: var(--gray-500);">Sharing Networking, Data Center and Automation Programming Technologies</p>
   <br/>
 </div>
 
 {{< columns >}}
-<h2 style="text-align: center; color: #3b7bbd; margin-top: 2rem;">Topics</h2>
+<h2 style="text-align: center; color: #3b7bbd; margin-top: 2rem;">All For the Networking</h2>
 
 <div class="card-grid">
 
 
 <a href="/docs/sdwan" class="nav-card">
-    <div class="nav-card-icon">🎯</div>
+    <div class="nav-card-icon">🌍</div>
     <h3>SD-WAN Technology</h3>
     <p>Deep dive into Huawei SD-WAN architecture, deployment, and best practices</p>
   </a>
 
 <a href="/docs/wlan" class="nav-card">
-    <div class="nav-card-icon">🚀</div>
+    <div class="nav-card-icon">📶</div>
     <h3>WLAN Technology</h3>
     <p>Explore wireless networking technologies and applications, including AP deployment and Option 43 calculation tools.</p>
   </a>
 
 <a href="/docs/nac" class="nav-card">
-    <div class="nav-card-icon">⚡</div>
+    <div class="nav-card-icon">🔒</div>
     <h3>NAC Technology</h3>
     <p>Network Access Control technologies for ensuring enterprise network security.</p>
   </a>
 
   <a href="/docs/dc" class="nav-card">
-    <div class="nav-card-icon">🎯</div>
+    <div class="nav-card-icon">⚡</div>
     <h3>DC Data Center Technology</h3>
     <p>Insights on Data Center network architecture, VXLAN, and other cutting-edge technologies.</p>
   </a>
 
   <a href="/docs/python" class="nav-card">
-    <div class="nav-card-icon">🎯</div>
-    <h3>python</h3>
-    <p>Insights on Data Center network architecture, VXLAN, and other cutting-edge technologies.</p>
+    <div class="nav-card-icon">🚀</div>
+    <h3>Python & Network Automation</h3>
+    <p>Python and network automation.</p>
   </a>
 
   <a href="/" class="nav-card">
-    <div class="nav-card-icon">🎯</div>
+    <div class="nav-card-icon">🎶</div>
     <h3>Stay Tuned</h3>
     <p>IMore exciting content is under construction.</p>
   </a>
