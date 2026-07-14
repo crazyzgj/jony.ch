@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How Cisco SD-WAN works?# In the last lesson, we looked at the main architectural components of the Cisco SD-WAN solution.
+Note: This is a demonstration page styled to look like NetworkAcademy.io.
+Data Plane vs Control Plane# The separation of the data plane from the control plane is the foundational principle of Software-Defined Networking.
+vSmart Controllers# vSmart controllers handle the control plane. They distribute routing information, policies, and security parameters across the SD-WAN fabric.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://192.168.1.220:1313/docs/sdwan/how-cisco-sd-wan-works/">
+	<meta property="og:site_name" content="Jonys-Book">
+	<meta property="og:title" content="How Cisco SD-WAN works?">
+	<meta property="og:description" content="How Cisco SD-WAN works?# In the last lesson, we looked at the main architectural components of the Cisco SD-WAN solution.
+Note: This is a demonstration page styled to look like NetworkAcademy.io.
+Data Plane vs Control Plane# The separation of the data plane from the control plane is the foundational principle of Software-Defined Networking.
+vSmart Controllers# vSmart controllers handle the control plane. They distribute routing information, policies, and security parameters across the SD-WAN fabric.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="How Cisco SD-WAN works?">
+	<meta itemprop="description" content="How Cisco SD-WAN works?# In the last lesson, we looked at the main architectural components of the Cisco SD-WAN solution.
+Note: This is a demonstration page styled to look like NetworkAcademy.io.
+Data Plane vs Control Plane# The separation of the data plane from the control plane is the foundational principle of Software-Defined Networking.
+vSmart Controllers# vSmart controllers handle the control plane. They distribute routing information, policies, and security parameters across the SD-WAN fabric.">
+	<meta itemprop="wordCount" content="114">
+
+<title>How Cisco SD-WAN works? • Jonys-Book</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://192.168.1.220:1313/docs/sdwan/how-cisco-sd-wan-works/">
+<link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
+
+
+  <script defer type="module" src="/en.search.min.280d7b27b5f238118a6ecc0194a39b755b23922112dd7101269b9b8454b20d79.js" integrity="sha256-KA17J7XyOBGKbswBlKObdVsjkiES3XEBJpubhFSyDXk=" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><img src="/logo.svg" alt="Logo" /><span>Jonys-Book</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/sdwan/" class="">
+      SD-WAN</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/sdwan/how-cisco-sd-wan-works/" class="active">
+      How Cisco SD-WAN works?</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>How Cisco SD-WAN works?</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#data-plane-vs-control-plane">Data Plane vs Control Plane</a>
+      <ul>
+        <li><a href="#vsmart-controllers">vSmart Controllers</a></li>
+        <li><a href="#vedge--cedge-routers">vEdge / cEdge Routers</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary">Summary</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="how-cisco-sd-wan-works">How Cisco SD-WAN works?<a class="anchor" href="#how-cisco-sd-wan-works">#</a></h1>
+<p>In the last lesson, we looked at the main architectural components of the Cisco SD-WAN solution.</p>
+<blockquote class='book-hint '>
+<p><strong>Note:</strong> This is a demonstration page styled to look like NetworkAcademy.io.</p>
+</blockquote><h2 id="data-plane-vs-control-plane">Data Plane vs Control Plane<a class="anchor" href="#data-plane-vs-control-plane">#</a></h2>
+<p>The separation of the data plane from the control plane is the foundational principle of Software-Defined Networking.</p>
+<h3 id="vsmart-controllers">vSmart Controllers<a class="anchor" href="#vsmart-controllers">#</a></h3>
+<p>vSmart controllers handle the control plane. They distribute routing information, policies, and security parameters across the SD-WAN fabric.</p>
+<h3 id="vedge--cedge-routers">vEdge / cEdge Routers<a class="anchor" href="#vedge--cedge-routers">#</a></h3>
+<p>These devices sit at the branches and handle the actual data plane, forwarding packets based on the policies distributed by the vSmart controllers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>vSmart &lt;---- OMP ----&gt; vEdge</span></span></code></pre></div><h2 id="summary">Summary<a class="anchor" href="#summary">#</a></h2>
+<p>Understanding the architecture is critical before diving into configuration.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/sdwan/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>SD-WAN</span>
+      </a>
+    
+    </span>
+    <span>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#data-plane-vs-control-plane">Data Plane vs Control Plane</a>
+      <ul>
+        <li><a href="#vsmart-controllers">vSmart Controllers</a></li>
+        <li><a href="#vedge--cedge-routers">vEdge / cEdge Routers</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary">Summary</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

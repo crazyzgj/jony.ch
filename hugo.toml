@@ -1,0 +1,16 @@
+baseURL = "https://jony.ch/"
+locale = 'en-us'
+title = 'Jonys-Book'
+theme = 'book'
+
+[params]
+  BookLogo = '/logo.svg'
+  BookSection = 'docs'
+  BookToc = true
+  BookToCWidth = 2
+  BookSearch = true
+  BookTheme = 'light'
+
+[markup.goldmark.renderer]
+  unsafe = true
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>华为 SD-WAN on Jonys-Book</title>
+		<link>http://192.168.1.220:1313/docs/huawei-sdwan/</link>
+		<description>Recent content in 华为 SD-WAN on Jonys-Book</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<atom:link href="http://192.168.1.220:1313/docs/huawei-sdwan/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>1. 简介</title>
+				<link>http://192.168.1.220:1313/docs/huawei-sdwan/introduction/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://192.168.1.220:1313/docs/huawei-sdwan/introduction/</guid>
+				<description>&lt;h1 id=&#34;华为-sd-wan-简介&#34;&gt;华为 SD-WAN 简介&lt;a class=&#34;anchor&#34; href=&#34;#%e5%8d%8e%e4%b8%ba-sd-wan-%e7%ae%80%e4%bb%8b&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;h2 id=&#34;什么是-sd-wan&#34;&gt;什么是 SD-WAN？&lt;a class=&#34;anchor&#34; href=&#34;#%e4%bb%80%e4%b9%88%e6%98%af-sd-wan&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;软件定义广域网（SD-WAN）是将 SDN 技术应用到广域网场景的服务，通过控制与转发分离、集中管控等技术，实现广域网的智能化。&lt;/p&gt;&#xA;&lt;h2 id=&#34;华为-sd-wan-的核心优势&#34;&gt;华为 SD-WAN 的核心优势&lt;a class=&#34;anchor&#34; href=&#34;#%e5%8d%8e%e4%b8%ba-sd-wan-%e7%9a%84%e6%a0%b8%e5%bf%83%e4%bc%98%e5%8a%bf&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;极简互联&lt;/strong&gt;：支持多种链路接入，混合组网。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;极致体验&lt;/strong&gt;：应用级智能选路，保障核心业务体验。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;智能运维&lt;/strong&gt;：iMaster NCE 提供可视化的集中运维管理。&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>2. 架构与组件</title>
+				<link>http://192.168.1.220:1313/docs/huawei-sdwan/architecture/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://192.168.1.220:1313/docs/huawei-sdwan/architecture/</guid>
+				<description>&lt;h1 id=&#34;架构与组件&#34;&gt;架构与组件&lt;a class=&#34;anchor&#34; href=&#34;#%e6%9e%b6%e6%9e%84%e4%b8%8e%e7%bb%84%e4%bb%b6&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;华为 SD-WAN 架构分为三层：&lt;/p&gt;&#xA;&lt;h2 id=&#34;1-编排与管理层-imaster-nce-campus&#34;&gt;1. 编排与管理层 (iMaster NCE-Campus)&lt;a class=&#34;anchor&#34; href=&#34;#1-%e7%bc%96%e6%8e%92%e4%b8%8e%e7%ae%a1%e7%90%86%e5%b1%82-imaster-nce-campus&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;全网的统一大脑，提供网络配置、编排、自动化运维能力。&lt;/p&gt;&#xA;&lt;h2 id=&#34;2-控制层-route-reflector---rr&#34;&gt;2. 控制层 (Route Reflector - RR)&lt;a class=&#34;anchor&#34; href=&#34;#2-%e6%8e%a7%e5%88%b6%e5%b1%82-route-reflector---rr&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;负责在各个站点之间反射和分发 VPN 路由及策略信息。&lt;/p&gt;&#xA;&lt;h2 id=&#34;3-转发层-netengine-ar&#34;&gt;3. 转发层 (NetEngine AR)&lt;a class=&#34;anchor&#34; href=&#34;#3-%e8%bd%ac%e5%8f%91%e5%b1%82-netengine-ar&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;部署在分支企业和总部的 CPE 设备，负责实际的数据报文转发。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

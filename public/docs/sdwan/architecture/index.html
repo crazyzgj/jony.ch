@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="架构与组件# 华为 SD-WAN 架构分为三层：
+1. 编排与管理层 (iMaster NCE-Campus)# 全网的统一大脑，提供网络配置、编排、自动化运维能力。
+2. 控制层 (Route Reflector - RR)# 负责在各个站点之间反射和分发 VPN 路由及策略信息。
+3. 转发层 (NetEngine AR)# 部署在分支企业和总部的 CPE 设备，负责实际的数据报文转发。
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://192.168.1.220:1313/docs/sdwan/architecture/">
+	<meta property="og:site_name" content="Jonys-Book">
+	<meta property="og:title" content="2. 架构与组件">
+	<meta property="og:description" content="架构与组件# 华为 SD-WAN 架构分为三层：
+1. 编排与管理层 (iMaster NCE-Campus)# 全网的统一大脑，提供网络配置、编排、自动化运维能力。
+2. 控制层 (Route Reflector - RR)# 负责在各个站点之间反射和分发 VPN 路由及策略信息。
+3. 转发层 (NetEngine AR)# 部署在分支企业和总部的 CPE 设备，负责实际的数据报文转发。">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="2. 架构与组件">
+	<meta itemprop="description" content="架构与组件# 华为 SD-WAN 架构分为三层：
+1. 编排与管理层 (iMaster NCE-Campus)# 全网的统一大脑，提供网络配置、编排、自动化运维能力。
+2. 控制层 (Route Reflector - RR)# 负责在各个站点之间反射和分发 VPN 路由及策略信息。
+3. 转发层 (NetEngine AR)# 部署在分支企业和总部的 CPE 设备，负责实际的数据报文转发。">
+	<meta itemprop="wordCount" content="25">
+
+<title>2. 架构与组件 • Jonys-Book</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://192.168.1.220:1313/docs/sdwan/architecture/">
+<link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
+
+
+  <script defer type="module" src="/en.search.min.0326450d940e2005ef035bcb2fe1af2ebae6160b365ac1ecdd38c0b59e6928ea.js" integrity="sha256-AyZFDZQOIAXvA1vLL&#43;GvLrrmFgs2WsHs3TjAtZ5pKOo=" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<a class="flex align-center" href="/">
+  <div style="background-color: #CF0A2C; color: white; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 1.2rem; margin-right: 8px;">HW</div>
+  <span>Jonys-Book</span>
+</a>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/sdwan/" class="">
+      华为 SD-WAN</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/sdwan/introduction/" class="">
+      1. 简介</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/sdwan/architecture/" class="active">
+      2. 架构与组件</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/wlan/" class="">
+      WLAN 技术</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/wlan/option43/" class="">
+      华为 Option 43 在线计算</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/nac/" class="">
+      NAC 技术</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/dc/" class="">
+      DC 数据中心技术</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/python/" class="">
+      Python 技术</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>2. 架构与组件</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-编排与管理层-imaster-nce-campus">1. 编排与管理层 (iMaster NCE-Campus)</a></li>
+    <li><a href="#2-控制层-route-reflector---rr">2. 控制层 (Route Reflector - RR)</a></li>
+    <li><a href="#3-转发层-netengine-ar">3. 转发层 (NetEngine AR)</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="架构与组件">架构与组件<a class="anchor" href="#%e6%9e%b6%e6%9e%84%e4%b8%8e%e7%bb%84%e4%bb%b6">#</a></h1>
+<p>华为 SD-WAN 架构分为三层：</p>
+<h2 id="1-编排与管理层-imaster-nce-campus">1. 编排与管理层 (iMaster NCE-Campus)<a class="anchor" href="#1-%e7%bc%96%e6%8e%92%e4%b8%8e%e7%ae%a1%e7%90%86%e5%b1%82-imaster-nce-campus">#</a></h2>
+<p>全网的统一大脑，提供网络配置、编排、自动化运维能力。</p>
+<h2 id="2-控制层-route-reflector---rr">2. 控制层 (Route Reflector - RR)<a class="anchor" href="#2-%e6%8e%a7%e5%88%b6%e5%b1%82-route-reflector---rr">#</a></h2>
+<p>负责在各个站点之间反射和分发 VPN 路由及策略信息。</p>
+<h2 id="3-转发层-netengine-ar">3. 转发层 (NetEngine AR)<a class="anchor" href="#3-%e8%bd%ac%e5%8f%91%e5%b1%82-netengine-ar">#</a></h2>
+<p>部署在分支企业和总部的 CPE 设备，负责实际的数据报文转发。</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/sdwan/introduction/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>1. 简介</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/wlan/" class="flex align-center">
+        <span>WLAN 技术</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-编排与管理层-imaster-nce-campus">1. 编排与管理层 (iMaster NCE-Campus)</a></li>
+    <li><a href="#2-控制层-route-reflector---rr">2. 控制层 (Route Reflector - RR)</a></li>
+    <li><a href="#3-转发层-netengine-ar">3. 转发层 (NetEngine AR)</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
