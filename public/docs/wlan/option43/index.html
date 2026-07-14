@@ -8,34 +8,34 @@ https://github.com/alex-shpak/hugo-book
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="华为 Option 43 在线计算# 在 WLAN 部署中，AP 通常通过 DHCP Option 43 字段获取 WAC 的 IP 地址。本工具可用于快速计算 Option 43 的 Hex 配置字符串。
-WAC IP 地址 1： WAC IP 地址 2（可选，主备场景）： 计算 Option 43 计算结果： 计算说明# 华为 Option 43 字段的格式通常为：03（子选项类型） &#43; 长度（十六进制，占一字节） &#43; 逗号分隔的 IP 字符串的 ASCII 十六进制。
+<meta name="description" content="Huawei Option 43 Online Calculator# In WLAN deployment, APs typically obtain the WAC’s IP address through the DHCP Option 43 field. This tool can be used to quickly calculate the Option 43 Hex configuration string.
+WAC IP Address 1: WAC IP Address 2 (Optional, active/standby scenario): Calculate Option 43 Calculation Result: Calculation Instructions# The format of Huawei Option 43 field is usually: 03 (sub-option type) &#43; Length (hexadecimal, 1 byte) &#43; ASCII Hexadecimal of comma-separated IP string.
 ">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
 <meta name="color-scheme" content="light dark"><meta property="og:url" content="https://jony.ch/docs/wlan/option43/">
 	<meta property="og:site_name" content="Jonys-Book">
-	<meta property="og:title" content="华为 Option 43 在线计算">
-	<meta property="og:description" content="华为 Option 43 在线计算# 在 WLAN 部署中，AP 通常通过 DHCP Option 43 字段获取 WAC 的 IP 地址。本工具可用于快速计算 Option 43 的 Hex 配置字符串。
-WAC IP 地址 1： WAC IP 地址 2（可选，主备场景）： 计算 Option 43 计算结果： 计算说明# 华为 Option 43 字段的格式通常为：03（子选项类型） &#43; 长度（十六进制，占一字节） &#43; 逗号分隔的 IP 字符串的 ASCII 十六进制。">
+	<meta property="og:title" content="Huawei Option 43 Online Calculator">
+	<meta property="og:description" content="Huawei Option 43 Online Calculator# In WLAN deployment, APs typically obtain the WAC’s IP address through the DHCP Option 43 field. This tool can be used to quickly calculate the Option 43 Hex configuration string.
+WAC IP Address 1: WAC IP Address 2 (Optional, active/standby scenario): Calculate Option 43 Calculation Result: Calculation Instructions# The format of Huawei Option 43 field is usually: 03 (sub-option type) &#43; Length (hexadecimal, 1 byte) &#43; ASCII Hexadecimal of comma-separated IP string.">
 	<meta property="og:locale" content="en_us">
 	<meta property="og:type" content="article">
 		<meta property="article:section" content="docs">
 
 
-	<meta itemprop="name" content="华为 Option 43 在线计算">
-	<meta itemprop="description" content="华为 Option 43 在线计算# 在 WLAN 部署中，AP 通常通过 DHCP Option 43 字段获取 WAC 的 IP 地址。本工具可用于快速计算 Option 43 的 Hex 配置字符串。
-WAC IP 地址 1： WAC IP 地址 2（可选，主备场景）： 计算 Option 43 计算结果： 计算说明# 华为 Option 43 字段的格式通常为：03（子选项类型） &#43; 长度（十六进制，占一字节） &#43; 逗号分隔的 IP 字符串的 ASCII 十六进制。">
-	<meta itemprop="wordCount" content="71">
+	<meta itemprop="name" content="Huawei Option 43 Online Calculator">
+	<meta itemprop="description" content="Huawei Option 43 Online Calculator# In WLAN deployment, APs typically obtain the WAC’s IP address through the DHCP Option 43 field. This tool can be used to quickly calculate the Option 43 Hex configuration string.
+WAC IP Address 1: WAC IP Address 2 (Optional, active/standby scenario): Calculate Option 43 Calculation Result: Calculation Instructions# The format of Huawei Option 43 field is usually: 03 (sub-option type) &#43; Length (hexadecimal, 1 byte) &#43; ASCII Hexadecimal of comma-separated IP string.">
+	<meta itemprop="wordCount" content="136">
 
-<title>华为 Option 43 在线计算 • Jonys-Book</title>
+<title>Huawei Option 43 Online Calculator • Jonys-Book</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
 <link rel="canonical" href="https://jony.ch/docs/wlan/option43/">
 <link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
 
 
-  <script defer type="module" src="/en.search.min.c5633335c028bbc560f64292e86201728fa8b7c6d0642c7f024f7a0844de5cac.js" integrity="sha256-xWMzNcAou8Vg9kKS6GIBco&#43;ot8bQZCx/Ak96CETeXKw=" crossorigin="anonymous"></script>
+  <script defer type="module" src="/en.search.min.ba8897d143b2223ad8c0d47a65904c6a116525112a452cbd07860cb4b0a46c54.js" integrity="sha256-uoiX0UOyIjrYwNR6ZZBMahFlJREqRSy9B4YMtLCkbFQ=" crossorigin="anonymous"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,115 +80,80 @@ WAC IP 地址 1： WAC IP 地址 2（可选，主备场景）： 计算 Option 4
   <ul>
     
       
-        <li>
-          
-  
-  
+      
+        
+      
 
-  
-    <a href="/docs/sdwan/" class="">
-      华为 SD-WAN</a>
-  
-
-          
-  <ul>
-    
-  </ul>
-
-        </li>
       
     
       
-        <li>
-          
+      
+        
+      
+
+      
+        
+          <li>
+            
   
   
 
   
     <a href="/docs/wlan/" class="">
-      WLAN 技术</a>
+      WLAN Technology</a>
   
 
-          
+            
   <ul>
     
       
-        <li>
-          
+      
+
+      
+        
+          <li>
+            
   
   
 
   
     <a href="/docs/wlan/option43/" class="active">
-      华为 Option 43 在线计算</a>
+      Huawei Option 43 Online Calculator</a>
   
 
-        </li>
+          </li>
+        
       
     
   </ul>
 
-        </li>
+          </li>
+        
       
     
       
-        <li>
-          
-  
-  
+      
+        
+      
 
-  
-    <a href="/docs/nac/" class="">
-      NAC 技术</a>
-  
-
-          
-  <ul>
-    
-  </ul>
-
-        </li>
       
     
       
-        <li>
-          
-  
-  
+      
+        
+      
 
-  
-    <a href="/docs/dc/" class="">
-      DC 数据中心技术</a>
-  
-
-          
-  <ul>
-    
-  </ul>
-
-        </li>
       
     
       
-        <li>
-          
-  
-  
+      
+        
+      
 
-  
-    <a href="/docs/python/" class="">
-      Python 技术</a>
-  
-
-          
-  <ul>
-    
-  </ul>
-
-        </li>
       
     
   </ul>
+
 
 
 
@@ -223,7 +188,7 @@ WAC IP 地址 1： WAC IP 地址 2（可选，主备场景）： 计算 Option 4
     <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <h3>华为 Option 43 在线计算</h3>
+  <h3>Huawei Option 43 Online Calculator</h3>
 
   <label for="toc-control">
     
@@ -239,7 +204,7 @@ WAC IP 地址 1： WAC IP 地址 2（可选，主备场景）： 计算 Option 4
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#计算说明">计算说明</a></li>
+    <li><a href="#calculation-instructions">Calculation Instructions</a></li>
   </ul>
 </nav>
 
@@ -252,22 +217,22 @@ WAC IP 地址 1： WAC IP 地址 2（可选，主备场景）： 计算 Option 4
 
       
       
-  <article class="markdown book-article"><h1 id="华为-option-43-在线计算">华为 Option 43 在线计算<a class="anchor" href="#%e5%8d%8e%e4%b8%ba-option-43-%e5%9c%a8%e7%ba%bf%e8%ae%a1%e7%ae%97">#</a></h1>
-<p>在 WLAN 部署中，AP 通常通过 DHCP Option 43 字段获取 WAC 的 IP 地址。本工具可用于快速计算 Option 43 的 Hex 配置字符串。</p>
+  <article class="markdown book-article"><h1 id="huawei-option-43-online-calculator">Huawei Option 43 Online Calculator<a class="anchor" href="#huawei-option-43-online-calculator">#</a></h1>
+<p>In WLAN deployment, APs typically obtain the WAC&rsquo;s IP address through the DHCP Option 43 field. This tool can be used to quickly calculate the Option 43 Hex configuration string.</p>
 <div style="margin-top: 2rem; padding: 2rem; border: 1px solid var(--gray-200); border-radius: 8px; background-color: var(--gray-100);">
   <div style="margin-bottom: 1rem;">
-    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">WAC IP 地址 1：</label>
-    <input type="text" id="ip1" placeholder="例如：10.5.204.10" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
+    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">WAC IP Address 1:</label>
+    <input type="text" id="ip1" placeholder="e.g. 10.5.204.10" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
   </div>
   <div style="margin-bottom: 1rem;">
-    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">WAC IP 地址 2（可选，主备场景）：</label>
-    <input type="text" id="ip2" placeholder="例如：192.168.1.1" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
+    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">WAC IP Address 2 (Optional, active/standby scenario):</label>
+    <input type="text" id="ip2" placeholder="e.g. 192.168.1.1" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
   </div>
   <button onclick="calculateOption43()" style="background-color: #CF0A2C; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
-    计算 Option 43
+    Calculate Option 43
   </button>
   <div style="margin-top: 2rem;">
-    <strong style="display: block; margin-bottom: 0.5rem;">计算结果：</strong>
+    <strong style="display: block; margin-bottom: 0.5rem;">Calculation Result:</strong>
     <div id="result" style="padding: 1rem; background-color: #fff; border: 1px dashed #ccc; border-radius: 4px; font-family: monospace; word-break: break-all; min-height: 1.5rem;">
     </div>
   </div>
@@ -287,18 +252,18 @@ function calculateOption43() {
     }
 
     if (!ipStr) {
-        document.getElementById('result').innerText = '请输入至少一个 IP 地址';
+        document.getElementById('result').innerText = 'Please enter at least one IP address';
         return;
     }
 
-    // 正则简单校验 IP
+    // Simple Regex validation for IP
     const ipRegex = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
     if (ip1 && !ipRegex.test(ip1)) {
-        document.getElementById('result').innerText = 'IP 地址 1 格式不正确';
+        document.getElementById('result').innerText = 'IP Address 1 format is incorrect';
         return;
     }
     if (ip2 && !ipRegex.test(ip2)) {
-        document.getElementById('result').innerText = 'IP 地址 2 格式不正确';
+        document.getElementById('result').innerText = 'IP Address 2 format is incorrect';
         return;
     }
 
@@ -307,25 +272,25 @@ function calculateOption43() {
         hexStr += ipStr.charCodeAt(i).toString(16).toUpperCase();
     }
     
-    // 长度（十六进制）
+    // Length (Hexadecimal)
     let lengthHex = ipStr.length.toString(16).toUpperCase().padStart(2, '0');
-    // 子选项类型 03 + 长度 + 字符串转换的 Hex
+    // Sub-option type 03 + length + Hex converted from string
     let result = '03' + lengthHex + hexStr;
     
     document.getElementById('result').innerText = result;
 }
 </script>
-<h2 id="计算说明">计算说明<a class="anchor" href="#%e8%ae%a1%e7%ae%97%e8%af%b4%e6%98%8e">#</a></h2>
-<p>华为 Option 43 字段的格式通常为：<code>03</code>（子选项类型） + <code>长度</code>（十六进制，占一字节） + <code>逗号分隔的 IP 字符串的 ASCII 十六进制</code>。</p>
+<h2 id="calculation-instructions">Calculation Instructions<a class="anchor" href="#calculation-instructions">#</a></h2>
+<p>The format of Huawei Option 43 field is usually: <code>03</code> (sub-option type) + <code>Length</code> (hexadecimal, 1 byte) + <code>ASCII Hexadecimal of comma-separated IP string</code>.</p>
 <ul>
 <li>
-<p><strong>单 IP 示例</strong>：输入 <code>10.5.204.10</code>（长度 11 字节，十六进制为 <code>0B</code>）
-输出：<code>030B31302E352E3230342E3130</code></p>
+<p><strong>Single IP Example</strong>: Input <code>10.5.204.10</code> (length 11 bytes, hexadecimal is <code>0B</code>)
+Output: <code>030B31302E352E3230342E3130</code></p>
 </li>
 <li>
-<p><strong>双 IP 示例</strong>：输入 <code>192.168.1.2</code> 和 <code>192.168.1.1</code>，拼接后为 <code>192.168.1.2,192.168.1.1</code>（长度 23 字节，十六进制为 <code>17</code>）
-输出：<code>03173139322E3136382E312E322C3139322E3136382E312E31</code>
-<em>(注：根据标准，当配置两个 IP 地址时，计算长度应为两个 IP 及逗号的总长度，即 <code>17</code>。)</em></p>
+<p><strong>Dual IP Example</strong>: Input <code>192.168.1.2</code> and <code>192.168.1.1</code>, concatenated as <code>192.168.1.2,192.168.1.1</code> (length 23 bytes, hexadecimal is <code>17</code>)
+Output: <code>03173139322E3136382E312E322C3139322E3136382E312E31</code>
+<em>(Note: According to the standard, when configuring two IP addresses, the calculation length should be the total length of the two IPs and the comma, which is <code>17</code>.)</em></p>
 </li>
 </ul>
 </article>
@@ -351,14 +316,14 @@ function calculateOption43() {
     
       <a href="/docs/wlan/" class="flex align-center">
         <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
-        <span>WLAN 技术</span>
+        <span>WLAN Technology</span>
       </a>
     
     </span>
     <span>
     
       <a href="/docs/nac/" class="flex align-center">
-        <span>NAC 技术</span>
+        <span>NAC Technology</span>
         <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
       </a>
     
@@ -395,7 +360,7 @@ function calculateOption43() {
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#计算说明">计算说明</a></li>
+    <li><a href="#calculation-instructions">Calculation Instructions</a></li>
   </ul>
 </nav>
 

@@ -8,40 +8,40 @@ https://github.com/alex-shpak/hugo-book
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="架构与组件# 华为 SD-WAN 架构分为三层：
-1. 编排与管理层 (iMaster NCE-Campus)# 全网的统一大脑，提供网络配置、编排、自动化运维能力。
-2. 控制层 (Route Reflector - RR)# 负责在各个站点之间反射和分发 VPN 路由及策略信息。
-3. 转发层 (NetEngine AR)# 部署在分支企业和总部的 CPE 设备，负责实际的数据报文转发。
+<meta name="description" content="Architecture and Components# The Huawei SD-WAN architecture is divided into three layers:
+1. Orchestration and Management Layer (iMaster NCE-Campus)# The unified brain of the entire network, providing network configuration, orchestration, and automated O&amp;M capabilities.
+2. Control Layer (Route Reflector - RR)# Responsible for reflecting and distributing VPN routes and policy information among various sites.
+3. Forwarding Layer (NetEngine AR)# CPE devices deployed at branch enterprises and headquarters, responsible for actual data packet forwarding.
 ">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
 <meta name="color-scheme" content="light dark"><meta property="og:url" content="http://192.168.1.220:1313/docs/sdwan/architecture/">
 	<meta property="og:site_name" content="Jonys-Book">
-	<meta property="og:title" content="2. 架构与组件">
-	<meta property="og:description" content="架构与组件# 华为 SD-WAN 架构分为三层：
-1. 编排与管理层 (iMaster NCE-Campus)# 全网的统一大脑，提供网络配置、编排、自动化运维能力。
-2. 控制层 (Route Reflector - RR)# 负责在各个站点之间反射和分发 VPN 路由及策略信息。
-3. 转发层 (NetEngine AR)# 部署在分支企业和总部的 CPE 设备，负责实际的数据报文转发。">
+	<meta property="og:title" content="2. Architecture and Components">
+	<meta property="og:description" content="Architecture and Components# The Huawei SD-WAN architecture is divided into three layers:
+1. Orchestration and Management Layer (iMaster NCE-Campus)# The unified brain of the entire network, providing network configuration, orchestration, and automated O&amp;M capabilities.
+2. Control Layer (Route Reflector - RR)# Responsible for reflecting and distributing VPN routes and policy information among various sites.
+3. Forwarding Layer (NetEngine AR)# CPE devices deployed at branch enterprises and headquarters, responsible for actual data packet forwarding.">
 	<meta property="og:locale" content="en_us">
 	<meta property="og:type" content="article">
 		<meta property="article:section" content="docs">
 
 
-	<meta itemprop="name" content="2. 架构与组件">
-	<meta itemprop="description" content="架构与组件# 华为 SD-WAN 架构分为三层：
-1. 编排与管理层 (iMaster NCE-Campus)# 全网的统一大脑，提供网络配置、编排、自动化运维能力。
-2. 控制层 (Route Reflector - RR)# 负责在各个站点之间反射和分发 VPN 路由及策略信息。
-3. 转发层 (NetEngine AR)# 部署在分支企业和总部的 CPE 设备，负责实际的数据报文转发。">
-	<meta itemprop="wordCount" content="25">
+	<meta itemprop="name" content="2. Architecture and Components">
+	<meta itemprop="description" content="Architecture and Components# The Huawei SD-WAN architecture is divided into three layers:
+1. Orchestration and Management Layer (iMaster NCE-Campus)# The unified brain of the entire network, providing network configuration, orchestration, and automated O&amp;M capabilities.
+2. Control Layer (Route Reflector - RR)# Responsible for reflecting and distributing VPN routes and policy information among various sites.
+3. Forwarding Layer (NetEngine AR)# CPE devices deployed at branch enterprises and headquarters, responsible for actual data packet forwarding.">
+	<meta itemprop="wordCount" content="73">
 
-<title>2. 架构与组件 • Jonys-Book</title>
+<title>2. Architecture and Components • Jonys-Book</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
 <link rel="canonical" href="http://192.168.1.220:1313/docs/sdwan/architecture/">
 <link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
 
 
-  <script defer type="module" src="/en.search.min.0326450d940e2005ef035bcb2fe1af2ebae6160b365ac1ecdd38c0b59e6928ea.js" integrity="sha256-AyZFDZQOIAXvA1vLL&#43;GvLrrmFgs2WsHs3TjAtZ5pKOo=" crossorigin="anonymous"></script>
+  <script defer type="module" src="/en.search.min.1a6f75ca90abe9da2ab92f2677d22fc4435d376a56eb9d3b4c9e9353849c61c0.js" integrity="sha256-Gm91ypCr6doquS8md9IvxENdN2pW6507TJ6TU4ScYcA=" crossorigin="anonymous"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,7 +93,7 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="/docs/sdwan/" class="">
-      华为 SD-WAN</a>
+      Huawei SD-WAN</a>
   
 
           
@@ -107,7 +107,7 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="/docs/sdwan/introduction/" class="">
-      1. 简介</a>
+      1. Introduction</a>
   
 
         </li>
@@ -121,7 +121,7 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="/docs/sdwan/architecture/" class="active">
-      2. 架构与组件</a>
+      2. Architecture and Components</a>
   
 
         </li>
@@ -140,7 +140,7 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="/docs/wlan/" class="">
-      WLAN 技术</a>
+      WLAN Technology</a>
   
 
           
@@ -154,7 +154,7 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="/docs/wlan/option43/" class="">
-      华为 Option 43 在线计算</a>
+      Huawei Option 43 Online Calculator</a>
   
 
         </li>
@@ -173,7 +173,7 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="/docs/nac/" class="">
-      NAC 技术</a>
+      NAC Technology</a>
   
 
           
@@ -192,7 +192,7 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="/docs/dc/" class="">
-      DC 数据中心技术</a>
+      DC Data Center Technology</a>
   
 
           
@@ -211,7 +211,7 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="/docs/python/" class="">
-      Python 技术</a>
+      Python Technology</a>
   
 
           
@@ -257,7 +257,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <h3>2. 架构与组件</h3>
+  <h3>2. Architecture and Components</h3>
 
   <label for="toc-control">
     
@@ -273,9 +273,9 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#1-编排与管理层-imaster-nce-campus">1. 编排与管理层 (iMaster NCE-Campus)</a></li>
-    <li><a href="#2-控制层-route-reflector---rr">2. 控制层 (Route Reflector - RR)</a></li>
-    <li><a href="#3-转发层-netengine-ar">3. 转发层 (NetEngine AR)</a></li>
+    <li><a href="#1-orchestration-and-management-layer-imaster-nce-campus">1. Orchestration and Management Layer (iMaster NCE-Campus)</a></li>
+    <li><a href="#2-control-layer-route-reflector---rr">2. Control Layer (Route Reflector - RR)</a></li>
+    <li><a href="#3-forwarding-layer-netengine-ar">3. Forwarding Layer (NetEngine AR)</a></li>
   </ul>
 </nav>
 
@@ -288,14 +288,14 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown book-article"><h1 id="架构与组件">架构与组件<a class="anchor" href="#%e6%9e%b6%e6%9e%84%e4%b8%8e%e7%bb%84%e4%bb%b6">#</a></h1>
-<p>华为 SD-WAN 架构分为三层：</p>
-<h2 id="1-编排与管理层-imaster-nce-campus">1. 编排与管理层 (iMaster NCE-Campus)<a class="anchor" href="#1-%e7%bc%96%e6%8e%92%e4%b8%8e%e7%ae%a1%e7%90%86%e5%b1%82-imaster-nce-campus">#</a></h2>
-<p>全网的统一大脑，提供网络配置、编排、自动化运维能力。</p>
-<h2 id="2-控制层-route-reflector---rr">2. 控制层 (Route Reflector - RR)<a class="anchor" href="#2-%e6%8e%a7%e5%88%b6%e5%b1%82-route-reflector---rr">#</a></h2>
-<p>负责在各个站点之间反射和分发 VPN 路由及策略信息。</p>
-<h2 id="3-转发层-netengine-ar">3. 转发层 (NetEngine AR)<a class="anchor" href="#3-%e8%bd%ac%e5%8f%91%e5%b1%82-netengine-ar">#</a></h2>
-<p>部署在分支企业和总部的 CPE 设备，负责实际的数据报文转发。</p>
+  <article class="markdown book-article"><h1 id="architecture-and-components">Architecture and Components<a class="anchor" href="#architecture-and-components">#</a></h1>
+<p>The Huawei SD-WAN architecture is divided into three layers:</p>
+<h2 id="1-orchestration-and-management-layer-imaster-nce-campus">1. Orchestration and Management Layer (iMaster NCE-Campus)<a class="anchor" href="#1-orchestration-and-management-layer-imaster-nce-campus">#</a></h2>
+<p>The unified brain of the entire network, providing network configuration, orchestration, and automated O&amp;M capabilities.</p>
+<h2 id="2-control-layer-route-reflector---rr">2. Control Layer (Route Reflector - RR)<a class="anchor" href="#2-control-layer-route-reflector---rr">#</a></h2>
+<p>Responsible for reflecting and distributing VPN routes and policy information among various sites.</p>
+<h2 id="3-forwarding-layer-netengine-ar">3. Forwarding Layer (NetEngine AR)<a class="anchor" href="#3-forwarding-layer-netengine-ar">#</a></h2>
+<p>CPE devices deployed at branch enterprises and headquarters, responsible for actual data packet forwarding.</p>
 </article>
  
       
@@ -319,14 +319,14 @@ https://github.com/alex-shpak/hugo-book
     
       <a href="/docs/sdwan/introduction/" class="flex align-center">
         <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
-        <span>1. 简介</span>
+        <span>1. Introduction</span>
       </a>
     
     </span>
     <span>
     
       <a href="/docs/wlan/" class="flex align-center">
-        <span>WLAN 技术</span>
+        <span>WLAN Technology</span>
         <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
       </a>
     
@@ -363,9 +363,9 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#1-编排与管理层-imaster-nce-campus">1. 编排与管理层 (iMaster NCE-Campus)</a></li>
-    <li><a href="#2-控制层-route-reflector---rr">2. 控制层 (Route Reflector - RR)</a></li>
-    <li><a href="#3-转发层-netengine-ar">3. 转发层 (NetEngine AR)</a></li>
+    <li><a href="#1-orchestration-and-management-layer-imaster-nce-campus">1. Orchestration and Management Layer (iMaster NCE-Campus)</a></li>
+    <li><a href="#2-control-layer-route-reflector---rr">2. Control Layer (Route Reflector - RR)</a></li>
+    <li><a href="#3-forwarding-layer-netengine-ar">3. Forwarding Layer (NetEngine AR)</a></li>
   </ul>
 </nav>
 

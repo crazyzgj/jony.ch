@@ -1,9 +1,9 @@
 ---
-title: "DC 数据中心技术"
+title: "DC Data Center Technology"
 weight: 4
 bookCollapseSection: false
 ---
 
-# DC 数据中心技术专题
+# DC Data Center Technology
 
-欢迎来到数据中心技术知识库，分享最新数据中心网络架构与技术。
+Welcome to the Data Center technology knowledge base, sharing the latest data center network architectures and technologies.

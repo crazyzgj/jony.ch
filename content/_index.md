@@ -1,45 +1,57 @@
 ---
-title: "Jonys Book 技术博客"
+title: "Jonys Book Tech Blog"
 type: docs
+bookToC: false
 ---
 
+<style>
+  /* 彻底隐藏左侧的整块菜单区域 */
+  aside.book-menu {
+    display: none !important;
+  }
+  /* 让主页内容在屏幕中居中显示 */
+  .book-page {
+    margin: 0 auto !important;
+  }
+</style>
+
 <div class="text-center" style="margin: 4rem 0;">
-  <h1 style="font-size: 3rem; color: #CF0A2C;">Jonys Book 技术博客</h1>
-  <p style="font-size: 1.25rem; color: var(--gray-500);">分享网络、数据中心与自动化编程技术</p>
+  <h1 style="font-size: 3rem; color: #CF0A2C;">Jonys Book Tech Blog</h1>
+  <p style="font-size: 1.25rem; color: var(--gray-500);">Sharing Networking, Data Center and Automation Programming Technologies</p>
   <br/>
 </div>
 
 {{< columns >}}
-### SD-WAN 技术
-深入了解华为 SD-WAN 架构、部署与最佳实践。
+### SD-WAN Technology
+Deep dive into Huawei SD-WAN architecture, deployment, and best practices.
 <br/>
-<a href="/docs/sdwan" style="color: #CF0A2C;">了解更多 →</a>
+<a href="/docs/sdwan" style="color: #CF0A2C;">Learn More →</a>
 <--->
-### WLAN 技术
-探索无线网络技术与应用，包含 AP 部署与 Option 43 计算等工具。
+### WLAN Technology
+Explore wireless networking technologies and applications, including AP deployment and Option 43 calculation tools.
 <br/>
-<a href="/docs/wlan" style="color: #CF0A2C;">了解更多 →</a>
+<a href="/docs/wlan" style="color: #CF0A2C;">Learn More →</a>
 <--->
-### NAC 技术
-网络准入控制技术，保障企业网络安全。
+### NAC Technology
+Network Access Control technologies for ensuring enterprise network security.
 <br/>
-<a href="/docs/nac" style="color: #CF0A2C;">了解更多 →</a>
+<a href="/docs/nac" style="color: #CF0A2C;">Learn More →</a>
 {{< /columns >}}
 
 <br/>
 
 {{< columns >}}
-### DC 数据中心技术
-数据中心网络架构、VXLAN 等前沿技术分享。
+### DC Data Center Technology
+Insights on Data Center network architecture, VXLAN, and other cutting-edge technologies.
 <br/>
-<a href="/docs/dc" style="color: #CF0A2C;">了解更多 →</a>
+<a href="/docs/dc" style="color: #CF0A2C;">Learn More →</a>
 <--->
-### Python 技术
-网络自动化与 Python 编程技巧。
+### Python Technology
+Network automation and Python programming techniques.
 <br/>
-<a href="/docs/python" style="color: #CF0A2C;">了解更多 →</a>
+<a href="/docs/python" style="color: #CF0A2C;">Learn More →</a>
 <--->
-### 敬请期待
-更多精彩内容正在建设中。
+### Stay Tuned
+More exciting content is under construction.
 <br/>
 {{< /columns >}}

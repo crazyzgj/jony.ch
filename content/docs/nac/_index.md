@@ -1,9 +1,9 @@
 ---
-title: "NAC 技术"
+title: "NAC Technology"
 weight: 3
 bookCollapseSection: false
 ---
 
-# NAC 技术专题
+# NAC Technology
 
-欢迎来到网络准入控制（NAC）技术知识库。
+Welcome to the Network Access Control (NAC) technology knowledge base.

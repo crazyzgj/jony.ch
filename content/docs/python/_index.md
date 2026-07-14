@@ -1,9 +1,9 @@
 ---
-title: "Python 技术"
+title: "Python Technology"
 weight: 5
 bookCollapseSection: false
 ---
 
-# Python 技术专题
+# Python Technology
 
-欢迎来到 Python 编程与网络自动化知识库。
+Welcome to the Python programming and network automation knowledge base.

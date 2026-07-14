@@ -1,9 +1,9 @@
 ---
-title: "WLAN 技术"
+title: "WLAN Technology"
 weight: 2
 bookCollapseSection: false
 ---
 
-# WLAN 技术专题
+# WLAN Technology
 
-欢迎来到 WLAN 知识库。
+Welcome to the WLAN knowledge base.
