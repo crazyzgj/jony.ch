@@ -75,9 +75,9 @@ function calculateOption43() {
 
 The format of Huawei Option 43 field is usually: `03` (sub-option type) + `Length` (hexadecimal, 1 byte) + `ASCII Hexadecimal of comma-separated IP string`.
 
-* **Single IP Example**: Input `10.5.204.10` (length 11 bytes, hexadecimal is `0B`)
-  Output: `030B31302E352E3230342E3130`
+* **Single IP Example**: Input `192.168.1.1` (length 11 bytes, hexadecimal is `0B`)
+  Output: `030B3139322E3136382E312E31`
 
-* **Dual IP Example**: Input `192.168.1.2` and `192.168.1.1`, concatenated as `192.168.1.2,192.168.1.1` (length 23 bytes, hexadecimal is `17`)
-  Output: `03173139322E3136382E312E322C3139322E3136382E312E31`
+* **Dual IP Example**: Input `192.168.1.1` and `192.168.1.2`, concatenated as `192.168.1.1,192.168.1.2` (length 23 bytes, hexadecimal is `17`)
+  Output: `03173139322E3136382E312E312C3139322E3136382E312E32`
 *(Note: According to the standard, when configuring two IP addresses, the calculation length should be the total length of the two IPs and the comma, which is `17`.)*

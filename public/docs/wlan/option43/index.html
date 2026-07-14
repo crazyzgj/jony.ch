@@ -35,7 +35,7 @@ WAC IP Address 1: WAC IP Address 2 (Optional, active/standby scenario): Calculat
 <link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
 
 
-  <script defer type="module" src="/en.search.min.03f4d488181ea0a4c080b9920ee201e04a801c16f77fc2dda8249384787c46c3.js" integrity="sha256-A/TUiBgeoKTAgLmSDuIB4EqAHBb3f8LdqCSThHh8RsM=" crossorigin="anonymous"></script>
+  <script defer type="module" src="/en.search.min.2f4fdd99b9123c987397ee5077f6928717973b36feeb12186ceb3fb694fc5435.js" integrity="sha256-L0/dmbkSPJhzl&#43;5Qd/aShxeXOzb&#43;6xIYbOs/tpT8VDU=" crossorigin="anonymous"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -284,12 +284,12 @@ function calculateOption43() {
 <p>The format of Huawei Option 43 field is usually: <code>03</code> (sub-option type) + <code>Length</code> (hexadecimal, 1 byte) + <code>ASCII Hexadecimal of comma-separated IP string</code>.</p>
 <ul>
 <li>
-<p><strong>Single IP Example</strong>: Input <code>10.5.204.10</code> (length 11 bytes, hexadecimal is <code>0B</code>)
-Output: <code>030B31302E352E3230342E3130</code></p>
+<p><strong>Single IP Example</strong>: Input <code>192.168.1.1</code> (length 11 bytes, hexadecimal is <code>0B</code>)
+Output: <code>030B3139322E3136382E312E31</code></p>
 </li>
 <li>
-<p><strong>Dual IP Example</strong>: Input <code>192.168.1.2</code> and <code>192.168.1.1</code>, concatenated as <code>192.168.1.2,192.168.1.1</code> (length 23 bytes, hexadecimal is <code>17</code>)
-Output: <code>03173139322E3136382E312E322C3139322E3136382E312E31</code>
+<p><strong>Dual IP Example</strong>: Input <code>192.168.1.1</code> and <code>192.168.1.2</code>, concatenated as <code>192.168.1.1,192.168.1.2</code> (length 23 bytes, hexadecimal is <code>17</code>)
+Output: <code>03173139322E3136382E312E312C3139322E3136382E312E32</code>
 <em>(Note: According to the standard, when configuring two IP addresses, the calculation length should be the total length of the two IPs and the comma, which is <code>17</code>.)</em></p>
 </li>
 </ul>
