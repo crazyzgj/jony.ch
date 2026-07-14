@@ -61,6 +61,58 @@ bookToC: false
     margin: 0;
   }
 
+  /* =========================================
+    Hero Section (产品展示区)
+    ========================================= */
+  .hero-section {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem 0;
+    flex-wrap: wrap; /* 小屏幕自动换行 */
+  }
+
+  .hero-text {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .hero-image {
+    flex: 0 0 500px; /* 控制右侧图片的大小 */
+  }
+
+  .hero-image img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+
+  .hero-text h1 { color: #3b7bbd; margin-bottom: 0.5rem; }
+  .hero-text h2 { color: #28a745; font-size: 1.2rem; margin-bottom: 1.5rem; }
+
+  /* 按钮组样式 */
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn-primary {
+    background: #3b7bbd;
+    color: white !important;
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none !important;
+  }
+
+  .btn-outline {
+    border: 2px solid #3b7bbd;
+    color: #3b7bbd !important;
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none !important;
+  }
+
 </style>
 
 <div class="text-center" style="margin: 4rem 0;">
@@ -69,11 +121,31 @@ bookToC: false
   <br/>
 </div>
 
+
+<div class="hero-section">
+  <!-- 左侧文案 -->
+  <div class="hero-text">
+    <h1>My Tech Book</h1>
+    <h2>Systematic summary, Reject invalid involution.</h2>
+    <p>Here I recorded my practical experience from entry to mastery. Not only configuration commands, but also in-depth analysis of underlying logic. Abandon useless empty talk, leaving only dry goods.</p>
+    <div class="hero-buttons">
+      <a href="/docs/sdwan/" class="btn-primary">Read Now</a>
+      <a href="/about/" class="btn-outline">About Me</a>
+    </div>
+  </div>
+
+
+  <!-- 右侧图片 -->
+  <div class="hero-image">
+    <!-- 确保这张图放在 static 文件夹里 -->
+    <img src="/book-cover.png" alt="书本封面">
+  </div>
+</div>
+
 {{< columns >}}
 <h2 style="text-align: center; color: #3b7bbd; margin-top: 2rem;">All For the Networking</h2>
 
 <div class="card-grid">
-
 
 <a href="/docs/sdwan" class="nav-card">
     <div class="nav-card-icon">🌍</div>
