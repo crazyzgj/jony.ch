@@ -50,7 +50,8 @@ function lookupMac() {
 
     resultDiv.innerText = 'Searching...';
 
-    // We use the requested api.macvendors.com
+    // We use the requested api.macvendors.com directly.
+    // They natively support CORS for browser requests.
     const apiUrl = `https://api.macvendors.com/${formattedMac}`;
     
     // Add an abort controller for timeout (e.g. 8 seconds)
@@ -69,6 +70,10 @@ function lookupMac() {
             return response.text();
         })
         .then(text => {
+            // Some proxies or firewalls return JSON error pages instead of text. Catch that.
+            if (text.includes('Free usage is limited') || text.includes('{"error"')) {
+                throw new Error('Proxy or API limit reached');
+            }
             if (text === 'Vendor not found') {
                  resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nResult      : Vendor not found`;
             } else {
@@ -81,20 +86,19 @@ function lookupMac() {
             if (error.name === 'AbortError') {
                 resultDiv.innerText = 'Error: Request timed out. The API might be down.';
             } else {
-                // If direct fetch fails (likely due to CORS), fallback to corsproxy.io wrapper
-                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(apiUrl);
+                // If direct fetch fails (e.g., rate limited or strict CORS), fallback to allorigins
+                const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(apiUrl);
                 fetch(proxyUrl)
                     .then(res => {
-                        if (res.status === 404) return 'Vendor not found';
                         if (!res.ok) throw new Error('Proxy failed');
-                        return res.text();
+                        return res.json();
                     })
-                    .then(text => {
-                        if (text === 'Vendor not found') {
+                    .then(data => {
+                        if (!data.contents || data.contents.includes('Not Found')) {
                              resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nResult      : Vendor not found`;
-                        } else {
-                             resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nCompany     : ${text}\n(Result via fallback proxy)`;
+                             return;
                         }
+                        resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nCompany     : ${data.contents}\n(Result via fallback proxy)`;
                     })
                     .catch(fallbackError => {
                         resultDiv.innerText = `Error fetching MAC information.\nMake sure you have an internet connection and your browser is not blocking cross-origin requests (CORS).\nOriginal Error: ${error.message}`;
