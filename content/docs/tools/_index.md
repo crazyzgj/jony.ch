@@ -164,10 +164,10 @@ bookToC: false
     <p>Automatically detect your public IP and look up detailed location, ASN, and ISP info for any IP.</p>
   </a>
 
-  <!-- MAC Address Lookup Tool -->
-  <a href="/docs/tools/mac-lookup/" class="tool-card">
-    <div class="tool-icon">🏷️</div>
-    <h3>MAC Address Lookup</h3>
-    <p>Query any MAC address to find its manufacturer and vendor details.</p>
+  <!-- Batch Config Generator Tool -->
+  <a href="/docs/tools/batch-generator/" class="tool-card">
+    <div class="tool-icon">🛠️</div>
+    <h3>Batch Config Generator</h3>
+    <p>Automatically generate repetitive configuration scripts or JSON based on templates with dynamic variables.</p>
   </a>
 </div>

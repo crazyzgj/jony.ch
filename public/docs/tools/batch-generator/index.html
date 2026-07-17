@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Batch Config Generator# This tool allows you to automatically generate repetitive configuration scripts or JSON based on a template. Define variables in your template using the {{{VariableName}}} syntax.
+1. Template Use {{{VariableName}}} to define variables. Example provided below.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://192.168.1.220:1313/docs/tools/batch-generator/">
+	<meta property="og:site_name" content="Jonys-Book">
+	<meta property="og:title" content="Batch Config Generator">
+	<meta property="og:description" content="Batch Config Generator# This tool allows you to automatically generate repetitive configuration scripts or JSON based on a template. Define variables in your template using the {{{VariableName}}} syntax.
+1. Template Use {{{VariableName}}} to define variables. Example provided below.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="Batch Config Generator">
+	<meta itemprop="description" content="Batch Config Generator# This tool allows you to automatically generate repetitive configuration scripts or JSON based on a template. Define variables in your template using the {{{VariableName}}} syntax.
+1. Template Use {{{VariableName}}} to define variables. Example provided below.">
+	<meta itemprop="wordCount" content="84">
+
+<title>Batch Config Generator • Jonys-Book</title>
+<link rel="icon" href="/logo.svg" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://192.168.1.220:1313/docs/tools/batch-generator/">
+<link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
+
+
+  <script defer type="module" src="/en.search.min.4127c181d2c1e01d8dea8db934608d76999579319ebd284b423ebe498faa1037.js" integrity="sha256-QSfBgdLB4B2N6o25NGCNdpmVeTGevShLQj6&#43;SY&#43;qEDc=" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<a class="flex align-center" href="/"
+  style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;"><img src="/logo.svg" alt="Logo" class="book-icon"
+    style="height: 3rem; width: auto; transition: transform 0.3s ease; object-fit: contain; padding: 0.3rem; background-color: #f1f5f9; border: 2px solid #f1f5f9; border-radius: 8px;"
+    onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'" /><span style="font-weight: 800; font-size: 1.4rem; color: #102a43; letter-spacing: -0.5px;">Jonys-Book</span>
+</a>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/" class="">
+      Network Tools</a>
+  
+
+            
+  <ul>
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/option43/" class="">
+      Huawei Option 43</a>
+  
+
+          </li>
+        
+      
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/subnet/" class="">
+      IP &amp; Subnet Calculator</a>
+  
+
+          </li>
+        
+      
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/ip-lookup/" class="">
+      Public IP Lookup</a>
+  
+
+          </li>
+        
+      
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/batch-generator/" class="active">
+      Batch Config Generator</a>
+  
+
+          </li>
+        
+      
+    
+  </ul>
+
+          </li>
+        
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Batch Config Generator</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents"></nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="batch-config-generator">Batch Config Generator<a class="anchor" href="#batch-config-generator">#</a></h1>
+<p>This tool allows you to automatically generate repetitive configuration scripts or JSON based on a template.
+Define variables in your template using the <code>{{{VariableName}}}</code> syntax.</p>
+<style>
+.generator-container {
+    margin-top: 2rem;
+    padding: 2rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    background-color: var(--gray-100);
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.btn {
+    background-color: #CF0A2C;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+}
+.btn-outline {
+    background-color: transparent;
+    color: #CF0A2C;
+    border: 1px solid #CF0A2C;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+}
+.btn:hover, .btn-outline:hover {
+    opacity: 0.8;
+}
+.var-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.var-column h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+.alert {
+    padding: 1rem;
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #b91c1c;
+    border-radius: 4px;
+    margin-top: 1rem;
+    display: none;
+}
+</style>
+<div class="generator-container">
+    <div class="form-group">
+        <label>1. Template</label>
+        <p style="margin-top: 0; font-size: 0.9em; color: #666;">Use <code>{{{VariableName}}}</code> to define variables. Example provided below.</p>
+        <textarea id="templateInput" rows="8">interface {{{var1}}}
+ description {{{var2}}}
+ port default vlan {{{var3}}}</textarea>
+    </div>
+    <div class="form-group">
+        <button class="btn" onclick="extractVariables()">Extract Variables</button>
+    </div>
+    <div id="variablesSection" style="display: none;">
+        <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">2. Variable Values</h3>
+        <p style="font-size: 0.9em; color: #666;">Enter one value per line for each variable. The number of lines must be at least equal to the loop count.</p>
+        <div id="varListContainer" class="var-list-container"></div>
+        <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">3. Loop Count (Max 300)</h3>
+        <div class="form-group" style="max-width: 250px;">
+            <input type="number" id="loopCount" min="1" max="300" value="3">
+        </div>                
+        <div id="errorAlert" class="alert"></div>
+        <div class="form-group" style="margin-top: 1.5rem;">
+            <button class="btn" onclick="generateConfig()">Generate Config</button>
+        </div>
+    </div>
+    <div id="outputSection" class="form-group" style="display: none; margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+            <h3 style="margin: 0;">4. Output</h3>
+            <button class="btn-outline" id="copyBtn" onclick="copyOutput()">Copy to Clipboard</button>
+        </div>
+        <textarea id="outputResult" rows="20" readonly style="background-color: #fff;"></textarea>
+    </div>
+</div>
+<script>
+let extractedVars = [];
+
+function extractVariables() {
+    const template = document.getElementById('templateInput').value;
+    const regex = /\{\{\{([^}]+)\}\}\}/g;
+    const matches = new Set();
+    let match;
+    
+    while ((match = regex.exec(template)) !== null) {
+        matches.add(match[1].trim());
+    }
+    
+    extractedVars = Array.from(matches);
+    const container = document.getElementById('varListContainer');
+    container.innerHTML = '';
+    
+    if (extractedVars.length === 0) {
+        alert("No variables found in template. Please use {{{VariableName}}} syntax.");
+        document.getElementById('variablesSection').style.display = 'none';
+        return;
+    }
+    
+    if (extractedVars.length > 12) {
+        alert("Error: The maximum number of variables allowed is 12.");
+        document.getElementById('variablesSection').style.display = 'none';
+        return;
+    }
+
+    extractedVars.forEach(varName => {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'var-column';
+        
+        const title = document.createElement('h4');
+        title.innerText = varName + ' List';
+        
+        const textarea = document.createElement('textarea');
+        textarea.id = 'var_' + varName;
+        textarea.rows = 8;
+        textarea.placeholder = `Enter values for ${varName}\nOne per line...`;
+        
+        // Add requested default values
+        if (varName === 'var1') {
+            textarea.value = "G1/0/1\nG1/0/2\nG1/0/3";
+        } else if (varName === 'var2') {
+            textarea.value = "Port1\nPort2\nPort3";
+        } else if (varName === 'var3') {
+            textarea.value = "100\n200\n300";
+        }
+        
+        colDiv.appendChild(title);
+        colDiv.appendChild(textarea);
+        container.appendChild(colDiv);
+    });
+
+    document.getElementById('variablesSection').style.display = 'block';
+    document.getElementById('outputSection').style.display = 'none';
+    document.getElementById('errorAlert').style.display = 'none';
+}
+
+function generateConfig() {
+    const loopCount = parseInt(document.getElementById('loopCount').value, 10);
+    const alertBox = document.getElementById('errorAlert');
+    
+    if (isNaN(loopCount) || loopCount < 1 || loopCount > 300) {
+        alertBox.innerText = "Error: Loop count must be between 1 and 300.";
+        alertBox.style.display = 'block';
+        return;
+    }
+
+    // Collect all variable arrays
+    const varData = {};
+    let hasError = false;
+
+    for (const varName of extractedVars) {
+        const text = document.getElementById('var_' + varName).value.trim();
+        const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+        
+        if (lines.length < loopCount) {
+            alertBox.innerText = `Error: Variable "${varName}" has only ${lines.length} values, but loop count is ${loopCount}. Please provide at least ${loopCount} values.`;
+            alertBox.style.display = 'block';
+            hasError = true;
+            break;
+        }
+        varData[varName] = lines;
+    }
+
+    if (hasError) return;
+    
+    alertBox.style.display = 'none';
+    
+    const template = document.getElementById('templateInput').value;
+    let finalOutput = [];
+
+    for (let i = 0; i < loopCount; i++) {
+        let currentIter = template;
+        for (const varName of extractedVars) {
+            // Replace all occurrences of {{{varName}}}
+            const regex = new RegExp('\\{\\{\\{' + varName + '\\}\\}\\}', 'g');
+            currentIter = currentIter.replace(regex, varData[varName][i]);
+        }
+        finalOutput.push(currentIter);
+    }
+
+    // Join with double newline to separate objects clearly
+    document.getElementById('outputResult').value = finalOutput.join('\n\n');
+    document.getElementById('outputSection').style.display = 'block';
+    
+    // Reset copy button text
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+        copyBtn.innerText = 'Copy to Clipboard';
+    }
+}
+
+function copyOutput() {
+    const outputText = document.getElementById('outputResult');
+    outputText.select();
+    outputText.setSelectionRange(0, 99999); /* For mobile devices */
+    
+    try {
+        document.execCommand('copy');
+        const copyBtn = document.getElementById('copyBtn');
+        if (copyBtn) {
+            copyBtn.innerText = 'Copied!';
+            setTimeout(() => {
+                copyBtn.innerText = 'Copy to Clipboard';
+            }, 2000);
+        }
+    } catch (err) {
+        alert("Failed to copy text.");
+    }
+}
+</script>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/tools/ip-lookup/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Public IP Lookup</span>
+      </a>
+    
+    </span>
+    <span>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents"></nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
