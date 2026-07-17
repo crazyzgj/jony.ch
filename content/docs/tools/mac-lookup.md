@@ -41,51 +41,78 @@ function lookupMac() {
         return;
     }
 
-    // We only need the first 6 characters to query the API.
-    let oui = cleanMac.substring(0, 6).toUpperCase();
+    // Format to XX:XX:XX... for the API request to strictly match the requested format
+    let formattedMac = "";
+    for (let i = 0; i < cleanMac.length; i += 2) {
+        formattedMac += cleanMac.substring(i, i + 2);
+        if (i + 2 < cleanMac.length) formattedMac += ":";
+    }
 
     resultDiv.innerText = 'Searching...';
 
-    // We use corsproxy.io because direct API calls often fail due to strict CORS rules in modern browsers.
-    const url = 'https://corsproxy.io/?' + encodeURIComponent('https://api.macvendors.com/' + oui);
+    // We use the requested api.maclookup.app directly
+    const apiUrl = `https://api.maclookup.app/v2/macs/${formattedMac}`;
     
     // Add an abort controller for timeout (e.g. 8 seconds)
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-    fetch(url, { signal: controller.signal })
+    fetch(apiUrl, { signal: controller.signal })
         .then(response => {
             clearTimeout(timeoutId);
-            if (response.status === 404) {
-                return 'Vendor not found';
-            }
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.text();
+            return response.json();
         })
-        .then(text => {
-            if (text === 'Vendor not found') {
-                resultDiv.innerText = `MAC Input   : ${mac}\nOUI Prefix  : ${oui}\nResult      : Vendor not found`;
-            } else {
-                resultDiv.innerText = `MAC Input   : ${mac}\nOUI Prefix  : ${oui}\nCompany     : ${text}`;
+        .then(data => {
+            if (data.success === false) {
+                resultDiv.innerText = `Error: ${data.error || data.message || 'Unknown error'}`;
+                return;
             }
+            if (data.found === false) {
+                 resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nResult      : Vendor not found`;
+                 return;
+            }
+            
+            // Format the response
+            const output = [
+                `MAC Prefix : ${data.macPrefix || 'N/A'}`,
+                `Company    : ${data.company || 'N/A'}`,
+                `Address    : ${data.address || 'N/A'}`,
+                `Country    : ${data.country || 'N/A'}`,
+                `Updated    : ${data.updated || 'N/A'}`
+            ].join('\n');
+            
+            resultDiv.innerText = output;
         })
         .catch(error => {
             clearTimeout(timeoutId);
             
             if (error.name === 'AbortError') {
-                resultDiv.innerText = 'Error: Request timed out. The API proxy might be down or blocked by your network.';
+                resultDiv.innerText = 'Error: Request timed out. The API might be down.';
             } else {
-                // If corsproxy fails, fallback to another free API
-                fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.macvendors.com/' + oui)}`)
-                    .then(res => res.json())
+                // If direct fetch fails (likely due to CORS), fallback to corsproxy.io wrapper
+                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(apiUrl);
+                fetch(proxyUrl)
+                    .then(res => {
+                        if (!res.ok) throw new Error('Proxy failed');
+                        return res.json();
+                    })
                     .then(data => {
-                        if (data.contents && !data.contents.includes('Not Found') && !data.contents.includes('Error')) {
-                             resultDiv.innerText = `MAC Input   : ${mac}\nOUI Prefix  : ${oui}\nCompany     : ${data.contents}\n(via fallback proxy)`;
-                        } else {
-                             resultDiv.innerText = `MAC Input   : ${mac}\nOUI Prefix  : ${oui}\nResult      : Vendor not found`;
+                        if (data.success === false || data.found === false) {
+                             resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nResult      : Vendor not found`;
+                             return;
                         }
+                        const output = [
+                            `MAC Prefix : ${data.macPrefix || 'N/A'}`,
+                            `Company    : ${data.company || 'N/A'}`,
+                            `Address    : ${data.address || 'N/A'}`,
+                            `Country    : ${data.country || 'N/A'}`,
+                            `Updated    : ${data.updated || 'N/A'}`,
+                            `(Result via fallback proxy)`
+                        ].join('\n');
+                        resultDiv.innerText = output;
                     })
                     .catch(fallbackError => {
                         resultDiv.innerText = `Error fetching MAC information.\nMake sure you have an internet connection and your browser is not blocking cross-origin requests (CORS).\nOriginal Error: ${error.message}`;
