@@ -50,8 +50,8 @@ function lookupMac() {
 
     resultDiv.innerText = 'Searching...';
 
-    // We use the requested api.maclookup.app directly
-    const apiUrl = `https://api.maclookup.app/v2/macs/${formattedMac}`;
+    // We use the requested api.macvendors.com
+    const apiUrl = `https://api.macvendors.com/${formattedMac}`;
     
     // Add an abort controller for timeout (e.g. 8 seconds)
     const controller = new AbortController();
@@ -60,31 +60,20 @@ function lookupMac() {
     fetch(apiUrl, { signal: controller.signal })
         .then(response => {
             clearTimeout(timeoutId);
+            if (response.status === 404) {
+                return 'Vendor not found';
+            }
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.json();
+            return response.text();
         })
-        .then(data => {
-            if (data.success === false) {
-                resultDiv.innerText = `Error: ${data.error || data.message || 'Unknown error'}`;
-                return;
-            }
-            if (data.found === false) {
+        .then(text => {
+            if (text === 'Vendor not found') {
                  resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nResult      : Vendor not found`;
-                 return;
+            } else {
+                 resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nCompany     : ${text}`;
             }
-            
-            // Format the response
-            const output = [
-                `MAC Prefix : ${data.macPrefix || 'N/A'}`,
-                `Company    : ${data.company || 'N/A'}`,
-                `Address    : ${data.address || 'N/A'}`,
-                `Country    : ${data.country || 'N/A'}`,
-                `Updated    : ${data.updated || 'N/A'}`
-            ].join('\n');
-            
-            resultDiv.innerText = output;
         })
         .catch(error => {
             clearTimeout(timeoutId);
@@ -96,23 +85,16 @@ function lookupMac() {
                 const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(apiUrl);
                 fetch(proxyUrl)
                     .then(res => {
+                        if (res.status === 404) return 'Vendor not found';
                         if (!res.ok) throw new Error('Proxy failed');
-                        return res.json();
+                        return res.text();
                     })
-                    .then(data => {
-                        if (data.success === false || data.found === false) {
+                    .then(text => {
+                        if (text === 'Vendor not found') {
                              resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nResult      : Vendor not found`;
-                             return;
+                        } else {
+                             resultDiv.innerText = `MAC Input   : ${mac}\nFormatted   : ${formattedMac}\nCompany     : ${text}\n(Result via fallback proxy)`;
                         }
-                        const output = [
-                            `MAC Prefix : ${data.macPrefix || 'N/A'}`,
-                            `Company    : ${data.company || 'N/A'}`,
-                            `Address    : ${data.address || 'N/A'}`,
-                            `Country    : ${data.country || 'N/A'}`,
-                            `Updated    : ${data.updated || 'N/A'}`,
-                            `(Result via fallback proxy)`
-                        ].join('\n');
-                        resultDiv.innerText = output;
                     })
                     .catch(fallbackError => {
                         resultDiv.innerText = `Error fetching MAC information.\nMake sure you have an internet connection and your browser is not blocking cross-origin requests (CORS).\nOriginal Error: ${error.message}`;
