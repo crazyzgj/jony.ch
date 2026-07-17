@@ -10,6 +10,7 @@ theme = 'book'
   BookToCWidth = 2
   BookSearch = true
   BookTheme = 'light'
+  BookFavicon = '/logo.svg'
 
 [markup.goldmark.renderer]
   unsafe = true

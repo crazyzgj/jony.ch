@@ -1,4 +1,12 @@
-<a class="flex align-center" href="{{ .Site.BaseURL | relLangURL }}">
-  <div style="background-color: #CF0A2C; color: white; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 1.2rem; margin-right: 8px;">HW</div>
-  <span>{{ .Site.Title }}</span>
+<a class="flex align-center" href="{{ .Site.BaseURL | relLangURL }}"
+  style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+  {{- if .Site.Params.BookLogo -}}
+  <img src="{{ .Site.Params.BookLogo | relURL }}" alt="Logo" class="book-icon"
+    style="height: 2.2rem; width: auto; transition: transform 0.3s ease; object-fit: contain;"
+    onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'" />
+  {{- else -}}
+  <img src="{{ " logo.svg" | relURL }}" alt="Logo" class="book-icon"
+    style="height: 2.2rem; width: auto; transition: transform 0.3s ease; object-fit: contain;" />
+  {{- end -}}
+  <span style="font-weight: 800; font-size: 1.4rem; color: #102a43; letter-spacing: -0.5px;">{{ .Site.Title }}</span>
 </a>
