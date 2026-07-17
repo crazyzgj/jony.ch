@@ -52,7 +52,7 @@ function lookupMac() {
 
     // We use the requested api.macvendors.com directly.
     // They natively support CORS for browser requests.
-    const apiUrl = `https://api.macvendors.com/${formattedMac}`;
+    const apiUrl = `https://api.maclookup.app/v2/macs/${formattedMac}`;
     
     // Add an abort controller for timeout (e.g. 8 seconds)
     const controller = new AbortController();
