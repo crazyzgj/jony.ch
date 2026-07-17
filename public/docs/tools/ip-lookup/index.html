@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Public IP Lookup# This tool displays your current public IP address and allows you to query any IP address to find its location, AS number, ISP, and other details.
+1. Your Current Public IP Loading your IP information... 2. IP Lookup Enter IP Address: Lookup ">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://jony.ch/docs/tools/ip-lookup/">
+	<meta property="og:site_name" content="Jonys-Book">
+	<meta property="og:title" content="Public IP Lookup">
+	<meta property="og:description" content="Public IP Lookup# This tool displays your current public IP address and allows you to query any IP address to find its location, AS number, ISP, and other details.
+1. Your Current Public IP Loading your IP information... 2. IP Lookup Enter IP Address: Lookup">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="Public IP Lookup">
+	<meta itemprop="description" content="Public IP Lookup# This tool displays your current public IP address and allows you to query any IP address to find its location, AS number, ISP, and other details.
+1. Your Current Public IP Loading your IP information... 2. IP Lookup Enter IP Address: Lookup">
+	<meta itemprop="wordCount" content="45">
+
+<title>Public IP Lookup • Jonys-Book</title>
+<link rel="icon" href="/logo.svg" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://jony.ch/docs/tools/ip-lookup/">
+<link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
+
+
+  <script defer type="module" src="/en.search.min.a0b5db21c6ae8cf9f2866b7b85766145ae9aa3dbf23f37304b304be8bd560db4.js" integrity="sha256-oLXbIcaujPnyhmt7hXZhRa6ao9vyPzcwSzBL6L1WDbQ=" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<a class="flex align-center" href="/"
+  style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;"><img src="/logo.svg" alt="Logo" class="book-icon"
+    style="height: 3rem; width: auto; transition: transform 0.3s ease; object-fit: contain; padding: 0.3rem; background-color: #f1f5f9; border: 2px solid #f1f5f9; border-radius: 8px;"
+    onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'" /><span style="font-weight: 800; font-size: 1.4rem; color: #102a43; letter-spacing: -0.5px;">Jonys-Book</span>
+</a>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/" class="">
+      Network Tools</a>
+  
+
+            
+  <ul>
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/option43/" class="">
+      Huawei Option 43</a>
+  
+
+          </li>
+        
+      
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/subnet/" class="">
+      IP &amp; Subnet Calculator</a>
+  
+
+          </li>
+        
+      
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/ip-lookup/" class="active">
+      Public IP Lookup</a>
+  
+
+          </li>
+        
+      
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/mac-lookup/" class="">
+      MAC Address Lookup</a>
+  
+
+          </li>
+        
+      
+    
+  </ul>
+
+          </li>
+        
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Public IP Lookup</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents"></nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="public-ip-lookup">Public IP Lookup<a class="anchor" href="#public-ip-lookup">#</a></h1>
+<p>This tool displays your current public IP address and allows you to query any IP address to find its location, AS number, ISP, and other details.</p>
+<div style="margin-top: 2rem; padding: 2rem; border: 1px solid var(--gray-200); border-radius: 8px; background-color: var(--gray-100);">
+  <!-- Feature 1: Current IP -->
+  <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #ccc;">
+    <h3 style="margin-top: 0;">1. Your Current Public IP</h3>
+    <div id="currentIpResult" style="padding: 1rem; background-color: #fff; border: 1px dashed #ccc; border-radius: 4px; font-family: monospace; white-space: pre-wrap; min-height: 1.5rem;">Loading your IP information...</div>
+  </div>
+  <!-- Feature 2: IP Lookup -->
+  <div>
+    <h3 style="margin-top: 0;">2. IP Lookup</h3>
+    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Enter IP Address:</label>
+    <div style="display: flex; gap: 1rem;">
+      <input type="text" id="ipInput" placeholder="e.g., 8.8.8.8" style="flex: 1; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
+      <button onclick="lookupIp()" style="background-color: #CF0A2C; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold;">Lookup</button>
+    </div>
+    <div id="lookupIpResult" style="margin-top: 1rem; padding: 1rem; background-color: #fff; border: 1px dashed #ccc; border-radius: 4px; font-family: monospace; white-space: pre-wrap; min-height: 1.5rem; display: none;"></div>
+  </div>
+</div>
+<script>
+function formatIpData(data) {
+    if (!data.success) {
+        return `Error: ${data.message}`;
+    }
+    
+    return [
+        `IP              : ${data.ip}`,
+        `Type            : ${data.type}`,
+        `Country         : ${data.country} (${data.country_code})`,
+        `Region          : ${data.region}`,
+        `City            : ${data.city}`,
+        `Latitude        : ${data.latitude}`,
+        `Longitude       : ${data.longitude}`,
+        `ASN             : ${data.connection.asn}`,
+        `ISP / Org       : ${data.connection.org} / ${data.connection.isp}`,
+        `Domain          : ${data.connection.domain}`,
+        `Timezone        : ${data.timezone.id} (UTC ${data.timezone.utc})`
+    ].join('\n');
+}
+
+// Fetch current IP on load
+window.addEventListener('DOMContentLoaded', () => {
+    fetch('https://ipwho.is/')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('currentIpResult').innerText = formatIpData(data);
+        })
+        .catch(error => {
+            document.getElementById('currentIpResult').innerText = 'Error fetching IP information: ' + error.message;
+        });
+});
+
+function lookupIp() {
+    const ip = document.getElementById('ipInput').value.trim();
+    const resultDiv = document.getElementById('lookupIpResult');
+    resultDiv.style.display = 'block';
+    
+    if (!ip) {
+        resultDiv.innerText = 'Please enter an IP address.';
+        return;
+    }
+
+    resultDiv.innerText = 'Searching...';
+
+    fetch(`https://ipwho.is/${ip}`)
+        .then(response => response.json())
+        .then(data => {
+            resultDiv.innerText = formatIpData(data);
+        })
+        .catch(error => {
+            resultDiv.innerText = 'Error fetching IP information: ' + error.message;
+        });
+}
+</script>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/tools/subnet/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>IP &amp; Subnet Calculator</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/tools/mac-lookup/" class="flex align-center">
+        <span>MAC Address Lookup</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents"></nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

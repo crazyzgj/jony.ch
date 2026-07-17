@@ -156,4 +156,18 @@ bookToC: false
     <h3>IP & Subnet</h3>
     <p>Calculate network addresses, subnets, usable hosts, and convert wildcard masks easily.</p>
   </a>
+
+  <!-- Public IP Lookup Tool -->
+  <a href="/docs/tools/ip-lookup/" class="tool-card">
+    <div class="tool-icon">🔍</div>
+    <h3>Public IP Lookup</h3>
+    <p>Automatically detect your public IP and look up detailed location, ASN, and ISP info for any IP.</p>
+  </a>
+
+  <!-- MAC Address Lookup Tool -->
+  <a href="/docs/tools/mac-lookup/" class="tool-card">
+    <div class="tool-icon">🏷️</div>
+    <h3>MAC Address Lookup</h3>
+    <p>Query any MAC address to find its manufacturer and vendor details.</p>
+  </a>
 </div>
