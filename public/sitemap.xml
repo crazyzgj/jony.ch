@@ -2,28 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://jony.ch/docs/tools/option43/</loc>
+    <loc>http://192.168.1.220:1313/docs/tools/option43/</loc>
   </url><url>
-    <loc>https://jony.ch/docs/sdwan/</loc>
+    <loc>http://192.168.1.220:1313/docs/sdwan/</loc>
   </url><url>
-    <loc>https://jony.ch/docs/tools/subnet/</loc>
+    <loc>http://192.168.1.220:1313/docs/tools/subnet/</loc>
   </url><url>
-    <loc>https://jony.ch/docs/wlan/</loc>
+    <loc>http://192.168.1.220:1313/docs/wlan/</loc>
   </url><url>
-    <loc>https://jony.ch/docs/nac/</loc>
+    <loc>http://192.168.1.220:1313/docs/nac/</loc>
   </url><url>
-    <loc>https://jony.ch/docs/dc/</loc>
+    <loc>http://192.168.1.220:1313/docs/dc/</loc>
   </url><url>
-    <loc>https://jony.ch/docs/python/</loc>
+    <loc>http://192.168.1.220:1313/docs/python/</loc>
   </url><url>
-    <loc>https://jony.ch/docs/</loc>
+    <loc>http://192.168.1.220:1313/docs/</loc>
   </url><url>
-    <loc>https://jony.ch/categories/</loc>
+    <loc>http://192.168.1.220:1313/categories/</loc>
   </url><url>
-    <loc>https://jony.ch/</loc>
+    <loc>http://192.168.1.220:1313/</loc>
   </url><url>
-    <loc>https://jony.ch/docs/tools/</loc>
+    <loc>http://192.168.1.220:1313/docs/tools/</loc>
   </url><url>
-    <loc>https://jony.ch/tags/</loc>
+    <loc>http://192.168.1.220:1313/tags/</loc>
   </url>
 </urlset>

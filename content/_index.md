@@ -118,8 +118,14 @@ bookToC: false
 
 <div class="hero-section">
   <!-- 左侧文案 -->
+
   <div class="hero-text">
-    <h1>Jonys Tech Book</h1>
+    <h1 style="display: flex; align-items: center; justify-content: left; gap: 0.75rem;">
+      <img src="logo.svg" alt="Logo" class="book-icon"
+        style="height: 3.8rem; width: auto; transition: transform 0.3s ease; object-fit: contain; padding: 0.3rem; background-color: #f1f5f9; border: 2px solid #f1f5f9; border-radius: 8px;"
+        onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'" />
+      Jonys Tech Book
+    </h1>
     <h2>Systematic summary, Reject invalid involution.</h2>
     <p>Sharing Networking, Data Center and Automation Programming Technologie</p>
     <div class="hero-buttons">
