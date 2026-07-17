@@ -2,9 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://jony.ch/docs/wlan/option43/</loc>
+    <loc>https://jony.ch/docs/tools/option43/</loc>
   </url><url>
     <loc>https://jony.ch/docs/sdwan/</loc>
+  </url><url>
+    <loc>https://jony.ch/docs/tools/subnet/</loc>
   </url><url>
     <loc>https://jony.ch/docs/wlan/</loc>
   </url><url>
@@ -19,6 +21,8 @@
     <loc>https://jony.ch/categories/</loc>
   </url><url>
     <loc>https://jony.ch/</loc>
+  </url><url>
+    <loc>https://jony.ch/docs/tools/</loc>
   </url><url>
     <loc>https://jony.ch/tags/</loc>
   </url>

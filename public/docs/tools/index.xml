@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>Jonys Tech Book on Jonys-Book</title>
-		<link>https://jony.ch/</link>
-		<description>Recent content in Jonys Tech Book on Jonys-Book</description>
+		<title>Network Tools on Jonys-Book</title>
+		<link>https://jony.ch/docs/tools/</link>
+		<description>Recent content in Network Tools on Jonys-Book</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
 		
 		
 		
 		
-			<atom:link href="https://jony.ch/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://jony.ch/docs/tools/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>Huawei Option 43</title>
 				<link>https://jony.ch/docs/tools/option43/</link>

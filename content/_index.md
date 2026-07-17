@@ -140,6 +140,11 @@ bookToC: false
 <h2 style="text-align: center; color: #3b7bbd; margin-top: 2rem;">All For the Networking</h2>
 
 <div class="card-grid">
+  <a href="/docs/tools" class="nav-card">
+    <div class="nav-card-icon">🛠️</div>
+    <h3>Network Tools</h3>
+    <p>You can find some useful tools here.</p>
+  </a>
 
 <a href="/docs/sdwan" class="nav-card">
     <div class="nav-card-icon">🌍</div>
@@ -170,6 +175,7 @@ bookToC: false
     <h3>Python & Network Automation</h3>
     <p>Python and network automation.</p>
   </a>
+
 
   <a href="/" class="nav-card">
     <div class="nav-card-icon">🎶</div>

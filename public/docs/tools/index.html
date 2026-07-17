@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content=" Networking Toolkit Essential utilities for network engineering, configuration, and diagnostics.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://jony.ch/docs/tools/">
+	<meta property="og:site_name" content="Jonys-Book">
+	<meta property="og:title" content="Network Tools">
+	<meta property="og:description" content="Networking Toolkit Essential utilities for network engineering, configuration, and diagnostics.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="website">
+
+
+	<meta itemprop="name" content="Network Tools">
+	<meta itemprop="description" content="Networking Toolkit Essential utilities for network engineering, configuration, and diagnostics.">
+	<meta itemprop="wordCount" content="41">
+
+<title>Network Tools • Jonys-Book</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="https://jony.ch/docs/tools/">
+<link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
+
+
+  <script defer type="module" src="/en.search.min.5006afb39cbdfb3fe27161cc476dd9817d881d6af79ce5870a40172773e94b01.js" integrity="sha256-UAavs5y9&#43;z/icWHMR23ZgX2IHWr3nOWHCkAXJ3PpSwE=" crossorigin="anonymous"></script>
+<link rel="alternate" type="application/rss+xml" href="https://jony.ch/docs/tools/index.xml" title="Network Tools" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body dir="ltr" class="book-kind-section book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<a class="flex align-center" href="/">
+  <div style="background-color: #CF0A2C; color: white; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 1.2rem; margin-right: 8px;">HW</div>
+  <span>Jonys-Book</span>
+</a>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+    
+      
+      
+        
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/" class="active">
+      Network Tools</a>
+  
+
+            
+  <ul>
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/option43/" class="">
+      Huawei Option 43</a>
+  
+
+          </li>
+        
+      
+    
+      
+      
+
+      
+        
+          <li>
+            
+  
+  
+
+  
+    <a href="/docs/tools/subnet/" class="">
+      IP &amp; Subnet Calculator</a>
+  
+
+          </li>
+        
+      
+    
+  </ul>
+
+          </li>
+        
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Network Tools</h3>
+
+  <label for="toc-control">
+    
+  </label>
+</div>
+
+
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><style>
+  /* 彻底隐藏左侧的整块菜单区域 */
+  aside.book-menu {
+    display: none !important;
+  }
+  /* 让主页内容在屏幕中居中显示 */
+  .book-page {
+    margin: 0 auto !important;
+    max-width: 1000px;
+    padding: 2rem;
+  }
+
+  /* 顶部标题区样式 */
+  .tools-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #eef2f5 0%, #e0eaf5 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+  }
+  
+  .tools-header h1 {
+    color: #102a43;
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.5px;
+  }
+  
+  .tools-header p {
+    color: #486581;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+/* =========================================
+     工具卡片网格布局
+     ========================================= */
+  
+  .tools-grid {
+    display: grid;
+    /* 自动排版，固定最小宽度，让屏幕变窄自动换行 */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2.5rem; 
+  }
+
+  /* 工具卡片样式 - 规整的正方形显示 */
+  a.tool-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    aspect-ratio: 1 / 1; /* 固定长宽比为1:1，呈现规整的正方形 */
+    text-decoration: none !important;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 顶部色彩条点缀 */
+  a.tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: #3b7bbd;
+    transition: all 0.3s ease;
+  }
+
+  /* 鼠标悬浮时的效果 */
+  a.tool-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.1), 0 15px 15px -5px rgba(0, 0, 0, 0.04);
+    border-color: #bcd1eb;
+  }
+  
+  a.tool-card:hover::before {
+    height: 8px;
+    background: #CF0A2C; /* 华为红作为高亮点缀 */
+  }
+
+  /* 卡片里面的图标 */
+  .tool-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    background: #f8fafc;
+    border-radius: 50%;
+    transition: all 0.4s ease;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  a.tool-card:hover .tool-icon {
+    transform: scale(1.15) rotate(5deg);
+    background: #f1f5f9;
+  }
+
+  /* 标题和文字 */
+  .tool-card h3 {
+    color: #1e293b !important;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+  }
+
+  .tool-card p {
+    color: #64748b !important;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    /* 限制最多显示三行 */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+</style>
+<div class="tools-header">
+  <h1>Networking Toolkit</h1>
+  <p>Essential utilities for network engineering, configuration, and diagnostics.</p>
+</div>
+<div class="tools-grid">
+  <!-- Option 43 Tool -->
+  <a href="/docs/tools/option43/" class="tool-card">
+    <div class="tool-icon">🧮</div>
+    <h3>Huawei Option 43</h3>
+    <p>Quickly calculate DHCP Option 43 hexadecimal strings for Huawei WLAN AP deployments.</p>
+  </a>
+  <!-- Subnet Calculator Tool -->
+  <a href="/docs/tools/subnet/" class="tool-card">
+    <div class="tool-icon">🌐</div>
+    <h3>IP & Subnet</h3>
+    <p>Calculate network addresses, subnets, usable hosts, and convert wildcard masks easily.</p>
+  </a>
+</div>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/python/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Python Technology</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/tools/option43/" class="flex align-center">
+        <span>Huawei Option 43</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
