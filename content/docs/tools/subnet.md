@@ -32,7 +32,7 @@ This tool provides network address calculations, subnet mask conversions, and wi
   </div>
 
   <!-- Feature 3 -->
-  <div>
+  <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #ccc;">
     <h3 style="margin-top: 0;">3. Wildcard Mask Calculator</h3>
     <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Subnet Mask (e.g., 255.255.255.0):</label>
     <div style="display: flex; gap: 1rem;">
@@ -40,6 +40,17 @@ This tool provides network address calculations, subnet mask conversions, and wi
       <button onclick="calcFeature3()" style="background-color: #CF0A2C; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold;">Calculate</button>
     </div>
     <div id="result3" style="margin-top: 1rem; padding: 1rem; background-color: #fff; border: 1px dashed #ccc; border-radius: 4px; font-family: monospace; white-space: pre-wrap; min-height: 1.5rem; display: none;"></div>
+  </div>
+
+  <!-- Feature 4 -->
+  <div>
+    <h3 style="margin-top: 0;">4. IP Range to Subnets (CIDR)</h3>
+    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">IP Range (e.g., 192.168.1.0-192.168.1.65):</label>
+    <div style="display: flex; gap: 1rem;">
+      <input type="text" id="ipInput4" placeholder="192.168.1.0-192.168.1.65" style="flex: 1; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" />
+      <button onclick="calcFeature4()" style="background-color: #CF0A2C; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold;">Calculate</button>
+    </div>
+    <div id="result4" style="margin-top: 1rem; padding: 1rem; background-color: #fff; border: 1px dashed #ccc; border-radius: 4px; font-family: monospace; white-space: pre-wrap; min-height: 1.5rem; display: none;"></div>
   </div>
 
 </div>
@@ -118,7 +129,8 @@ function calcFeature1() {
         `Subnet Mask        : ${long2ip(maskLong)}`,
         `Usable Hosts       : ${usableCount}`,
         `Network (Binary)   : ${long2binary(networkLong)}`,
-        `Broadcast (Binary) : ${long2binary(broadcastLong)}`
+        `Broadcast (Binary) : ${long2binary(broadcastLong)}`,
+        `Mask (Binary)      : ${long2binary(maskLong)}`
     ].join('\n');
 
     resultDiv.innerText = output;
@@ -195,5 +207,69 @@ function calcFeature3() {
     ].join('\n');
 
     resultDiv.innerText = output;
+}
+
+function rangeToSubnets(startIpLong, endIpLong) {
+    let subnets = [];
+    let current = startIpLong;
+    while (current <= endIpLong) {
+        let maxPrefix = 32;
+        while (maxPrefix > 0) {
+            let pLen = maxPrefix - 1;
+            let mask = maskLen2long(pLen);
+            let network = (current & mask) >>> 0;
+            let broadcast = (network | (~mask)) >>> 0;
+            // The subnet must start exactly at 'current', and must end within the range
+            if (network === current && broadcast <= endIpLong) {
+                maxPrefix = pLen;
+            } else {
+                break;
+            }
+        }
+        subnets.push(long2ip(current) + '/' + maxPrefix);
+        
+        // Move current to the next IP after the chosen subnet
+        let mask = maskLen2long(maxPrefix);
+        let broadcast = (current | (~mask)) >>> 0;
+        
+        // Prevent infinite loop on 255.255.255.255
+        if (broadcast === 4294967295) {
+            break;
+        }
+        current = broadcast + 1;
+    }
+    return subnets;
+}
+
+function calcFeature4() {
+    const input = document.getElementById('ipInput4').value.trim();
+    const resultDiv = document.getElementById('result4');
+    resultDiv.style.display = 'block';
+
+    const parts = input.split('-');
+    if (parts.length !== 2) {
+        resultDiv.innerText = 'Error: Please enter a valid IP range separated by a hyphen (e.g., 192.168.1.0-192.168.1.65)';
+        return;
+    }
+
+    const startIp = parts[0].trim();
+    const endIp = parts[1].trim();
+
+    if (!isValidIP(startIp) || !isValidIP(endIp)) {
+        resultDiv.innerText = 'Error: Invalid IP address format in range';
+        return;
+    }
+
+    const startLong = ip2long(startIp);
+    const endLong = ip2long(endIp);
+
+    if (startLong > endLong) {
+        resultDiv.innerText = 'Error: Start IP must be less than or equal to End IP';
+        return;
+    }
+
+    const subnets = rangeToSubnets(startLong, endLong);
+    
+    resultDiv.innerText = subnets.join(', ');
 }
 </script>
