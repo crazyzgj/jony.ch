@@ -1,6 +1,7 @@
 ---
 title: "Batch Config Generator"
 weight: 5
+bookToC: false
 ---
 
 # Batch Config Generator
@@ -113,7 +114,7 @@ input[type="number"] {
             <h3 style="margin: 0;">4. Output</h3>
             <button class="btn-outline" id="copyBtn" onclick="copyOutput()">Copy to Clipboard</button>
         </div>
-        <textarea id="outputResult" rows="20" readonly style="background-color: #fff;"></textarea>
+        <textarea id="outputResult" rows="40"></textarea>
     </div>
 </div>
 

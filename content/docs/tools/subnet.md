@@ -1,6 +1,7 @@
 ---
 title: "IP & Subnet Calculator"
 weight: 2
+bookToC: false
 ---
 
 # IP & Subnet Calculator

@@ -1,6 +1,7 @@
 ---
 title: "Huawei Option 43"
 weight: 1
+bookToC: false
 ---
 
 # Huawei Option 43 Online Calculator
