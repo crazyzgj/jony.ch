@@ -11,7 +11,7 @@ bookToC: false
   }
   .book-page {
     margin: 0 auto !important;
-    max-width: 1200px !important;
+    max-width: 1600px !important;
     padding: 2rem !important;
   }
 
@@ -221,10 +221,10 @@ bookToC: false
   }
 
   .nav-card-icon {
-    font-size: 2.8rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.9rem;
+    margin-bottom: 0.5rem;
     display: inline-block;
-    padding: 1rem 1.2rem;
+    padding: 0.4rem 0.6rem;
     background: #f4f7fb;
     border-radius: 16px;
     align-self: flex-start;

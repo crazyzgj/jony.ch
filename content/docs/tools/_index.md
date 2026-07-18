@@ -12,7 +12,7 @@ bookToC: false
   /* 让主页内容在屏幕中居中显示 */
   .book-page {
     margin: 0 auto !important;
-    max-width: 1000px;
+    max-width: 1600px;
     padding: 2rem;
   }
 
