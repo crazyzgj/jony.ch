@@ -1,0 +1,59 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="task">
+<meta name="DC.Title" content="Collecting Error Packet Statistics on Peer-Link Member Interfaces">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0035.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0036.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0037.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_TASK_0000001286347034">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>Collecting Error Packet Statistics on Peer-Link Member Interfaces</title>
+</head>
+<body><a name="EN-US_TASK_0000001286347034"></a><a name="EN-US_TASK_0000001286347034"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Collecting Error Packet Statistics on Peer-Link Member Interfaces</h1>
+<div class="taskbody"><div class="context"><a name="EN-US_TASK_0000001286347034__1.3.1"></a><a name="1.3.1"></a><h4 class="sectiontitle">Context</h4>
+<div class="p"><p>Packets may be incorrectly changed when being forwarded by a peer-link member interface. It is expected that peer-link member interfaces in an M-LAG can periodically send detection packets to each other to check whether the packets received by the remote end are incorrectly changed. Therefore, a mechanism is proposed to detect packet changes on peer-link member interfaces.</p>
+<div class="p">This mechanism is described as follows:<ul><li>When DFS group pairing is successful and peer-link member interfaces are Up, peer-link member interfaces periodically send detection packets.</li><li>After receiving the detection packets, a remote peer-link member interface checks whether the packets are changed. If the number of changed packets increases, an hwPacketChange alarm is generated.</li><li>If the number of changed packets does not increase within 5 minutes, the alarm on the interface is cleared.</li><li>This alarm on a peer-link member interface is also cleared when DFS group pairing fails, the peer-link configuration is deleted, the peer-link member interface goes Down, or the peer-link member interface is removed from the peer-link interface.</li></ul>
+</div>
+</div></div>
+<div class="steps"><a name="EN-US_TASK_0000001286347034__1.3.2"></a><a name="1.3.2"></a><h4 class="sectiontitle">Procedure</h4>
+<ol><li><span>Run the <b><span class="cmdname">display fei m-lag synchronization packet-change statistics</span></b> [ <b><span class="cmdname">slot</span></b> <i><span class="varname">slot-id</span></i> ] command to check statistics about error packet detection packets on peer-link member interfaces of the devices paired into a DFS group on the FEI side.</span></li></ol></div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0035.html">Maintaining M-LAG
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0036.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_cfg_m-lag_0037.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+</body>
+</html>

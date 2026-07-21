@@ -1,0 +1,378 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="concept">
+<meta name="DC.Title" content="Licensing Requirements and Limitations for M-LAG">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0001.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0005.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0020.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_CONCEPT_0231872964">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<script type="text/javascript" src="../public_sys-resources/customQuery.js"></script>
+<script type="text/javascript" src="../public_sys-resources/colfilter.js"></script>
+
+<script type="text/javascript">
+	var isFilterShow = true;
+	onPageLoad(function () {
+		$$(".filterBtn").each(function (i) {
+			init($$(this));
+			$$(this).click(function () {
+				if(null != $$(this).next()[0] && $$(this).next()[0].className == "filterListBox"){
+					isFilterShow = false;
+				}else{
+					isFilterShow = true;
+				}
+				showfilterListBox($$(this),isFilterShow,"OK","Cancel","Select All");
+				if(null != $$(this).next()[0] && $$(this).next()[0].className == "filterListBox"){
+					$$(this).addClass("disabled").next().show("normal");
+				}
+				else{
+					$$(this).removeClass("disabled").next().hide("normal");
+				}
+			})
+	})
+})
+</script>
+<script type="text/javascript" src="../public_sys-resources/colsort.js"></script>
+
+<script type="text/javascript" src="../public_sys-resources/RowOrColfreezeSupport.js"></script>
+
+<script type="text/javascript">
+	onPageLoad(function () {
+		if (document.documentElement.clientWidth < '980'){
+			$$("table[rowfreeze='yes']").removeAttr("rowfreeze");}
+		$$("table[rowfreeze='yes']").rowfreeze();
+		$$("table[colfreeze='yes']").colfreeze();
+ });
+</script>
+<title>Licensing Requirements and Limitations for M-LAG</title>
+</head>
+<body><a name="EN-US_CONCEPT_0231872964"></a><a name="EN-US_CONCEPT_0231872964"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Licensing Requirements and Limitations for M-LAG</h1>
+<div><div class="section"><h4 class="sectiontitle">Involved Network Elements</h4><p>Other network elements are not required.</p>
+</div>
+<div class="section"><h4 class="sectiontitle">License Requirements</h4><p>M-LAG is a basic function of a switch and is controlled by the license for basic software functions. The license for basic software functions has been installed and activated on the device before delivery. You do not need to manually activate it. <span>M-LAG upgrade in maintenance mode is controlled by a license <span> (CE-LIC-LU)</span>. By default, M-LAG upgrade in maintenance mode is disabled on newly purchased <span class="keyword">CloudEngine 9800, 8800, 6800, and 5800 series switches</span>. To use M-LAG upgrade in maintenance mode, apply for and purchase the license from the device supplier.</span></p>
+</div>
+<div class="section"><h4 class="sectiontitle">Version Requirements</h4>
+<div class="tableBorder"><table cellpadding="4" cellspacing="0" summary="" class="dataTable J_table" data-sorttable="true" rowfreeze="yes" frame="border" border="1" rules="all"><caption><b>Table 1 </b>Products and minimum version supporting M-LAG</caption><thead align="left"><tr liSelected="liSelected"><th align="left" class="por" valign="top" width="41.949999999999996%" id="mcps1.3.3.2.2.3.1.1" data-sorttable-type="string" liSelected="liSelected"><span class="filterTh"></span><div class="filterThDiv"><span style="margin-right:15px;">Product</span><span class="filterBtn" index="1"></span>
+</div></th>
+<th align="left" class="por" valign="top" width="58.050000000000004%" id="mcps1.3.3.2.2.3.1.2" data-sorttable-type="string" liSelected="liSelected"><span class="filterTh"></span><div class="filterThDiv"><span style="margin-right:15px;">Minimum Version Required</span><span class="filterBtn" index="2"></span>
+</div></th>
+</tr>
+</thead>
+<tbody><tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE9860EI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R020C00</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE8868EI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R005C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE8861EI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R005C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE8850-32CQ-EI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R002C50</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE8850-64CQ-EI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R005C00</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p><span>CE6881/CE6820/CE6863</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R005C20</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p><span><span>CE6863E</span></span></p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R021C00</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6881K</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R019C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6881E</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R019C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6863K</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R019C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6856HI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R002C50</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6857EI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R005C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p><span>CE6857E</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R020C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p><span><span>CE6857F</span></span></p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R021C00</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6857S</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R024C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6865EI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R005C00</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p><span>CE6865E</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R021C00</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p><span><span>CE8850E-32CQ-EI</span></span></p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R021C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6870-48S6CQ-EI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R001C00</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6870-48T6CQ-EI</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R002C50</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE6870-48S6CQ-EI-A</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R022C00</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE5881</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R020C00</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p>CE5855E</p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R020C10</p>
+</td>
+</tr>
+<tr liSelected="liSelected"><td class="cellrowborder" valign="top" width="41.949999999999996%" headers="mcps1.3.3.2.2.3.1.1 "><p><span>CE5855F</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="58.050000000000004%" headers="mcps1.3.3.2.2.3.1.2 "><p>V200R021C00</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p id="EN-US_CONCEPT_0231872964__en-us_task_0138780877_p13587821192416">For details about the mapping between software versions and switch models, see the <a href="https://info.support.huawei.com/info-finder/search-center/en/enterprise/switch/cloudengine-58-68-78-88-98-pid-252837181/hardwarecenter" target="_blank" rel="noopener noreferrer">Hardware Query Tool</a>.</p>
+<div class="p" id="EN-US_CONCEPT_0231872964__en-us_task_0138780877_p762117314593">Software version evolution:<ul id="EN-US_CONCEPT_0231872964__en-us_task_0138780877_ul1962133114595"><li id="EN-US_CONCEPT_0231872964__en-us_task_0138780877_li11621203135913">For switches excluding the CE9860EI, CE6881, CE6881E, CE6881K, CE6863, CE6863K, CE6820, CE5881<p id="EN-US_CONCEPT_0231872964__en-us_task_0138780877_p1962103117599"><a name="EN-US_CONCEPT_0231872964__en-us_task_0138780877_li11621203135913"></a><a name="en-us_task_0138780877_li11621203135913"></a>V100R001C00 -&gt; V100R002C00 -&gt; V100R003C00 -&gt; V100R003C10 -&gt; V100R005C00 -&gt; V100R005C10 -&gt; V100R006C00 -&gt; V200R001C00 -&gt; V200R002C50 -&gt; V200R003C00 -&gt; V200R005C00 -&gt; V200R005C10 -&gt; V200R019C00 -&gt; V200R019C10 -&gt; V200R020C10 -&gt; V200R021C00 -&gt; V200R021C10 -&gt; V200R022C00 -&gt; V200R022C10 -&gt; V200R023C00 -&gt; V200R023C10 -&gt; V200R024C00 -&gt; V200R024C10</p>
+</li><li id="EN-US_CONCEPT_0231872964__en-us_task_0138780877_li662253116596">For the CE9860EI, CE6881, CE6881E, CE6881K, CE6863, CE6863K, CE6820, CE5881<p id="EN-US_CONCEPT_0231872964__en-us_task_0138780877_p4622163110599"><a name="EN-US_CONCEPT_0231872964__en-us_task_0138780877_li662253116596"></a><a name="en-us_task_0138780877_li662253116596"></a>V200R005C20 -&gt; V200R019C10 -&gt; V200R020C00 -&gt; V200R020C10 -&gt; V200R021C00 -&gt; V200R021C10 -&gt; V200R022C00 -&gt; V200R022C10 -&gt; V200R023C00 -&gt; V200R023C10 -&gt; V200R024C00 -&gt; V200R024C10</p>
+</li></ul>
+</div>
+</div></div>
+</div>
+<div class="section"><h4 class="sectiontitle">Feature Dependencies and Limitations</h4><div class="p"><strong>Limitations on M-LAG Devices</strong><ul><li>During M-LAG setup, you must use optical or copper modules that are certified for Huawei data center switches. If you want to use high-speed cables or active optical cables (AOCs), you must purchase them from Huawei. Optical or copper modules that are not certified for Huawei data center switches, and cables not purchased from Huawei cannot ensure transmission reliability and may affect service stability. Huawei is not liable for any problem caused by the use of optical or copper modules that are not certified for Huawei data center switches, or cables not purchased from Huawei, and will not fix such problems.</li><li>The two devices that establish an M-LAG must be of the same type. Both devices must be <span class="keyword">CloudEngine 9800, 8800, 6800, and 5800 series switches</span>. It is recommended that both devices use the same model and version.</li><li>A CE6863-48S6CQ-K switch running V200R021C10 or a later version cannot establish an M-LAG with a CE6863-48S6CQ-K switch running a version earlier than V200R021C10. To establish an M-LAG, upgrade the system software to V200R021C10 or a later version.</li></ul>
+</div>
+<div class="p"><strong>Limitations on Configuring the Root Bridge and V-STP</strong><ul><li>The two devices that establish an M-LAG need to be configured as root bridges with bridge IDs or be configured with V-STP. They are virtualized into one device for STP calculation to prevent loops.</li><li>When an M-LAG is configured in root bridge mode, the two devices in the M-LAG must be configured with the same bridge ID and the highest root priority to ensure that they are root nodes.</li><li>In an M-LAG configured in root bridge mode, STP multi-process is not supported. In an M-LAG configured in V-STP mode, MSTP mode is not supported and STP multi-process is supported.</li><li>In a V-STP scenario, you are advised to configure M-LAG and connect cables in the following sequence:<ol><li>Configure V-STP.</li><li>Configure a DFS group and peer-link interfaces.</li><li>Use a cable to connect peer-link interfaces of M-LAG master and backup devices.</li><li>Configure M-LAG member interfaces and use cables to connect M-LAG master and backup devices and the user-side host or switching device.</li></ol>
+</li></ul>
+</div>
+<div class="p"><strong>Limitations on Configuring V-VBST</strong><ul><li>When an M-LAG is configured in V-VBST mode, STP multi-process is not supported.</li></ul>
+<ul><li>In an M-LAG configured in V-VBST mode, the STP status of M-LAG member interfaces on the two devices may be different during VBST configuration or M-LAG member interface fault recovery. However, the status inconsistency does not affect functions and does not cause loops.</li><li>In an M-LAG configured in V-VBST mode, an M-LAG active/standby switchover causes VBST reconvergence.</li><li>After VBST is enabled, the settings of the <strong>stp vlan cost</strong>, <strong>stp vlan priority</strong>, and <strong>stp point-to-point</strong> commands on M-LAG interfaces cannot be changed to non-default values.</li><li>M-LAG and VBST cannot be configured together in VXLAN scenarios.</li></ul>
+</div>
+<div class="p"><strong>Limitations on Configuring M-LAG Consistency Check</strong><ul><li>To ensure that traffic is forwarded normally, the configurations of M-LAG interfaces with the same M-LAG ID on the master and backup devices must be consistent.</li><li><p>If the M-LAG consistency check mode is set to strict mode and the system detects that type 1 configurations of the two M-LAG devices are inconsistent, contact the device administrator to immediately adjust the configurations and not restart the devices. If type 1 configurations are inconsistent, member interfaces on the M-LAG backup device enter the Error-Down state and the alarm about type 1 configuration inconsistency is generated.</p>
+<p>If the administrator does not adjust the configurations and restarts the M-LAG master device, interfaces on the M-LAG backup device may enter the Error-Down state because of type 1 configuration inconsistency during re-negotiation between M-LAG devices when the master device is recovering. Due to the delay after which the M-LAG member interface on the M-LAG master device goes Up, both the M-LAG master and backup devices fail to forward traffic, and services are interrupted.</p>
+<p>If M-LAG configuration consistency check is disabled and type 1 and type 2 configurations of M-LAG master and backup devices are inconsistent, traffic forwarding may be abnormal. You are advised to manually adjust configurations of M-LAG master and backup devices to ensure that they have consistent type 1 and type 2 configurations, and enable M-LAG configuration consistency check.</p>
+</li></ul>
+</div>
+<div class="p"><strong>Limitations on Configuring Dual-Active Gateways</strong><ul><li>When the two devices that constitute an M-LAG function as gateways and servers are single-homed or dual-homed to the two devices, pay attention to the following points:<ul><li>(Recommended) Select the access mode in which the same IP and MAC addresses are configured for VLANIF/VBDIF interfaces. If the same IP and MAC addresses are configured for VLANIF/VBDIF interfaces, the conflict alarm is not generated.</li><li>If M-LAG dual-active gateways need to be deployed in the same data center, you are advised to deploy them by configuring IP addresses and virtual MAC addresses for VLANIF/VBDIF interfaces, not by configuring VRRP. In V200R021C10 and later versions, if M-LAG dual-active gateways need to be deployed in the same data center, you are advised to deploy them by configuring IP addresses and virtual MAC addresses for VLANIF/VBDIF interfaces, not by configuring VRRP6.</li><li>If M-LAG dual-active gateways are configured in VRRP mode, the gateways must be configured with the same MAC address. Otherwise, ARP entries cannot be learned and packet loss persists.</li></ul>
+</li><li>When M-LAG and VRRP are deployed across data centers that are configured as active and standby data centers, the M-LAG gateways in the same data center must be configured with the same IP address and virtual MAC address, but the IP addresses and virtual MAC addresses of devices in the active and standby data centers cannot be the same. In V200R021C10 and later versions, when M-LAG and VRRP6 are deployed across data centers that are configured as active and standby data centers, the M-LAG gateways in the same data center must be configured with the same IPv6 address and virtual MAC address, but the IPv6 addresses and virtual MAC addresses of devices in the active and standby data centers cannot be the same.</li><li>For M-LAG dual-active gateways, the configurations of VLANIF/VBDIF interfaces on both devices must be the same. In an M-LAG single-homing scenario where enhanced M-LAG Layer 3 forwarding is enabled, if VLANIF/VBDIF interfaces on M-LAG member devices are configured with different IP addresses, no virtual MAC address can be configured for the VLANIF/VBDIF interfaces.</li><li>In V200R005C20 and later versions, for the CE6820, CE6881<span>, CE5881</span><span>, CE6881K</span><span>, CE6863K</span><span>, CE6881E</span><span>, CE6863E</span>, and CE6863, the enhanced M-LAG Layer 3 forwarding function takes effect only in scenarios where virtual MAC addresses are statically configured for M-LAG dual-active gateways.</li><li>M-LAG dual-active gateways must be configured with the same IPv4/IPv6 address and the same interface MAC address.</li><li>If the <strong>shutdown</strong> command is run on a Layer 2 sub-interface, VLANIF interface, or VBDIF interface of an M-LAG device, traffic forwarding may be abnormal.</li></ul>
+</div>
+<div class="p"><strong>Limitations on Configuring DAD</strong><ul><li>When configuring an independent dual-active detection (DAD) link, you are advised to use main interfaces to establish the DAD link. If a VLANIF interface is used, ensure that the peer-link interface does not allow packets from the VLAN to pass through. Otherwise, a loop or MAC address flapping occurs.</li><li>The M-LAG performs DAD arbitration only after detecting that the peer-link interfaces at both ends are Down.<ul><li>The scenario where an Eth-Trunk member interface is removed or goes offline is not included.</li><li>If the protocol status of one end is Down and the physical status of the other end is Down, DAD can be triggered only after the physical status of both ends is Down.</li></ul>
+</li><li>When enabling enhanced DAD for double-fault failures in an M-LAG scenario, you need to configure the <strong>source ip</strong> command in the DFS group view and add the <strong>peer</strong> <em>peer-ip-address</em> parameter. Otherwise, if the peer-link fault persists after the device is restarted and the device fault is rectified, two master devices may exist in the M-LAG.</li></ul>
+</div>
+<div class="p"><strong>Limitations in Fault Scenarios</strong><ul><li>When M-LAG faults occur, the convergence performance of Layer 3 traffic is in direct proportion to the ARP entries learned on the switch and interface. If there are many ARP entries, the convergence performance is low.</li><li>To prevent STP flapping caused by device restart and peer-link faults and ensure switchback performance, you are advised to set the delay in reporting the Up event to be at least 30s on the M-LAG interface, peer-link interface, and other service interfaces. By default, the delay for an M-LAG interface to report the Up state is 240s.</li><li>After a device restarts or a card resets, the physical status of an interface changes to Up, but the status of the upper-layer protocol module does not meet forwarding requirements, resulting in packet loss. To ensure switchback performance, the default delay for an M-LAG interface to report the Up state is 240s. If a delay after which the Layer 3 protocol status changes to Up is configured on a VLANIF interface, ensure that the delay for an M-LAG member interface to report the Up event is longer than the delay configured on the VLANIF interface. Otherwise, triggering of learning for ND entries that fail to be synchronized depends on ND Miss messages.</li><li>A static MAC address can be configured for an M-LAG member interface. When the M-LAG member interface fails, the MAC address of the faulty M-LAG member interface is changed to that of a peer-link interface in corresponding entries.</li><li><span>You can enable enhanced M-LAG Layer 3 forwarding on switches<span> excluding the <span>CE5855E<span>, CE5855F,</span> and </span>CE9860EI</span> to apply for backup FRR resources for dynamic and static ARP entries with M-LAG member interfaces as outbound interfaces. The outbound interfaces can be changed to peer-link interfaces to establish active and standby paths for traffic forwarding. However, FRR resources applied for static ARP entries are not released when the M-LAG member interface goes Down and the corresponding VLANIF interface is still Up. As a result, the FRR resource consumption increases.</span></li><li><span>You can enable enhanced M-LAG Layer 3 forwarding on switches<span> excluding the CE9860EI, CE6881, CE5881, CE6881K, CE6881E<span>, CE6863E</span>, CE6863K, CE6820, and CE6863</span> to apply for backup FRR resources for dynamic and static ND entries with M-LAG member interfaces as outbound interfaces. The outbound interfaces can be changed to peer-link interfaces to establish active and standby paths for traffic forwarding. However, FRR resources applied for static ND entries are not released when the M-LAG member interface goes Down and the corresponding VLANIF interface is still Up. As a result, the FRR resource consumption increases.</span></li><li><p>If an access device is dual-homed to M-LAG master and backup devices through Layer 2 sub-interfaces and one Layer 2 sub-interface is Down, north-south traffic cannot be forwarded through the peer-link because of the M-LAG unidirectional isolation mechanism, resulting in packet loss. In the M-LAG unidirectional isolation mechanism, if a device is dual-homed to the M-LAG through main interfaces, all packets excluding Layer 3 known unicast packets from a peer-link interface to an M-LAG member interface are isolated.</p>
+</li><li>After logical interfaces are configured to change to Error-Down state when the peer-link fails but the DAD heartbeat status is normal in an M-LAG, if a faulty peer-link interface in the M-LAG recovers, the devices restore VLANIF interfaces, VBDIF interfaces, and loopback interfaces to Up state 6 seconds after DFS group pairing succeeds to ensure that ARP entry synchronization on a large number of VLANIF interfaces is normal. If a delay after which the Layer 3 protocol status of the interface changes to Up is configured, the delay after which VLANIF interfaces, VBDIF interfaces, and loopback interfaces go Up is the configured delay plus 6 seconds.</li></ul>
+</div>
+<p><strong>Limitations on Interconnection with an M-LAG</strong></p>
+<div class="p" id="EN-US_CONCEPT_0231872964__p1733414469449">When devices in an M-LAG are connected to third-party firewalls enabled with the sticky load balancing function and network attached storage (NAS) devices or load balancers enabled with the Auto Last Hop function, these devices do not learn the gateway MAC address based on the normal ARP request logic. Instead, they use the source MAC address of the first packet from the gateway as the gateway MAC address. Therefore, if an M-LAG device fails or restarts when the two M-LAG devices use their own system MAC addresses as the source MAC addresses to encapsulate packets, services are interrupted for several minutes. You are advised to disable the sticky load balancing function of the firewalls and the Auto Last Hop function of the NAS devices or load balancers in the preceding scenario.<ul id="EN-US_CONCEPT_0231872964__ul12264192154512"><li id="EN-US_CONCEPT_0231872964__li2232353144319">For the CE6870EI, the any unicast MAC address (non-virtual MAC address) cannot be configured on an interface. If the functions cannot be disabled, configure the same any unicast MAC address (non-virtual MAC address) on the VLANIF/VBDIF gateway interfaces connecting the two M-LAG devices to the firewalls, NAS devices, or load balancers.</li><li id="EN-US_CONCEPT_0231872964__li128321748132013">For other models, if the functions cannot be disabled, you are advised to configure M-LAG devices as dual-active gateways using the same IP address and the same virtual MAC address.</li></ul>
+</div>
+<p><strong>Configuration Notes When M-LAG Is Deployed with Other Services</strong></p>
+<p>When M-LAG needs to be configured with multiple other services, some services may fail to be delivered because of insufficient ACL resources. For services that can be configured together with M-LAG, see "Using CSS/M-LAG with Other Services" in <a href="https://support.huawei.com/enterprise/en/doc/EDOC1000150510?idPath=24030814|21782165|21782236|252837173" target="_blank" rel="noopener noreferrer">CloudEngine 12800, 12800E, 8800, 7800, 6800, and 5800 Series Switches ACL Technical Topics</a>.</p>
+<p>The support for service features by M-LAG and the device is similar, but there are differences which are described in <a href="#EN-US_CONCEPT_0231872964__table_05">Table 2</a>.</p>
+<div class="p">For models that do not support a feature, the commands of this feature cannot be configured on these models. Therefore, the corresponding constraints in the following table do not apply to these models.
+<div class="tableBorder"><a name="EN-US_CONCEPT_0231872964__table_05"></a><a name="table_05"></a><table cellpadding="4" cellspacing="0" summary="" id="EN-US_CONCEPT_0231872964__table_05" frame="border" border="1" rules="all"><caption><b>Table 2 </b>Constraints when M-LAG is used with other features</caption><thead align="left"><tr><th align="left" class="cellrowborder" valign="top" width="26.08%" id="mcps1.3.4.14.1.2.3.1.1" liSelected="liSelected"><p>Feature</p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="73.92%" id="mcps1.3.4.14.1.2.3.1.2" liSelected="liSelected"><p>Configuration Note</p>
+</th>
+</tr>
+</thead>
+<tbody><tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>Stack</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>Switches can set up a stack, and the stack then can be used to establish an M-LAG as an independent device.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>VBST</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>In versions earlier than V200R023C00, M-LAG and VBST are mutually exclusive and cannot be configured together. In V200R023C00 and later versions, M-LAG and VBST can be configured together.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>QinQ and VLAN mapping</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>When VLAN mapping or VLAN stacking is used to access an M-LAG, Layer 3 services, including ARP, ND, and ICMP, are not supported.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>CFM</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>M-LAG and CFM cannot be configured together.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>GVRP</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>GVRP and M-LAG cannot be configured on an Eth-Trunk together.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>DHCP</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><ul><li>The two devices that constitute an M-LAG cannot be configured with DHCP snooping.</li></ul>
+<ul><li>The DHCP relay function must be configured on the two devices that constitute an M-LAG.</li><li>The DHCP server function must be configured on the two devices that constitute an M-LAG, and addresses in the address pools of the two devices cannot overlap.</li></ul>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>ARP</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p><span>On the <span><span><span>CE8868EI</span></span>, <span><span>CE8861EI</span></span>, CE8850EI</span><span>, CE6865EI<span>, CE6865E<span>, CE8850E-32CQ-EI</span></span></span>, <span>CE6857EI<span>, CE6857E<span>, CE6857S, CE6857F</span></span></span>, and CE6856HI, the large-arp mode or UFT hybrid mode where ARP entries are specified is mutually exclusive with the <strong>m-lag forward layer-3 ipv4 enhance enable</strong> command.</span></p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>IP unicast routing</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><ul><li>In V200R020C00 and later versions, for switches except the <span>CE6881<span>, CE5881</span><span>, CE6881K</span><span>, CE6863E</span><span>, CE6863K</span><span>, CE6881E</span></span>, CE6820, and CE6863, M-LAG member devices and connected devices cannot establish routing neighbor relationships through M-LAG member interfaces. In V200R021C00 and later versions, for only the CE5855E<span>, CE5855F,</span> and CE9860EI, M-LAG member devices and connected devices cannot establish routing neighbor relationships through M-LAG member interfaces.</li><li>If two member devices in an M-LAG need to establish a neighbor relationship, you are advised to manually configure router IDs on the two M-LAG devices. If the devices automatically obtain router IDs, the neighbor relationship may fail to be established due to a router ID conflict.</li><li>M-LAG member devices function as dual-active gateways. An independent link between M-LAG member devices is used as the bypass link and OSPF is configured. M-LAG member devices import the direct route of a downstream server connected to the M-LAG and advertise the route to each other. IP FRR is configured, and the direct route is specified as the primary link and the dynamic OSPF route is specified as the backup link. When a network-side device sends traffic to the server, the traffic is transmitted along the backup link on the M-LAG gateways because there is no ARP entry for the primary link. As a result, a loop occurs between the M-LAG member devices and the network-side device cannot access the server. In this case, you can run the <b><span class="cmdname">ip ip-prefix</span></b> <i><span class="varname">ip-prefix-name</span></i> [ <strong><span>index</span></strong> <i><span class="varname">index-number</span></i> ] { <strong><span>permit</span></strong> | <strong><span>deny</span></strong> } <i><span class="varname">ipv4-address</span></i> <i><span class="varname">mask-length</span></i> <span>[ <strong><span>match-network</span></strong> ] </span>[ <strong><span>greater-equal</span></strong> <i><span class="varname">greater-equal-value</span></i> ] [ <strong><span>less-equal</span></strong> <i><span class="varname">less-equal-value</span></i> ] command on the M-LAG gateways to configure an OSPF routing policy to permit all routes excluding the direct route.</li><li>When a routing neighbor relationship is established between M-LAG member devices for route advertisement, they need to filter out the same local network segment routes before advertising routes to the peer M-LAG device, preventing routing loops.</li></ul>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>IPv4 multicast</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>An M-LAG consisting of standalone switches and stacks supports IPv4 Layer 3 multicast for switches except the CE9860EI. Pay attention to the following points:</p>
+<ul><li>In addition to the peer-link, there must be a direct Layer 3 link between the M-LAG master and backup devices. STP must be disabled on the interfaces at both ends of the Layer 3 link.</li><li>The M-LAG master and backup devices must have the same multicast configuration.</li><li>On the M-LAG master and backup devices, PIM-SM and IGMP must be enabled on all the VLANIF interfaces that need to run Layer 3 multicast services, and IGMP snooping must be enabled in the corresponding VLANs.</li><li>The PIM silent function must be configured on the user-side interfaces of the M-LAG master and backup devices.</li><li>If a Layer 3 link is established between VLANIF interfaces of the M-LAG master and backup devices, enable the PIM protocol on the VLANIF interfaces, and the corresponding VLAN cannot be allowed on peer-link interfaces.</li><li>If the peer-link is selected as the optimal link to the RP or multicast source by the unicast routing protocol, multicast traffic with the peer-link interface as the outbound interface may fail to be forwarded. To prevent this problem, ensure that the Layer 3 link between the M-LAG master and backup devices has a route cost less than or equal to the route cost of the peer-link, so that the Layer 3 link is selected as the optimal route by the unicast routing protocol.</li><li id="EN-US_CONCEPT_0231872964__li520363295518">To ensure switchback performance in a scenario where the maximum number of multicast groups are dual-homed to an M-LAG and a faulty direct Layer 3 uplink recovers, disable STP on the interfaces at both ends of the link and run the <strong id="EN-US_CONCEPT_0231872964__b394755952101523">holdtime join-prune</strong> command to set the holdtime of Join/Prune messages to 350s.</li></ul>
+<p>On the network when the Receiver is dual-homed to an M-LAG:</p>
+<ul><li>Both the master and backup M-LAG member interfaces forward multicast traffic to the Receiver, implementing load sharing. The M-LAG master and backup devices share load according to the following rule: If the last decimal number of the multicast group address is an odd number, such as the address 225.1.1.1, the master M-LAG member interface forwards the multicast traffic. If the last decimal number of the multicast group address is an even number, such as the address 225.1.1.2, the backup M-LAG member interface forwards the multicast traffic.</li><li>If the M-LAG master and backup devices run different versions, the multicast traffic forwarding rule is subject to the device running the earlier version.</li></ul>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>IPv6 multicast</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>An M-LAG consisting of <span>standalone switches or stacks</span> supports IPv6 Layer 3 multicast<span> for the CE6870EI</span><span>, and does not support IPv6 Layer 3 multicast for other models</span><span> in V200R003C00 and later versions</span>. In V200R021C00 and later versions, for the CE8868EI, CE8861EI, CE8850EI, CE8850E-32CQ-EI, CE6870EI, CE6865EI, CE6865E, CE6857EI, CE6857E, CE6857S, CE6857F, and CE6856HI, an M-LAG consisting of standalone switches or stacks supports IPv6 Layer 3 multicast. In V200R022C00 and later versions, for the CE5881, CE6820, CE6881, CE6881E, CE6881K, CE6863, CE6863E, and CE6863K, an M-LAG consisting of standalone switches or stacks supports IPv6 Layer 3 multicast. Pay attention to the following points:</p>
+<ul><li>In addition to the peer-link, there must be a direct Layer 3 link between the M-LAG master and backup devices. STP must be disabled on the interfaces at both ends of the Layer 3 link.</li><li>The M-LAG master and backup devices must have the same multicast configuration.</li><li>On the M-LAG master and backup devices, PIM-SM (IPv6) and MLD must be enabled on all the VLANIF interfaces that need to run Layer 3 multicast services, and MLD snooping must be enabled in the corresponding VLANs.</li><li>The PIM silent (IPv6) function must be configured on the user-side interfaces of the M-LAG master and backup devices.</li><li>If a Layer 3 link is established between VLANIF interfaces of the M-LAG master and backup devices, enable the PIM (IPv6) protocol on the VLANIF interfaces, and the corresponding VLAN cannot be allowed on peer-link interfaces.</li><li>If the peer-link is selected as the optimal link to the RP or multicast source by the unicast routing protocol, multicast traffic with the peer-link interface as the outbound interface may fail to be forwarded. To prevent this problem, ensure that the Layer 3 link between the M-LAG master and backup devices has a route cost less than or equal to the route cost of the peer-link, so that the Layer 3 link is selected as the optimal route by the unicast routing protocol.</li><li>To ensure switchback performance in a scenario where the maximum number of multicast groups are dual-homed to an M-LAG and a faulty direct Layer 3 uplink recovers, disable STP on the interfaces at both ends of the link and run the <strong id="EN-US_CONCEPT_0231872964__en-us_concept_0231872964_b394755952101523">holdtime join-prune</strong> command to set the holdtime of Join/Prune messages to 350s.</li></ul>
+<p>On the network when the Receiver is dual-homed to an M-LAG:</p>
+<p>Both the master and backup M-LAG member interfaces forward multicast traffic to the Receiver, implementing load sharing. The M-LAG master and backup devices share load according to the following rule: If the last hexadecimal number of the multicast group address is an odd number, such as the addresses FF1E::1 and FF1E::B, the master M-LAG member interface forwards the multicast traffic. If the last hexadecimal number of the multicast group address is an even number, such as the addresses FF1E::2 and FF1E::A, the backup M-LAG member interface forwards the multicast traffic.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>FCoE</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>If both FSB and FCF<span> or both FSB and NPV</span> are configured on the device, the M-LAG function cannot be used.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>IPSG</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>The two devices that constitute an M-LAG cannot be configured with IPSG.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>MPLS/L3VPN</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>For devices that support MPLS and L3VPN, MPLS and L3VPN cannot be configured on M-LAG member interfaces of the devices.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>VXLAN</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><ul><li><p>M-LAG can be configured with termination QinQ Layer 2 sub-interfaces and cannot be configured with transparent transmission QinQ Layer 2 sub-interfaces.</p>
+</li><li>An M-LAG consisting of CE6881<span>, CE5881</span><span>, CE6881K</span><span>, CE6863E</span><span>, CE6863K</span><span>, CE6881E</span>, or CE6863 switches supports segment VXLAN for Layer 2 DCI in mapping VNI mode, and an M-LAG consisting of other switch models does not support segment VXLAN for Layer 2 DCI.</li><li>In V200R019C10 and earlier versions, for the <span>CE6881<span>, CE6881K</span><span>, CE6863E</span><span>, CE6863K</span><span>, CE6881E</span> and CE6863</span>, the function of configuring a VXLAN tunnel over an IPv6 underlay network and the M-LAG function are mutually exclusive and cannot be configured together.</li><li>When VXLAN dual-active access is configured and the gateways work in loopback mode in a distributed gateway scenario, the NVE interfaces of different M-LAG systems on the network must be configured with different MAC addresses. For example, if devices A and B establish M-LAG system 1 and devices C and D establish M-LAG system 2, the NVE interfaces of M-LAG systems 1 and 2 must be configured with different MAC addresses.</li><li><span>In a scenario where a device is dual-homed to a VXLAN network through an M-LAG, a member device in the M-LAG pings a device on the VXLAN network. If the <b><span class="cmdname">ping vxlan</span></b> command is run without specifying the source IPv4 or IPv6 address (the IPv4 or IPv6 address of the outbound interface of packets is used by default) and the remote device does not have a route to the IPv4 or IPv6 address (for example, in a non-direct connection scenario), the ping fails. If the source IPv4 or IPv6 address of the tunnel is specified as the source IPv4 or IPv6 address using the <strong>-a</strong> parameter when the <b><span class="cmdname">ping vxlan</span></b> command is run, ICMP echo reply packets are forwarded to the other M-LAG member device that does not initiate the ping because the tunnel source IPv4 or IPv6 addresses of the two M-LAG member devices are the same. As a result, the ping fails. To address the preceding problems, you are advised to use the <strong>-a</strong> parameter to specify a unique IPv4 or IPv6 address on the M-LAG member device that initiates the ping as the source IPv4 or IPv6 address when running the <b><span class="cmdname">ping vxlan</span></b> command.</span></li><li>Currently, M-LAG member devices synchronize packets through UDP. The default UDP port number is 1025, which is different from the UDP port number configured for the all-active gateway neighbor in the DFS group view. If the two UDP port numbers conflict, you can run the <b><span class="cmdname">source ip</span></b> <i><span class="varname">ip-address</span></i> [<b><span class="cmdname"> vpn-instance</span></b> <i><span class="varname">vpn-instance-name</span></i> ] [ <strong><span>peer</span></strong> <i><span class="varname">peer-ip-address</span></i> [ <strong><span>udp-port</span></strong> <i><span class="varname">port-number</span></i> ] ] or <b><span class="cmdname">source ipv6</span></b> <i><span class="varname">ipv6-address</span></i> [ <b><span class="cmdname">vpn-instance</span></b> <i><span class="varname">vpn-instance-name</span></i> ] [ <strong><span>peer</span></strong> <i><span class="varname">peer-ipv6-address</span></i> [ <strong><span>udp-port</span></strong> <i><span class="varname">port-number</span></i> ] ] command to change the UDP port number bound to the DFS group, or run the <strong><span>udp port</span></strong> <i><span class="varname">port-number</span></i> command to change the UDP port number configured for the all-active gateway neighbor.</li><li>For the <span class="keyword">CE5881, CE6881, CE6881E, CE6881K, CE6863, CE6863E, and CE6863K</span>, the function of binding a VLAN to a BD and the MAC FRR function on the overlay network in VXLAN networking are mutually exclusive and cannot be configured together. After enhanced binding between a BD and a VLAN is enabled, the function of binding a VLAN to a BD and the MAC FRR function on the overlay network in VXLAN networking are no longer mutually exclusive.</li></ul>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>Storm control</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>You are not advised to configure storm control for multicast packets on physical member interfaces of a peer-link interface. Otherwise, M-LAG synchronization packets may be suppressed, resulting in abnormal forwarding of data packets in the M-LAG system.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>Port security</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><ul><li>After port security is configured on a port, dynamic MAC addresses learned by the port are changed to secure dynamic MAC addresses or sticky MAC addresses. Secure dynamic MAC addresses and sticky MAC addresses are static MAC addresses and cannot be synchronized through peer-link interfaces on the two M-LAG member devices.</li><li>When port security is configured on the M-LAG interfaces through which a device is dual-homed, the secure dynamic MAC addresses or sticky MAC addresses on the two M-LAG member devices may be different.</li></ul>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>BFD</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><ul><li>Only the CE8868EI, CE8861EI, CE6857EI<span>, CE6857S, CE6857F</span>, CE6865EI<span>, CE6865E<span>, CE8850E-32CQ-EI</span></span>, CE6881<span>, CE5881</span><span>, CE6881K</span>, CE6863<span>, CE6863E</span><span>, CE6863K</span><span>, CE6881E</span>, and CE6820 can establish BFD sessions with connected devices through M-LAG member interfaces.</li><li>If an M-LAG member device establishes a BFD session with a connected device through the M-LAG member interface, and the two M-LAG member devices synchronize BFD protocol packets through peer-link interfaces, BFD protocol packets enter the interface queue with the priority of 6 for forwarding. If service packets enter the interface queue with the priority of 7 for forwarding and the interface uses the default PQ scheduling mode, the BFD session flaps because BFD protocol packets are discarded when the service packets arrive at the interface at the 100% output link rate within a period of time. If other protocol packets are forwarded through peer-link interfaces, the packets may also be discarded due to the scheduling priority problem.</li></ul>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>Ping and tracert</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>When an M-LAG member device tracerts an access device, the tracert operation fails.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>Local attack defense</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>In V200R022C00 and later versions, M-LAG protocol association can be enabled. You are advised to configure M-LAG protocol association on both M-LAG member devices.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="26.08%" headers="mcps1.3.4.14.1.2.3.1.1 "><p>Monitor Link</p>
+</td>
+<td class="cellrowborder" valign="top" width="73.92%" headers="mcps1.3.4.14.1.2.3.1.2 "><p>To reduce the service interruption time in an M-LAG double-fault failure scenario, the delay for a downlink interface in a Monitor Link group to go Up does not take effect in this scenario.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0001.html">M-LAG Configuration
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0005.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_cfg_m-lag_0020.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,466 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="task">
+<meta name="DC.Title" content="Example for Deploying M-LAG to Connect the Device to an Ethernet Network in Dual-Homing Mode Through the Root Bridge">
+<meta name="abstract" content="">
+<meta name="description" content="">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0013.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_cfgcase_0017.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_TASK_0141112726">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>Example for Deploying M-LAG to Connect the Device to an Ethernet Network in Dual-Homing Mode Through the Root Bridge</title>
+
+<style type="text/css">
+			<!--	pre.screen,pre.codeblock{
+					word-wrap:break-word;
+					word-break:break-all;
+					white-space:pre-wrap !important;
+				}-->
+		</style>
+</head>
+<body><a name="EN-US_TASK_0141112726"></a><a name="EN-US_TASK_0141112726"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Example for Deploying M-LAG to Connect the Device to an Ethernet Network in Dual-Homing Mode Through the Root Bridge</h1>
+<div class="taskbody"><p></p>
+<div class="context"><a name="EN-US_TASK_0141112726__1.4.1"></a><a name="1.4.1"></a>
+<div class="p"><h4 class="sectiontitle">Networking Requirements</h4><p>As shown in <a href="#EN-US_TASK_0141112726__fig_dc_cfg_eth-trunk_008701">Figure 1</a>, a server is dual-homed to an Ethernet network through M-LAG. The customer requires high service reliability. Link aggregation between the server and devices only achieves link-level reliability, and a fault on a device may cause service interruption. M-LAG can be configured. When devices work properly, links load balance traffic and a fault of any device does not affect services. High service reliability is therefore ensured. On an Ethernet network, the blocked interface cannot transmit heartbeat packets of M-LAG master and backup devices; therefore, a DFS group is configured and bound to the IP address of the management interface to ensure that heartbeat packets of M-LAG master and backup devices can be transmitted normally.</p>
+<div class="fignone" id="EN-US_TASK_0141112726__fig_dc_cfg_eth-trunk_008701"><a name="EN-US_TASK_0141112726__fig_dc_cfg_eth-trunk_008701"></a><a name="fig_dc_cfg_eth-trunk_008701"></a><span class="figcap"><b>Figure 1 </b>Networking for dual-homing the M-LAG to a common Ethernet network</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_002401dcb.png"></span></div>
+</div></div>
+<div class="context"><a name="EN-US_TASK_0141112726__1.4.2"></a><a name="1.4.2"></a>
+<div class="p"><h4 class="sectiontitle">Configuration Roadmap</h4><ol><li><p>Configure SwitchA and SwitchB as the root bridge and configure the same bridge ID to ensure that M-LAG master and backup devices are used as root bridges.</p>
+</li><li><p>Configure IP addresses for management interfaces on SwitchA and SwitchB to ensure Layer 3 connectivity and transmission of heartbeat packets of M-LAG master and backup devices.</p>
+</li><li><p>Configure M-LAG on SwitchA and SwitchB so that the server is dual-homed to SwitchA and SwitchB.</p>
+</li><li><p>Create VLANIF interfaces on SwitchC and SwitchD and configure IP addresses for the VLANIF interfaces. Create VRRP groups on the VLANIF interfaces and configure VRRP groups as gateways of M-LAG master and backup devices.</p>
+</li></ol>
+</div></div>
+<div class="steps"><a name="EN-US_TASK_0141112726__1.4.3"></a><a name="1.4.3"></a><h4 class="sectiontitle">Procedure</h4>
+<ol><li><span>Configure SwitchA and SwitchB as root bridges and configure the same bridge ID for them.</span><p><div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>If the two devices that constitute an M-LAG connect to downstream switching devices, you must configure root protection.</p>
+</div></div>
+<p># Configure SwitchA.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchA</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>stp root primary</strong>
+[<span class="keyword">*</span>SwitchA] <strong>stp bridge-address 39-39-39</strong>
+[<span class="keyword">*</span>SwitchA] <strong>interface eth-trunk 1</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>trunkport 10ge 1/0/5</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>trunkport 10ge 1/0/6</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>stp edged-port enable</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA-Eth-Trunk1] <strong>quit</strong></pre>
+<p># Configure SwitchB.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchB</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB] <strong>stp root primary</strong>
+[<span class="keyword">*</span>SwitchB] <strong>stp bridge-address 39-39-39</strong>
+[<span class="keyword">*</span>SwitchB] <strong>interface eth-trunk 1</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk1] <strong>trunkport 10ge 1/0/5</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk1] <strong>trunkport 10ge 1/0/6</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk1] <strong>stp edged-port enable</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk1] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB-Eth-Trunk1] <strong>quit</strong></pre>
+</p></li><li><span>Configure IP addresses for management interfaces on SwitchA and SwitchB.</span><p><p># Configure SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA]<strong> interface meth 0/0/0</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA-MEth0/0/0]<strong> ip address 10.1.1.1 24</strong>
+[<span class="keyword">*</span>SwitchA-MEth0/0/0]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchA]<strong> commit</strong></pre>
+<p># Configure SwitchB.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB]<strong> interface meth 0/0/0</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB-MEth0/0/0]<strong> ip address 10.1.1.2 24</strong>
+[<span class="keyword">*</span>SwitchB-MEth0/0/0]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchB]<strong> commit</strong></pre>
+</p></li><li><span>Create a DFS group and bind IP addresses of management interfaces to the DFS group on SwitchA and SwitchB.</span><p><p>Configure IP addresses for management interfaces on SwitchA and SwitchB to ensure Layer 3 connectivity.</p>
+<p># Configure SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>dfs-group 1</strong>
+[<span class="keyword">*</span>SwitchA-dfs-group-1] <strong>source ip 10.1.1.1</strong> <strong>peer 10.1.1.2</strong>
+[<span class="keyword">*</span>SwitchA-dfs-group-1] <strong>dual-active detection enhanced enable</strong>
+[<span class="keyword">*</span>SwitchA-dfs-group-1] <strong>priority 150</strong>
+[<span class="keyword">*</span>SwitchA-dfs-group-1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+<p># Configure SwitchB.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB] <strong>dfs-group 1</strong>
+[<span class="keyword">*</span>SwitchB-dfs-group-1] <strong>source ip 10.1.1.2</strong> <strong>peer 10.1.1.1</strong>
+[<span class="keyword">*</span>SwitchB-dfs-group-1] <strong>dual-active detection enhanced enable</strong>
+[<span class="keyword">*</span>SwitchB-dfs-group-1] <strong>priority 120</strong>
+[<span class="keyword">*</span>SwitchB-dfs-group-1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchB] <strong>commit</strong></pre>
+</p></li><li><span>Configure the link between SwitchA and SwitchB as a peer-link.</span><p><p># Configure SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>interface eth-trunk 0</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk0] <strong>trunkport 10ge 1/0/3</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk0] <strong>trunkport 10ge <span>1/0/4</span></strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk0] <strong>undo stp enable</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk0] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk0] <strong>peer-link 1</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+<p># Configure SwitchB.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB] <strong>interface eth-trunk 0</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk0] <strong>trunkport 10ge 1/0/3</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk0] <strong>trunkport 10ge <span>1/0/4</span></strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk0] <strong>undo stp enable</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk0] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk0] <strong>peer-link 1</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchB] <strong>commit</strong></pre>
+</p></li><li><span>Add Eth-Trunks that connect SwitchA and SwitchB to the server to VLAN 11 and bind the Eth-Trunks to the DFS group.</span><p><p>The uplink interface of the server connected to the switch needs to be bound to an aggregation link, and the link aggregation modes on the server and switch must be consistent.</p>
+<p># Configure SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>vlan batch 11</strong>
+[<span class="keyword">*</span>SwitchA] <strong>interface eth-trunk 1</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>mode lacp-dynamic</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>port link-type access</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>port default vlan 11</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>dfs-group 1 m-lag 1</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+<p># Configure SwitchB.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB] <strong>vlan batch 11</strong>
+[<span class="keyword">*</span>SwitchB] <strong>interface eth-trunk 1</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk1] <strong>mode lacp-dynamic</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk1] <strong>port link-type access</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk1] <strong>port default vlan 11</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk1] <strong>dfs-group 1 m-lag 1</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchB] <strong>commit</strong></pre>
+</p></li><li><span>Configure the links between SwitchA and SwitchC and between SwitchB and SwitchD as aggregated links, and configure interface types and allowed VLANs.</span><p><p># Configure SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>interface eth-trunk 2</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk2] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk2] <strong>port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk2] <strong>port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk2] <strong>trunkport 10ge 1/0/1</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk2] <strong>trunkport 10ge 1/0/2</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk2] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+<p># Configure SwitchB.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB] <strong>interface eth-trunk 2</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk2] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk2] <strong>port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk2] <strong>port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk2] <strong>trunkport 10ge 1/0/1</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk2] <strong>trunkport 10ge 1/0/2</strong>
+[<span class="keyword">*</span>SwitchB-Eth-Trunk2] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchB] <strong>commit</strong></pre>
+<p># Configure SwitchC.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchC</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchC] <strong>vlan batch 11</strong>
+[<span class="keyword">*</span>SwitchC] <strong>interface eth-trunk 2</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk2] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk2] <strong>port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk2] <strong>port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk2] <strong>trunkport 10ge 1/0/1</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk2] <strong>trunkport 10ge 1/0/2</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk2] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchC] <strong>commit</strong></pre>
+<p># Configure SwitchD.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchD</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchD] <strong>vlan batch 11</strong>
+[<span class="keyword">*</span>SwitchD] <strong>interface eth-trunk 2</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk2] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk2] <strong>port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk2] <strong>port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk2] <strong>trunkport 10ge 1/0/1</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk2] <strong>trunkport 10ge 1/0/2</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk2] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchD] <strong>commit</strong></pre>
+</p></li><li><span>Create VLANIF interfaces on SwitchC and SwitchD and configure IP addresses for the VLANIF interfaces. Create VRRP groups on the VLANIF interfaces.</span><p><p># Configure VRRP group 1 on SwitchC and set the priority of SwitchC to 120.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchC] <strong>interface vlanif 11</strong>
+[<span class="keyword">*</span>SwitchC-Vlanif11] <strong>ip address 10.2.1.1 24</strong>
+[<span class="keyword">*</span>SwitchC-Vlanif11] <strong>vrrp vrid 1 virtual-ip 10.2.1.111</strong>
+[<span class="keyword">*</span>SwitchC-Vlanif11] <strong>vrrp vrid 1 priority 120</strong>
+[<span class="keyword">*</span>SwitchC-Vlanif11] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchC] <strong>commit</strong></pre>
+<p># Configure VRRP group 1 on SwitchD. SwitchD uses default priority 100.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchD] <strong>interface vlanif 11</strong>
+[<span class="keyword">*</span>SwitchD-Vlanif11] <strong>ip address 10.2.1.2 24</strong>
+[<span class="keyword">*</span>SwitchD-Vlanif11] <strong>vrrp vrid 1 virtual-ip 10.2.1.111</strong>
+[<span class="keyword">*</span>SwitchD-Vlanif11] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchD] <strong>commit</strong></pre>
+</p></li><li><span>Verify the configuration.</span><p><ul><li><p>Run the <a href="cmdqueryname=display+dfs-group"><b><span class="cmdname">display dfs-group</span></b></a> command to check M-LAG information.</p>
+<p># Check information about the M-LAG with DFS group 1.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA]<strong> display dfs-group 1 m-lag</strong>
+*                : Local node
+Heart beat state : <strong>OK</strong>
+Node 1 *
+  Dfs-Group ID   : 1
+  Priority       : 150
+  Address        : ip address 10.1.1.1
+  State          : <strong>Master</strong>
+  Causation      : -
+  System ID      : 00e0-fc95-7c31
+  SysName        : SwitchA
+  Version        : <span>V200R020C00</span>
+  Device Type    : CE9860EI
+Node 2
+  Dfs-Group ID   : 1
+  Priority       : 120
+  Address        : ip address 10.1.1.2
+  State          : <strong>Backup</strong>
+  Causation      : -
+  System ID      : 00e0-fc95-7c11
+  SysName        : SwitchB
+  Version        : <span>V200R020C00</span>
+  Device Type    : CE9860EI</pre>
+<p># Check M-LAG information on SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA]<strong> display dfs-group 1 node 1 m-lag brief</strong>
+* - Local node
+
+M-Lag ID     Interface      Port State    Status                Consistency-check
+       1     Eth-Trunk 1    <strong>Up</strong>            active(*)-active      --
+
+
+Failed reason:                                                                  
+    1 -- Relationship between vlan and port is inconsistent                     
+    2 -- STP configuration under the port is inconsistent                       
+    3 -- STP port priority configuration is inconsistent                        
+    4 -- LACP mode of M-LAG is inconsistent                                     
+    5 -- M-LAG configuration is inconsistent                                    
+    6 -- The number of M-LAG members is inconsistent</pre>
+<p># Check M-LAG information on SwitchB.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB]<strong> display dfs-group 1 node 2 m-lag brief</strong>
+* - Local node
+
+M-Lag ID     Interface      Port State    Status                Consistency-check
+       1     Eth-Trunk 1    <strong>Up</strong>            active-active(*)      --
+
+
+Failed reason:                                                                  
+    1 -- Relationship between vlan and port is inconsistent                     
+    2 -- STP configuration under the port is inconsistent                       
+    3 -- STP port priority configuration is inconsistent                        
+    4 -- LACP mode of M-LAG is inconsistent                                     
+    5 -- M-LAG configuration is inconsistent                                    
+    6 -- The number of M-LAG members is inconsistent</pre>
+<p>In the preceding command outputs, the value of <span class="parmname"><b>Heart beat state</b></span> is <span class="parmname"><b>OK</b></span>, indicating that the heartbeat is normal. SwitchA is used as Node 1, its priority is 150, and its status is <span class="parmname"><b>Master</b></span>. SwitchB is used as Node 2, its priority is 120, and its status is <span class="parmname"><b>Backup</b></span>. The value of <span class="parmname"><b>Causation</b></span> is <span class="parmname"><b>-</b></span>, and the values of <span class="parmname"><b>Port State</b></span> of Node 1 and Node 2 are both <span class="parmname"><b>Up</b></span>, and the M-LAG status of Node 1 and Node 2 is both <span class="parmname"><b>active</b></span>, indicating that the M-LAG configuration is correct.</p>
+</li><li><p>Run the <b><span class="cmdname">display vrrp</span></b> command on SwitchC and SwitchD. You can see that SwitchC is in Master state and SwitchD is in Backup state.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchC] <strong>display vrrp verbose</strong>
+Vlanif11 | Virtual Router 1
+<strong>State        : Master</strong>
+Virtual IP     : 10.2.1.111
+Master IP      : 10.2.1.1
+PriorityRun    : 120
+PriorityConfig : 120                                                        
+MasterPriority : 120                                                        
+Preempt        : YES   Delay Time : 0s    Remain : --    
+TimerRun       : 1s                                                              
+TimerConfig    : 1s                                                           
+Auth Type      : NONE                                                            
+Virtual MAC    : 0000-5e00-0101                                                
+Check TTL      : YES                                                             
+Config Type    : Normal                                                   
+Create Time       : 2020-01-30 11:39:18                                           
+Last Change Time  : 2020-02-04 11:38:58 </pre>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchD] <strong>display vrrp verbose</strong>
+Vlanif11 | Virtual Router 1
+<strong>State        : Backup</strong>
+Virtual IP     : 10.2.1.111
+Master IP      : 10.2.1.1
+PriorityRun    : 100
+PriorityConfig : 100                                                        
+MasterPriority : 120                                                        
+Preempt        : YES   Delay Time : 0s   Remain : --     
+TimerRun       : 1s                                                        
+TimerConfig    : 1s                                                        
+Auth Type      : NONE                                                       
+Virtual MAC    : 0000-5e00-0101                                             
+Check TTL      : YES                                                        
+Config Type    : Normal                                                
+Create Time      : 2020-01-30 11:39:18                                      
+Last Change Time : 2020-02-04 11:38:58 </pre>
+</li></ul>
+</p></li></ol></div>
+<div class="example"><a name="EN-US_TASK_0141112726__1.4.4"></a><a name="1.4.4"></a><h4 class="sectiontitle">Configuration Files</h4><ul><li><p>SwitchA configuration file</p>
+<pre class="screen">#
+sysname SwitchA
+#
+dfs-group 1
+ priority 150
+ source ip 10.1.1.1 peer 10.1.1.2
+ dual-active detection enhanced enable
+#
+vlan batch 11
+#
+stp bridge-address 00e0-fc39-0039
+stp instance 0 root primary
+#
+interface MEth0/0/0
+ ip address 10.1.1.1 255.255.255.0
+#
+interface Eth-Trunk0
+ stp disable
+ mode lacp-static
+ peer-link 1
+#
+interface Eth-Trunk1
+ port default vlan 11
+ stp edged-port enable
+ mode lacp-dynamic
+ dfs-group 1 m-lag 1
+#
+interface Eth-Trunk2
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static 
+#
+interface 10GE1/0/1
+ eth-trunk 2
+#
+interface 10GE1/0/2
+ eth-trunk 2
+#
+interface 10GE1/0/3
+ eth-trunk 0
+#
+interface 10GE1/0/4
+ eth-trunk 0
+#
+interface 10GE1/0/5
+ eth-trunk 1
+#
+interface 10GE1/0/6
+ eth-trunk 1
+#
+return
+</pre>
+</li><li><p>SwitchB configuration file</p>
+<pre class="screen">#
+sysname SwitchB
+#
+dfs-group 1
+ priority 120
+ source ip 10.1.1.2 peer 10.1.1.1
+ dual-active detection enhanced enable
+#
+vlan batch 11
+#
+stp bridge-address 00e0-fc39-0039
+stp instance 0 root primary
+#
+interface MEth0/0/0
+ ip address 10.1.1.2 255.255.255.0
+#
+interface Eth-Trunk0
+ stp disable
+ mode lacp-static
+ peer-link 1
+#
+interface Eth-Trunk1
+ port default vlan 11
+ stp edged-port enable
+ mode lacp-dynamic
+ dfs-group 1 m-lag 1
+#
+interface Eth-Trunk2
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+#
+interface 10GE1/0/1
+ eth-trunk 2
+#
+interface 10GE1/0/2
+ eth-trunk 2
+#
+interface 10GE1/0/3
+ eth-trunk 0
+#
+interface 10GE1/0/4
+ eth-trunk 0
+#
+interface 10GE1/0/5
+ eth-trunk 1
+#
+interface 10GE1/0/6
+ eth-trunk 1
+#
+return
+</pre>
+</li><li><p>SwitchC configuration file</p>
+<pre class="screen">#
+sysname SwitchC
+#
+vlan batch 11
+#
+interface Vlanif11
+ ip address 10.2.1.1 255.255.255.0
+ vrrp vrid 1 virtual-ip 10.2.1.111
+ vrrp vrid 1 priority 120
+#
+interface Eth-Trunk2
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+#
+interface 10GE1/0/1
+ eth-trunk 2
+#
+interface 10GE1/0/2
+ eth-trunk 2
+#
+return
+</pre>
+</li><li><p>SwitchD configuration file</p>
+<pre class="screen">#
+sysname SwitchD
+#
+vlan batch 11
+#
+interface Vlanif11
+ ip address 10.2.1.2 255.255.255.0
+ vrrp vrid 1 virtual-ip 10.2.1.111
+#
+interface Eth-Trunk2
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+#
+interface 10GE1/0/1
+ eth-trunk 2
+#
+interface 10GE1/0/2
+ eth-trunk 2
+#
+return
+</pre>
+</li></ul>
+</div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0013.html">Configuration Examples for M-LAG
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_cfgcase_0017.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+</body>
+</html>

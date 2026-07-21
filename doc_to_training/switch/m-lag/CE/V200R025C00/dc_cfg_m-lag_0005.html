@@ -1,0 +1,104 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="concept">
+<meta name="DC.Title" content="Summary of M-LAG Configuration Tasks">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0001.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0004.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_dc_cfg_m-lag_note_001.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_CONCEPT_0141112699">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>Summary of M-LAG Configuration Tasks</title>
+</head>
+<body><a name="EN-US_CONCEPT_0141112699"></a><a name="EN-US_CONCEPT_0141112699"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Summary of M-LAG Configuration Tasks</h1>
+<div><p>You can perform the following M-LAG configurations according to the actual networking.</p>
+
+<div class="tableBorder"><table cellpadding="4" cellspacing="0" summary="" frame="border" border="1" rules="all"><caption><b>Table 1 </b>M-LAG configuration tasks</caption><thead align="left"><tr><th align="left" class="cellrowborder" valign="top" width="17.04%" id="mcps1.3.2.2.5.1.1" liSelected="liSelected"><p>Mode</p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="27.57%" id="mcps1.3.2.2.5.1.2" liSelected="liSelected"><p>Description</p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="39.35%" id="mcps1.3.2.2.5.1.3" liSelected="liSelected"><p>Task</p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="16.04%" id="mcps1.3.2.2.5.1.4" liSelected="liSelected"><p>Configuration Notes</p>
+</th>
+</tr>
+</thead>
+<tbody><tr><td class="cellrowborder" valign="top" width="17.04%" headers="mcps1.3.2.2.5.1.1 "><p>Root bridge mode</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.3.2.2.5.1.2 "><p><span>When the root bridge mode is used to configure M-LAG,
+the M-LAG master and backup devices must be used as root bridges and
+configured with the same bridge ID on the STP network so that the
+two devices are simulated into one root bridge. The M-LAG master and
+backup devices are not affected by the network topology change on
+the Layer 2 network.</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="39.35%" headers="mcps1.3.2.2.5.1.3 "><div class="p"><ol><li><a href="dc_cfg_m-lag_0007.html">Configuring the Root Bridge and Bridge ID</a></li><li><a href="dc_cfg_m-lag_0008.html">Configuring a DFS Group</a></li><li><a href="dc_cfg_m-lag_0044.html">Configuring M-LAG Consistency Check</a></li><li><a href="dc_cfg_m-lag_0009.html">Configuring an Interface as a Peer-link Interface</a></li><li><a href="dc_cfg_m-lag_0011.html">Configuring an M-LAG Member Interface</a></li><li><a href="dc_cfg_m-lag_0015.html">(Optional) Configuring Dual-Active Gateways</a></li><li><a href="dc_cfg_m-lag_0014.html">(Optional) Configuring a Dynamic Routing Protocol for Communication with an M-LAG</a></li><li><a href="dc_cfg_m-lag_0060.html">(Optional) Configuring ARP and ND Entry Synchronization</a></li><li><a href="dc_cfg_m-lag_0034.html">(Optional) Configuring the Interface Status When the Peer-Link Fails</a></li><li><a href="dc_cfg_m-lag_0049.html">(Optional) Enabling Enhanced M-LAG Layer 3 Forwarding</a></li><li><a href="dc_cfg_m-lag_0050.html">(Optional) Enabling the MAC FRR Function</a></li><li><a href="dc_cfg_m-lag_0074.html">(Optional) Configuring M-LAG Uplink Interfaces</a></li></ol>
+</div>
+</td>
+<td class="cellrowborder" valign="top" width="16.04%" headers="mcps1.3.2.2.5.1.4 "><div class="p"><ul><li>Configure the M-LAG master and backup devices as root bridges and configure the same bridge ID for them.</li><li>STP must be disabled on peer-link interfaces.</li></ul>
+</div>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="17.04%" headers="mcps1.3.2.2.5.1.1 "><p>V-STP mode (recommended)</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.3.2.2.5.1.2 "><p><span>V-STP virtualizes the M-LAG master and backup devices enabled with STP into one device to perform STP calculation.</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="39.35%" headers="mcps1.3.2.2.5.1.3 "><div class="p"><ol><li><a href="dc_cfg_m-lag_0010.html">Configuring V-STP</a></li><li><a href="dc_cfg_m-lag_0008_c.html">Configuring a DFS Group</a></li><li><a href="dc_cfg_m-lag_0044_c.html">Configuring M-LAG Consistency Check</a></li><li><a href="dc_cfg_m-lag_0022.html">Configuring an Interface as a Peer-link Interface</a></li><li><a href="dc_cfg_m-lag_0039.html">Configuring an M-LAG Member Interface</a></li><li><a href="dc_cfg_m-lag_0015_c.html">(Optional) Configuring Dual-Active Gateways</a></li><li><a href="dc_cfg_m-lag_0014_c.html">(Optional) Configuring a Dynamic Routing Protocol for Communication with an M-LAG</a></li><li><a href="dc_cfg_m-lag_0060_c.html">(Optional) Configuring ARP and ND Entry Synchronization</a></li><li><a href="dc_cfg_m-lag_0034_c.html">(Optional) Configuring the Interface Status When the Peer-Link Fails</a></li><li><a href="dc_cfg_m-lag_0049_c.html">(Optional) Enabling Enhanced M-LAG Layer 3 Forwarding</a></li><li><a href="dc_cfg_m-lag_0050_c.html">(Optional) Enabling the MAC FRR Function</a></li><li><a href="dc_cfg_m-lag_0074_c.html">(Optional) Configuring M-LAG Uplink Interfaces</a></li></ol>
+</div>
+</td>
+<td class="cellrowborder" valign="top" width="16.04%" headers="mcps1.3.2.2.5.1.4 "><p>You must enable STP on peer-link interfaces and enable V-STP.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="17.04%" headers="mcps1.3.2.2.5.1.1 "><p>V-VBST mode</p>
+</td>
+<td class="cellrowborder" valign="top" width="27.57%" headers="mcps1.3.2.2.5.1.2 "><p><span>VBST virtualizes the M-LAG master and backup devices enabled with VBST into one device to perform VBST calculation.</span></p>
+</td>
+<td class="cellrowborder" valign="top" width="39.35%" headers="mcps1.3.2.2.5.1.3 "><ol><li><a href="dc_cfg_m-lag_0072_c.html">Configuring V-VBST</a></li><li><a href="dc_cfg_m-lag_0069_c.html">Configuring a DFS Group</a></li><li><a href="dc_cfg_m-lag_0070_c.html">Configuring M-LAG Consistency Check</a></li><li><a href="dc_cfg_m-lag_0071.html">Configuring the Peer-Link</a></li><li><a href="dc_cfg_m-lag_0073.html">Configuring an M-LAG Member Interface</a></li><li><a href="dc_cfg_m-lag_0076_c.html">(Optional) Configuring Dual-Active Gateways</a></li><li><a href="dc_cfg_m-lag_0077_c.html">(Optional) Configuring a Dynamic Routing Protocol for Communication with an M-LAG</a></li><li><a href="dc_cfg_m-lag_0079_c.html">(Optional) Configuring ARP/ND Entry Synchronization</a></li><li><a href="dc_cfg_m-lag_0080_c.html">(Optional) Configuring the Interface Status in a Peer-Link Failure Scenario</a></li><li><a href="dc_cfg_m-lag_0081_c.html">(Optional) Enabling Enhanced M-LAG Layer 3 Forwarding</a></li><li><a href="dc_cfg_m-lag_0082_c.html">(Optional) Enabling the MAC FRR Function</a></li><li><a href="dc_cfg_m-lag_0085_c.html">(Optional) Configuring M-LAG Uplink Interfaces</a></li></ol>
+</td>
+<td class="cellrowborder" valign="top" width="16.04%" headers="mcps1.3.2.2.5.1.4 "><p>Set the STP working mode of the switches to VBST.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><ul><li>In root bridge mode, the two devices in an M-LAG must function as root bridges on a Layer 2 network, and multi-level M-LAG in all-root bridge mode is not supported.</li><li>In V-STP mode, the two devices in an M-LAG do not need to function as root bridges on a Layer 2 network. The networking is flexible and multi-level M-LAG is supported. V-STP is recommended because it can eliminate loops caused by incorrect M-LAG configurations or connections.</li><li>V-VBST can be used only in M-LAG networking to meet the requirements of multi-level M-LAG interconnection scenarios and scenarios where devices in an M-LAG function as non-root bridges. In addition, V-VBST can solve the port blocking problem after STP is enabled.</li></ul>
+</div></div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0001.html">M-LAG Configuration
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0004.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_dc_cfg_m-lag_note_001.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+</body>
+</html>

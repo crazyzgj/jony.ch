@@ -1,0 +1,116 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="concept">
+<meta name="DC.Title" content="Traffic Forwarding in M-LAG Failure Scenarios">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0003.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0046.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0051.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_CONCEPT_0141112643">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>Traffic Forwarding in M-LAG Failure Scenarios</title>
+</head>
+<body><a name="EN-US_CONCEPT_0141112643"></a><a name="EN-US_CONCEPT_0141112643"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Traffic Forwarding in M-LAG Failure Scenarios</h1>
+<div><p>M-LAG technology improves link reliability from card-level to device-level. If a fault (link, device, or peer-link fault) occurs, M-LAG ensures that normal services are not affected. The following describes how M-LAG ensures proper service running when a fault occurs.</p>
+<div class="section"><h4 class="sectiontitle">Uplink Failure</h4><div class="fignone" id="EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_01"><a name="EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_01"></a><a name="dc_cfg_m-lag_0047_fig_01"></a><span class="figcap"><b>Figure 1 </b>Uplink failure</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_004701dcb.png" width="NaN" height="NaN"></span></div>
+<p>In <a href="#EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_01">Figure 1</a>, an M-LAG is connected to a common Ethernet network. If the uplink of the M-LAG master device fails, traffic passing through the M-LAG master device is forwarded by the M-LAG backup device through the peer-link.</p>
+<p>If the faulty link is the DAD link, the M-LAG continues to work properly without being affected. If the peer-link also fails, a dual-active conflict occurs in the M-LAG, and DAD cannot be performed. As a result, packet loss occurs.</p>
+<p>When an M-LAG is connected to a Layer 3 network, a Layer 3 bypass link needs to be configured between the M-LAG master and backup devices so that the uplink traffic destined for the master device can reach the backup device through the Layer 3 bypass link.</p>
+</div>
+<div class="section"><h4 class="sectiontitle">Downlink Failure</h4><div class="fignone"><span class="figcap"><b>Figure 2 </b>Downlink failure</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_004702dcb.png" width="NaN" height="NaN"></span></div>
+<p>If a downlink M-LAG member interface fails, the DFS group master and backup states do not change. However, if the faulty M-LAG member interface is in master state, the backup M-LAG member interface changes to master state, and traffic is switched to the corresponding link for transmission. The link of the faulty M-LAG member interface goes Down, and the dual-homing networking changes to single-homing networking. The MAC address of the faulty M-LAG member interface is changed to that of the peer-link interface in corresponding entries. After the faulty M-LAG member interface recovers, the status of M-LAG member interfaces is not changed. The backup M-LAG member interface that changes to the master M-LAG member interface remains in master state, and the original master M-LAG member interface is in backup state after the fault is rectified. You can run the <b><span class="cmdname">display dfs-group</span></b> <span class="parmname"><b>dfs-group-id</b></span> <strong><span>node</span></strong> <span class="parmname"><b>node-id</b></span> <strong><span>m-lag</span></strong> command to view the status of an M-LAG member interface.</p>
+<p>Assume that a multicast source is at the network side and a multicast group member is at the access side. If the M-LAG member interface on the M-LAG master device fails, the device instructs the remote device to update multicast entries through M-LAG synchronization packets. M-LAG master and backup devices do not load balance traffic depending on whether the last digit of the multicast group address is an odd or even number, and all multicast traffic is forwarded by the M-LAG backup device on which the M-LAG member interface is Up. If the M-LAG member interface on the M-LAG backup device fails, multicast traffic is forwarded similarly.</p>
+</div>
+<div class="section"><h4 class="sectiontitle">M-LAG Master Device Failure</h4><div class="fignone"><span class="figcap"><b>Figure 3 </b>M-LAG master device failure</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_004703dcb.png" width="NaN" height="NaN"></span></div>
+<p>If the M-LAG master device fails, the M-LAG backup device becomes the master device and continues to forward traffic, and its Eth-Trunk link is still in Up state. The Eth-Trunk link of the M-LAG master device goes Down, and the dual-homing networking changes to single-homing networking.</p>
+<p>If the M-LAG backup device fails, the M-LAG master and backup status remains unchanged, and the Eth-Trunk link of the M-LAG backup device goes Down. The Eth-Trunk link of the M-LAG master device is still in Up state and continues to forward traffic. The dual-homing networking changes to single-homing networking.</p>
+<p>When a faulty M-LAG member device recovers, the peer-link goes Up first, and the two M-LAG member devices renegotiate their master and backup roles. After the negotiation succeeds, the M-LAG member interface on the faulty M-LAG member device goes Up and traffic is load balanced. Both the M-LAG master and backup devices retain their original roles after recovering from a fault.</p>
+</div>
+<div class="section" id="EN-US_CONCEPT_0141112643__peer-link_fault"><a name="EN-US_CONCEPT_0141112643__peer-link_fault"></a><a name="peer-link_fault"></a><h4 class="sectiontitle">Peer-Link Failure</h4><div class="fignone"><span class="figcap"><b>Figure 4 </b>Peer-link failure</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_004704dcb.png" width="NaN" height="NaN"></span></div>
+<p>In an M-LAG of fixed devices, if the peer-link fails but the DAD heartbeat status is normal when M-LAG is used for dual-homing access on a common Ethernet, VXLAN, or IP network, interfaces excluding the logical interface, management interface, peer-link interface, and stack interface on the M-LAG backup device enter the Error-Down state by default. If the peer-link fails but the DAD heartbeat status is normal when M-LAG is used for dual-homing access on a TRILL network, the M-LAG member interface on the M-LAG backup device enters the Error-Down state.</p>
+<p>You can run the <a href="cmdqueryname=uplink-port+enable"><b><span class="cmdname">uplink-port enable</span></b></a> command to configure an interface as an M-LAG uplink interface. When the peer-link fails but the DAD heartbeat status is normal, the states of M-LAG uplink interfaces are preferentially compared. If not all uplink interfaces on the local device fail or all uplink interfaces on the remote device fail, the local device wins the election, and interfaces on the device that fails to win the election are set to the Error-Down state.</p>
+<p>When the faulty peer-link recovers, the M-LAG member interface in the Error-Down state automatically restores to the Up state after 240s by default, and the other interfaces in the Error-Down state automatically restore to the Up state immediately.</p>
+<p>You can run the <strong>dual-active detection error-down mode routing-switch</strong> command to configure logical interfaces to enter the Error-Down state when the peer-link fails but the DAD heartbeat status is normal in an M-LAG scenario. If the peer-link fails but the DAD heartbeat status is normal when M-LAG is used for dual-homing access on a VXLAN or IP network, the VLANIF interface, VBDIF interface, loopback interface, and M-LAG member interface on the M-LAG backup device enter the Error-Down state.</p>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p id="EN-US_CONCEPT_0141112643__en-us_task_0141112703_p950890114113">After logical interfaces are configured to change to Error-Down state when the peer-link fails but the DAD heartbeat status is normal in an M-LAG, if a faulty peer-link interface in the M-LAG recovers, the devices restore VLANIF interfaces, VBDIF interfaces, and loopback interfaces to Up state 6 seconds after DFS group pairing succeeds to ensure that ARP entry synchronization on a large number of VLANIF interfaces is normal. If a delay after which the Layer 3 protocol status of the interface changes to Up is configured, the delay after which VLANIF interfaces, VBDIF interfaces, and loopback interfaces go Up is the configured delay plus 6 seconds.</p>
+<p id="EN-US_CONCEPT_0141112643__en-us_task_0141112703_p586862915016">To improve the switchover convergence performance in a scenario where the peer-link fails and two master devices exist, you are advised to configure the <strong id="EN-US_CONCEPT_0141112643__en-us_task_0141112703_b15868152916015">port-status fast-detect enable</strong> command on the interfaces connecting M-LAG member devices to upstream and downstream devices and on the connected interfaces on these devices to enable the chip to quickly detect the physical status change of interfaces.</p>
+</div></div>
+<p>You can run the <strong>m-lag unpaired-port suspend</strong> and <strong>m-lag unpaired-port reserved</strong> commands to flexibly configure whether an interface enters the Error-Down state when the peer-link fails but the DAD heartbeat status is normal in an M-LAG scenario. <a href="#EN-US_CONCEPT_0141112643__table_0001">Table 1</a> describes the interfaces in the Error-Down state when the peer-link fails, the DAD heartbeat status is normal, and the following functions are configured.</p>
+
+<div class="tableBorder"><a name="EN-US_CONCEPT_0141112643__table_0001"></a><a name="table_0001"></a><table cellpadding="4" cellspacing="0" summary="" id="EN-US_CONCEPT_0141112643__table_0001" frame="border" border="1" rules="all"><caption><b>Table 1 </b>Interfaces in the Error-Down state when the peer-link fails but the DAD heartbeat status is normal</caption><thead align="left"><tr><th align="left" class="cellrowborder" valign="top" width="50%" id="mcps1.3.5.9.2.3.1.1" liSelected="liSelected"><p><strong>Device Configuration</strong></p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="50%" id="mcps1.3.5.9.2.3.1.2" liSelected="liSelected"><p><strong>M-LAG Connecting to a Common Ethernet, VXLAN, or IP Network</strong></p>
+</th>
+</tr>
+</thead>
+<tbody><tr><td class="cellrowborder" valign="top" width="50%" headers="mcps1.3.5.9.2.3.1.1 "><p>Default setting</p>
+</td>
+<td class="cellrowborder" valign="top" width="50%" headers="mcps1.3.5.9.2.3.1.2 "><p>Interfaces excluding the logical interface, management interface, peer-link interface, and stack interface are in the Error-Down state.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="50%" headers="mcps1.3.5.9.2.3.1.1 "><p>Suspend function configured only</p>
+</td>
+<td class="cellrowborder" valign="top" width="50%" headers="mcps1.3.5.9.2.3.1.2 "><p>Only the M-LAG member interface and the interface configured with this function are in the Error-Down state.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="50%" headers="mcps1.3.5.9.2.3.1.1 "><p>Reserved function configured only</p>
+</td>
+<td class="cellrowborder" valign="top" width="50%" headers="mcps1.3.5.9.2.3.1.2 "><p>Interfaces excluding the interface configured with this function, logical interface, management interface, peer-link interface, and stack interface are in the Error-Down state.</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="50%" headers="mcps1.3.5.9.2.3.1.1 "><p>Suspend and reserved functions configured</p>
+</td>
+<td class="cellrowborder" valign="top" width="50%" headers="mcps1.3.5.9.2.3.1.2 "><p>Only the M-LAG member interface and the interface configured with the suspend function are in the Error-Down state.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section"><h4 class="sectiontitle">M-LAG Double-Fault Failure (Peer-Link Failure + M-LAG Device Failure)</h4><div class="fignone" id="EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_05"><a name="EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_05"></a><a name="dc_cfg_m-lag_0047_fig_05"></a><span class="figcap"><b>Figure 5 </b>Networking when enhanced DAD for double-fault failures is enabled</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_004705dcb.png" width="NaN" height="NaN"></span></div>
+<p>As shown in scenario 2 in <a href="#EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_05">Figure 5</a>, if the peer-link fails but the DAD heartbeat status is normal when M-LAG is used for dual-homing access, some interfaces on <span>the M-LAG backup</span> device enter the Error-Down state. In this case, the <span>M-LAG master</span> device continues to work. If the <span>M-LAG master</span> device cannot work because it is powered off or it restarts due to a fault, both the M-LAG master and backup devices cannot forward traffic, as shown in scenario 3 in <a href="#EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_05">Figure 5</a>.</p>
+<div class="p">In this scenario, enhanced DAD for double-fault failures ensures nonstop forwarding when a double-fault failure occurs, meeting reliability requirements. As shown in <a href="#EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_05">Figure 5</a>, the following describes different fault phases and triggered behaviors after this function is enabled.<ol><li>Peer-link failure: If the peer-link fails but the DAD heartbeat status is normal, some interfaces (for details, see <a href="#EN-US_CONCEPT_0141112643__peer-link_fault">Peer-Link Failure</a>) on <span>the M-LAG backup</span> device are triggered to enter the Error-Down state. The <span>M-LAG master</span> device continues to work.</li><li>Failure of the <span>M-LAG master</span> device: If the peer-link fails and the <span>M-LAG master</span> device cannot work because it is powered off or it restarts due to a fault, both the M-LAG master and backup devices cannot forward traffic and services are interrupted.</li><li>Enhanced DAD for double-fault failures enabled: If enhanced DAD for double-fault failures is enabled, the device where the interfaces in the Error-Down state reside can detect that the <span>M-LAG master</span> device fails through the DAD mechanism (because it does not receive any heartbeat packets from the <span>M-LAG master</span> device within a certain period). The device then restores the interfaces in the Error-Down state to the Up state, and forwards traffic.</li><li>Device failure recovery: The faulty original DFS master device recovers, but the peer-link failure persists.<ul><li>If the LACP M-LAG system ID is switched to the LACP system ID of the local device within a certain period, the access device selects only one of the uplinks as the active link during LACP negotiation. The actual traffic forwarding is normal.</li><li>If the default LACP M-LAG system ID is used, that is, it is not switched, two M-LAG devices use the same system ID to negotiate with the access device. Therefore, links to both devices can be selected as the active link. In this scenario, because the peer-link failure persists, M-LAG devices cannot synchronize information such as the priority and system MAC address of each other. As a result, two M-LAG master devices exist, and traffic forwarding may be abnormal. In this case, as shown in <a href="#EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_06">Figure 6</a>, the HB DFS master/backup status is negotiated through heartbeat packets carrying necessary information for DFS group master/backup negotiation (such as the DFS group priority and system MAC address). Some interfaces (for details, see <a href="#EN-US_CONCEPT_0141112643__peer-link_fault">Peer-Link Failure</a>) on the HB DFS backup device are triggered to enter the Error-Down state. The HB DFS master device continues to work.<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>If a peer-link failure occurs and is followed by a DFS backup device failure in a double-fault failure scenario, the DFS master device forwards traffic in the same manner as when only a peer-link failure occurs.</p>
+</div></div>
+<div class="fignone" id="EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_06"><a name="EN-US_CONCEPT_0141112643__dc_cfg_m-lag_0047_fig_06"></a><a name="dc_cfg_m-lag_0047_fig_06"></a><span class="figcap"><b>Figure 6 </b>Networking when a double-fault failure is rectified</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_004706dcb.png" width="NaN" height="NaN"></span></div>
+</li></ul>
+</li></ol>
+</div>
+</div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0003.html">Understanding M-LAG
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0046.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_cfg_m-lag_0051.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+</body>
+</html>

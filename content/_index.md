@@ -346,10 +346,10 @@ bookToC: false
     <p>Network Access Control technologies for ensuring enterprise network security.</p>
   </a>
 
-  <a href="/docs/dc" class="nav-card">
+  <a href="/docs/switch" class="nav-card">
     <div class="nav-card-icon">⚡</div>
-    <h3>DC Data Center Technology</h3>
-    <p>Insights on Data Center network architecture, VXLAN, and other cutting-edge technologies.</p>
+    <h3>Switch Technology</h3>
+    <p>Insights on Huawei Switch network architecture, and other technologies.</p>
   </a>
 
   <a href="/docs/python" class="nav-card">

@@ -1,0 +1,838 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="task">
+<meta name="DC.Title" content="Configuring Multi-Level M-LAG Interconnection">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_dc_cfgcase_reliab_0000.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_dc_cfgcase_reliab_0009.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_dc_cfgcase_reliab_0004.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_TASK_0138784359">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/imagePopup.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/customQuery.js"></script>
+<script language="javascript" type="text/javascript" src="../public_sys-resources/imagePopup.js"></script>
+<title>Configuring Multi-Level M-LAG Interconnection</title>
+
+<style type="text/css">
+			<!--	pre.screen,pre.codeblock{
+					word-wrap:break-word;
+					word-break:break-all;
+					white-space:pre-wrap !important;
+				}-->
+		</style>
+</head>
+<body><a name="EN-US_TASK_0138784359"></a><a name="EN-US_TASK_0138784359"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Configuring Multi-Level M-LAG Interconnection</h1>
+<div class="taskbody"><div class="context"><a name="EN-US_TASK_0138784359__1.3.1"></a><a name="1.3.1"></a>
+<div class="p"><div class="p"><h4 class="sectiontitle">Applicable Products and Versions</h4><p>This example applies to CE6881, CE6820, and CE6863<span>, CE6863E</span> series switches running V200R005C20 or later versions.</p>
+<p>This example applies to CE6881K, CE6881E, and CE6863K series switches running V200R019C10 or later versions.</p>
+<p>This example applies to CE9860EI/CE5881 series switches running V200R020C00 or later versions.</p>
+<p>For details about the mapping between software versions and switch models, see the <a href="https://info.support.huawei.com/info-finder/tool/en/enterprise/hardwarecenter" target="_blank" rel="noopener noreferrer">Hardware Center</a>.</p>
+<h4 class="sectiontitle">Networking Requirements</h4><div class="p">The customer wants to build a stable large Layer 2 network so that a large number of servers can be deployed. The requirements are as follows:<ul><li>The dual-homing mode is used to ensure reliability.</li><li>The load balancing mode is used to improve the link use efficiency.</li></ul>
+</div>
+<p>As shown in <a href="#EN-US_TASK_0138784359__fig_dc_cfg_eth-trunk_008901">Figure 1</a>, multi-level M-LAG interconnection ensures reliability, improves the link use efficiency, and expands the network scale in dual-homing mode, meeting customer requirements. Aggregation devices function as active-active gateways, and core and aggregation devices are connected in a crossover manner to ensure device-level reliability.</p>
+<p>In this example, the CE12804 (modular switch) and CE6850EI (fixed switch) are used as examples.</p>
+<div class="fignone" id="EN-US_TASK_0138784359__fig_dc_cfg_eth-trunk_008901"><a name="EN-US_TASK_0138784359__fig_dc_cfg_eth-trunk_008901"></a><a name="fig_dc_cfg_eth-trunk_008901"></a><span class="figcap"><b>Figure 1 </b>Networking for configuring multi-level M-LAG interconnection</span><br><span><img class="imgResize" src="figure/en-us_image_0000001519320426.png" width="NaN" height="NaN" title="Click to enlarge"></span><p></p>
+</div>
+
+<div class="tableBorder"><table cellpadding="4" cellspacing="0" summary="" frame="border" border="1" rules="all"><caption><b>Table 1 </b>Data preparation</caption><thead align="left"><tr><th align="left" class="cellrowborder" valign="top" width="25%" id="mcps1.3.1.11.2.5.1.1" liSelected="liSelected"><p>Device Name</p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="25%" id="mcps1.3.1.11.2.5.1.2" liSelected="liSelected"><p>Interface</p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="25%" id="mcps1.3.1.11.2.5.1.3" liSelected="liSelected"><p>IP Address</p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="25%" id="mcps1.3.1.11.2.5.1.4" liSelected="liSelected"><p>Virtual MAC Address</p>
+</th>
+</tr>
+</thead>
+<tbody><tr><td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.1 "><p>SwitchC</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.2 "><p>Management interface</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.3 "><p>10.1.1.1/24</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.4 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.1 "><p>SwitchD</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.2 "><p>Management interface</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.3 "><p>10.1.1.2/24</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.4 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" rowspan="4" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.1 "><p>SwitchE</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.2 "><p>Management interface</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.3 "><p>10.2.1.1/24</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.4 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.1 "><p>VLANIF11</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.2 "><p>10.3.1.1/24</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.3 "><p>0000-5e00-0102</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.1 "><p>10GE1/0/5</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.2 "><p>10.4.1.1/24</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.3 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.1 "><p>10GE1/0/6</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.2 "><p>10.5.1.1/24</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.3 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" rowspan="4" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.1 "><p>SwitchF</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.2 "><p>Management interface</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.3 "><p>10.2.1.2/24</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.4 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.1 "><p>VLANIF11</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.2 "><p>10.3.1.1/24</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.3 "><p>0000-5e00-0102</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.1 "><p>10GE1/0/5</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.2 "><p>10.6.1.1/24</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.3 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.1 "><p>10GE1/0/6</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.2 "><p>10.7.1.1/24</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.3 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" rowspan="2" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.1 "><p>SwitchG</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.2 "><p>10GE1/0/1</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.3 "><p>10.4.1.2/24</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.4 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.1 "><p>10GE1/0/2</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.2 "><p>10.7.1.2/24</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.3 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" rowspan="2" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.1 "><p>SwitchH</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.2 "><p>10GE1/0/1</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.3 "><p>10.6.1.2/24</p>
+</td>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.3.1.11.2.5.1.4 "><p>-</p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.1 "><p>10GE1/0/2</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.2 "><p>10.5.1.2/24</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.1.11.2.5.1.3 "><p>-</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+<div class="context"><a name="EN-US_TASK_0138784359__1.3.2"></a><a name="1.3.2"></a>
+<div class="p"><h4 class="sectiontitle">Configuration Roadmap</h4><p>The configuration roadmap is as follows:</p>
+<ol><li><p>Configure SwitchA and SwitchB to form a stack to ensure high reliability of server access.</p>
+</li><li><p>Add the link connecting Server 1 and the stack to the inter-chassis Eth-Trunk to improve the link bandwidth and reliability.</p>
+</li><li><p>Configure the V-STP, DFS group, peer-link, and M-LAG on SwitchC, SwitchD, SwitchE, and SwitchF.</p>
+</li><li><p>Create VLANIF interfaces on SwitchE and SwitchF and configure IP addresses and virtual MAC addresses for the VLANIF interfaces to provide dual-active gateways.</p>
+</li><li><p>Enable OSPF on SwitchE, SwitchF, SwitchG, and SwitchH to implement Layer 3 connectivity.</p>
+</li></ol>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>Perform the configuration in sequence strictly; configure the devices that constitute the M-LAG one by one; and ensure that the LACP mode is used.</p>
+</div></div>
+</div></div>
+<div class="steps"><a name="EN-US_TASK_0138784359__1.3.3"></a><a name="1.3.3"></a><h4 class="sectiontitle">Procedure</h4>
+<ol><li><span>Configure SwitchA and SwitchB to form a stack. For details, see <span>Stack Configuration in Configuration Guide - Virtualization Configuration</span>.</span></li><li><span>Create an Eth-Trunk in the stack, add the Eth-Trunk to VLAN 11, and configure the Eth-Trunk to preferentially forward local traffic in the stack.</span><p><p>The uplink interface of the server connected to the stack needs to be bound to an aggregation link, and the link aggregation modes on the server and stack must be consistent.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname iStack</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>iStack] <strong>vlan batch 11</strong>
+[<span class="keyword">*</span>iStack] <strong>interface eth-trunk 10</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk10] <strong>mode lacp-dynamic</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk10] <strong>port link-type access</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk10] <strong>port default vlan 11</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk10] <strong>trunkport 10ge 1/0/3</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk10] <strong>trunkport 10ge 2/0/3</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk10] <strong>undo local-preference disable</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk10] <strong>quit</strong>
+[<span class="keyword">*</span>iStack] <strong>interface eth-trunk 20</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk20] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk20] <strong>port link-type trunk</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk20] <strong>port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk20] <strong>trunkport 10ge 1/0/1</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk20] <strong>trunkport 10ge 1/0/2</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk20] <strong>trunkport 10ge 2/0/1</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk20] <strong>trunkport 10ge 2/0/2</strong>
+[<span class="keyword">*</span>iStack-Eth-Trunk20] <strong>quit</strong>
+[<span class="keyword">*</span>iStack] <strong>commit</strong></pre>
+</p></li><li><span>Configure the V-STP, DFS group, peer-link, and M-LAG on SwitchC, SwitchD, SwitchE, and SwitchF.</span><p><p># Configure SwitchC.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchC</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchC]<strong> stp mode rstp</strong>
+[<span class="keyword">*</span>SwitchC]<strong> stp v-stp enable</strong>
+[<span class="keyword">*</span>SwitchC]<strong> interface meth 0/0/0</strong>
+[<span class="keyword">*</span>SwitchC-MEth0/0/0]<strong> ip address 10.1.1.1 24</strong>
+[<span class="keyword">*</span>SwitchC-MEth0/0/0]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchC]<strong> dfs-group 1</strong>
+[<span class="keyword">*</span>SwitchC-dfs-group-1]<strong> source ip 10.1.1.1</strong> <strong>peer 10.1.1.2</strong>
+[<span class="keyword">*</span>SwitchC-dfs-group-1]<strong> </strong><strong>dual-active detection enhanced enable</strong>
+[<span class="keyword">*</span>SwitchC-dfs-group-1]<strong> priority 150</strong>
+[<span class="keyword">*</span>SwitchC-dfs-group-1]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchC] <strong>interface eth-trunk 0</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk0] <strong>trunkport 10ge 1/0/3</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk0] <strong>trunkport 10ge </strong><span><strong>1/0/4</strong></span>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk0] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk0] <strong>peer-link 1</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchC]<strong> vlan batch 11</strong>
+[<span class="keyword">*</span>SwitchC]<strong> interface eth-trunk 20</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk20]<strong> mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk20]<strong> port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk20]<strong> port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk20]<strong> trunkport 10ge 1/0/1 to 1/0/2</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk20]<strong> dfs-group 1 m-lag 1</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk20]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchC]<strong> interface eth-trunk 30</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk30]<strong> mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk30]<strong> port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk30]<strong> port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk30]<strong> trunkport 10ge 1/0/5 to 1/0/6</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk30]<strong> dfs-group 1 m-lag 2</strong>
+[<span class="keyword">*</span>SwitchC-Eth-Trunk30]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchC]<strong> commit</strong></pre>
+<p># Configure SwitchD.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchD</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchD]<strong> stp mode rstp</strong>
+[<span class="keyword">*</span>SwitchD]<strong> stp v-stp enable</strong>
+[<span class="keyword">*</span>SwitchD]<strong> interface meth 0/0/0</strong>
+[<span class="keyword">*</span>SwitchD-MEth0/0/0]<strong> ip address 10.1.1.2 24</strong>
+[<span class="keyword">*</span>SwitchD-MEth0/0/0]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchD]<strong> dfs-group 1</strong>
+[<span class="keyword">*</span>SwitchD-dfs-group-1]<strong> source ip 10.1.1.2</strong> <strong>peer 10.1.1.1</strong>
+[<span class="keyword">*</span>SwitchD-dfs-group-1]<strong> </strong><strong>dual-active detection enhanced enable</strong>
+[<span class="keyword">*</span>SwitchD-dfs-group-1]<strong> priority 120</strong>
+[<span class="keyword">*</span>SwitchD-dfs-group-1]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchD] <strong>interface eth-trunk 0</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk0] <strong>trunkport 10ge 1/0/3</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk0] <strong>trunkport 10ge <span>1/0/4</span></strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk0] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk0] <strong>peer-link 1</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchD]<strong> vlan batch 11</strong>
+[<span class="keyword">*</span>SwitchD]<strong> interface eth-trunk 20</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk20]<strong> mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk20]<strong> port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk20]<strong> port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk20]<strong> trunkport 10ge 1/0/1 to 1/0/2</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk20]<strong> dfs-group 1 m-lag 1</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk20]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchD]<strong> interface eth-trunk 30</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk30]<strong> mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk30]<strong> port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk30]<strong> port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk30]<strong> trunkport 10ge 1/0/5 to 1/0/6</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk30]<strong> dfs-group 1 m-lag 2</strong>
+[<span class="keyword">*</span>SwitchD-Eth-Trunk30]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchD]<strong> commit</strong></pre>
+<p># Configure SwitchE.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchE</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchE]<strong> stp mode rstp</strong>
+[<span class="keyword">*</span>SwitchE]<strong> stp v-stp enable</strong>
+[<span class="keyword">*</span>SwitchE]<strong> interface meth 0/0/0</strong>
+[<span class="keyword">*</span>SwitchE-MEth0/0/0]<strong> ip address 10.2.1.1 24</strong>
+[<span class="keyword">*</span>SwitchE-MEth0/0/0]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchE]<strong> dfs-group 1</strong>
+[<span class="keyword">*</span>SwitchE-dfs-group-1]<strong> source ip 10.2.1.1</strong> <strong>peer 10.2.1.2</strong>
+[<span class="keyword">*</span>SwitchE-dfs-group-1]<strong> </strong><strong>dual-active detection enhanced enable</strong>
+[<span class="keyword">*</span>SwitchE-dfs-group-1]<strong> priority 150</strong>
+[<span class="keyword">*</span>SwitchE-dfs-group-1]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchE] <strong>interface eth-trunk 0</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk0] <strong>trunkport 10ge 1/0/3</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk0] <strong>trunkport 10ge <span>1/0/4</span></strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk0] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk0] <strong>peer-link 1</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchE]<strong> vlan batch 11</strong>
+[<span class="keyword">*</span>SwitchE]<strong> interface eth-trunk 40</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk40]<strong> mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk40]<strong> port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk40]<strong> port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk40]<strong> trunkport 10ge 1/0/1 to 1/0/2</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk40]<strong> dfs-group 1 m-lag 1</strong>
+[<span class="keyword">*</span>SwitchE-Eth-Trunk40]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchE]<strong> commit</strong></pre>
+<p># Configure SwitchF.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchF</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchF]<strong> stp mode rstp</strong>
+[<span class="keyword">*</span>SwitchF]<strong> stp v-stp enable</strong>
+[<span class="keyword">*</span>SwitchF]<strong> interface meth 0/0/0</strong>
+[<span class="keyword">*</span>SwitchF-MEth0/0/0]<strong> ip address 10.2.1.2 24</strong>
+[<span class="keyword">*</span>SwitchF-MEth0/0/0]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchF]<strong> dfs-group 1</strong>
+[<span class="keyword">*</span>SwitchF-dfs-group-1]<strong> source ip 10.2.1.2</strong> <strong>peer 10.2.1.1</strong>
+[<span class="keyword">*</span>SwitchF-dfs-group-1]<strong> dual-active detection enhanced enable</strong>
+[<span class="keyword">*</span>SwitchF-dfs-group-1]<strong> priority 120</strong>
+[<span class="keyword">*</span>SwitchF-dfs-group-1]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchF] <strong>interface eth-trunk 0</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk0] <strong>trunkport 10ge 1/0/3</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk0] <strong>trunkport 10ge <span>1/0/4</span></strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk0] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk0] <strong>peer-link 1</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchF]<strong> vlan batch 11</strong>
+[<span class="keyword">*</span>SwitchF]<strong> interface eth-trunk 40</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk40]<strong> mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk40]<strong> port link-type trunk</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk40]<strong> port trunk allow-pass vlan 11</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk40]<strong> trunkport 10ge 1/0/1 to 1/0/2</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk40]<strong> dfs-group 1 m-lag 1</strong>
+[<span class="keyword">*</span>SwitchF-Eth-Trunk40]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchF]<strong> commit</strong></pre>
+</p></li><li><span>Create VLANIF interfaces on SwitchE and SwitchF and assign IP addresses to the VLANIF interfaces.</span><p><p># Configure SwitchE.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchE] <strong>interface vlanif 11</strong>
+[<span class="keyword">*</span>SwitchE-Vlanif11] <strong>ip address 10.3.1.1 24</strong>
+[<span class="keyword">*</span>SwitchE-Vlanif11] <span><strong>mac-address 0000-5e00-0102</strong></span>
+[<span class="keyword">*</span>SwitchE-Vlanif11] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchE] <strong>commit</strong></pre>
+<p># Configure SwitchF.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchF] <strong>interface vlanif 11</strong>
+[<span class="keyword">*</span>SwitchF-Vlanif11] <strong>ip address 10.3.1.1 24</strong>
+[<span class="keyword">*</span>SwitchF-Vlanif11] <span><strong>mac-address 0000-5e00-0102</strong></span>
+[<span class="keyword">*</span>SwitchF-Vlanif11] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchF] <strong>commit</strong></pre>
+</p></li><li><span>Enable OSPF on SwitchE, SwitchF, SwitchG, and SwitchH.</span><p><div class="p"># Configure SwitchE.<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchE] <strong>interface 10ge 1/0/5</strong>
+[<span class="keyword">*</span>SwitchE-10GE1/0/5] <strong>undo portswitch</strong>
+[<span class="keyword">*</span>SwitchE-10GE1/0/5] <strong>ip address 10.4.1.1 24</strong>
+[<span class="keyword">*</span>SwitchE-10GE1/0/5] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchE] <strong>interface 10ge 1/0/6</strong>
+[<span class="keyword">*</span>SwitchE-10GE1/0/6] <strong>undo portswitch</strong>
+[<span class="keyword">*</span>SwitchE-10GE1/0/6] <strong>ip address 10.5.1.1 24</strong>
+[<span class="keyword">*</span>SwitchE-10GE1/0/6] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchE] <strong>ospf 1</strong>
+[<span class="keyword">*</span>SwitchE-ospf-1] <strong>area 0</strong>
+[<span class="keyword">*</span>SwitchE-ospf-1-area-0.0.0.0] <strong>network 10.3.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchE-ospf-1-area-0.0.0.0] <strong>network 10.4.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchE-ospf-1-area-0.0.0.0] <strong>network 10.5.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchE-ospf-1-area-0.0.0.0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchE-ospf-1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchE] <strong>commit</strong></pre>
+</div>
+<div class="p"># Configure SwitchF.<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchF] <strong>interface 10ge 1/0/5</strong>
+[<span class="keyword">*</span>SwitchF-10GE1/0/5] <strong>undo portswitch</strong>
+[<span class="keyword">*</span>SwitchF-10GE1/0/5] <strong>ip address 10.6.1.1 24</strong>
+[<span class="keyword">*</span>SwitchF-10GE1/0/5] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchF] <strong>interface 10ge 1/0/6</strong>
+[<span class="keyword">*</span>SwitchF-10GE1/0/6] <strong>undo portswitch</strong>
+[<span class="keyword">*</span>SwitchF-10GE1/0/6] <strong>ip address 10.7.1.1 24</strong>
+[<span class="keyword">*</span>SwitchF-10GE1/0/6] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchF] <strong>ospf 1</strong>
+[<span class="keyword">*</span>SwitchF-ospf-1] <strong>area 0</strong>
+[<span class="keyword">*</span>SwitchF-ospf-1-area-0.0.0.0] <strong>network 10.3.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchF-ospf-1-area-0.0.0.0] <strong>network 10.6.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchF-ospf-1-area-0.0.0.0] <strong>network 10.7.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchF-ospf-1-area-0.0.0.0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchF-ospf-1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchF] <strong>commit</strong></pre>
+</div>
+<p># Configure SwitchG.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchG</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchG] <strong>interface 10ge 1/0/1</strong>
+[<span class="keyword">*</span>SwitchG-10GE1/0/1] <strong>undo portswitch</strong>
+[<span class="keyword">*</span>SwitchG-10GE1/0/1] <strong>ip address 10.4.1.2 24</strong>
+[<span class="keyword">*</span>SwitchG-10GE1/0/1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchG] <strong>interface 10ge 1/0/2</strong>
+[<span class="keyword">*</span>SwitchG-10GE1/0/2] <strong>undo portswitch</strong>
+[<span class="keyword">*</span>SwitchG-10GE1/0/2] <strong>ip address 10.7.1.2 24</strong>
+[<span class="keyword">*</span>SwitchG-10GE1/0/2] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchG] <strong>ospf 1</strong>
+[<span class="keyword">*</span>SwitchG-ospf-1] <strong>area 0</strong>
+[<span class="keyword">*</span>SwitchG-ospf-1-area-0.0.0.0] <strong>network 10.4.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchG-ospf-1-area-0.0.0.0] <strong>network 10.7.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchG-ospf-1-area-0.0.0.0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchG-ospf-1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchG] <strong>commit</strong></pre>
+<p># Configure SwitchH.</p>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname SwitchH</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchH] <strong>interface 10ge 1/0/1</strong>
+[<span class="keyword">*</span>SwitchH-10GE1/0/1] <strong>undo portswitch</strong>
+[<span class="keyword">*</span>SwitchH-10GE1/0/1] <strong>ip address 10.6.1.2 24</strong>
+[<span class="keyword">*</span>SwitchH-10GE1/0/1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchH] <strong>interface 10ge 1/0/2</strong>
+[<span class="keyword">*</span>SwitchH-10GE1/0/2] <strong>undo portswitch</strong>
+[<span class="keyword">*</span>SwitchH-10GE1/0/2] <strong>ip address 10.5.1.2 24</strong>
+[<span class="keyword">*</span>SwitchH-10GE1/0/2] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchH] <strong>ospf 1</strong>
+[<span class="keyword">*</span>SwitchH-ospf-1] <strong>area 0</strong>
+[<span class="keyword">*</span>SwitchH-ospf-1-area-0.0.0.0] <strong>network 10.5.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchH-ospf-1-area-0.0.0.0] <strong>network 10.6.1.0 0.0.0.255</strong>
+[<span class="keyword">*</span>SwitchH-ospf-1-area-0.0.0.0] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchH-ospf-1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchH] <strong>commit</strong></pre>
+</p></li><li><span>Verify the configuration.</span><p><ul><li><p>Run the <b><span class="cmdname">display dfs-group</span></b> command to check M-LAG information.</p>
+<p># Check DFS group information.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchC]<strong> display dfs-group 1 m-lag</strong>
+*                : Local node
+Heart beat state : <strong>OK</strong>
+Node 1 *
+  Dfs-Group ID   : 1
+  Priority       : 150
+  Address        : ip address 10.1.1.1
+  State          : <strong>Master</strong>
+  Causation      : -
+  System ID      : 0025-9e95-7c31
+  SysName        : SwitchC
+  Version        : <span>V100R006C00</span>
+  Device Type    : CE6850EI
+Node 2
+  Dfs-Group ID   : 1
+  Priority       : 120
+  Address        : ip address 10.1.1.2
+  State          : <strong>Backup</strong>
+  Causation      : -
+  System ID      : 0025-9e95-7c11
+  SysName        : SwitchD
+  Version        : <span>V100R006C00</span>
+  Device Type    : CE6850EI</pre>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchE]<strong> display dfs-group 1 m-lag</strong>
+*                : Local node
+Heart beat state : <strong>OK</strong>
+Node 1 *
+  Dfs-Group ID   : 1
+  Priority       : 150
+  Address        : ip address 10.2.1.1
+  State          : <strong>Master</strong>
+  Causation      : -
+  System ID      : 0025-9e95-7c41
+  SysName        : SwitchE
+  Version        : <span>V100R006C00</span>
+  Device Type    : CE12800
+Node 2
+  Dfs-Group ID   : 1
+  Priority       : 120
+  Address        : ip address 10.2.1.2
+  State          : <strong>Backup</strong>
+  Causation      : -
+  System ID      : 0025-9e95-7c21
+  SysName        : SwitchF
+  Version        : <span>V100R006C00</span>
+  Device Type    : CE12800</pre>
+<p># Check M-LAG information on SwitchC.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchC]<strong> display dfs-group 1 node 1 m-lag brief</strong>
+* - Local node
+
+M-Lag ID     Interface      Port State    Status
+       1     Eth-Trunk 20   <strong>Up</strong>            active(*)-active
+       2     Eth-Trunk 30   <strong>Up</strong>            active(*)-active</pre>
+<p># Check M-LAG information on SwitchE.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchE]<strong> display dfs-group 1 node 2 m-lag brief</strong>
+* - Local node
+
+M-Lag ID     Interface      Port State    Status
+       1     Eth-Trunk 40   <strong>Up</strong>            active-active(*)</pre>
+<p>In the preceding information, the value of <span class="parmname"><b>Heart beat state</b></span> is <span class="parmname"><b>OK</b></span>, indicating that the heartbeat is normal. SwitchC and SwitchE are used as Node 1, its priority is 150, and the value of <span class="parmname"><b>State</b></span> is <span class="parmname"><b>Master</b></span>. SwitchD and SwitchF are used as Node 2, the priority is 120, and the value of <span class="parmname"><b>State</b></span> is <span class="parmname"><b>Backup</b></span>. The value of <span class="parmname"><b>Causation</b></span> is <span class="parmname"><b>-</b></span>, the values of <span class="parmname"><b>Port State</b></span> of Node 1 and Node 2 are both <span class="parmname"><b>Up</b></span>, and the M-LAG status of both Node 1 and Node 2 is <span class="parmname"><b>active</b></span>, indicating that the M-LAG configuration is correct.</p>
+</li></ul>
+</p></li></ol></div>
+<div class="example"><a name="EN-US_TASK_0138784359__1.3.4"></a><a name="1.3.4"></a><h4 class="sectiontitle">Configuration Files</h4><ul><li><p>Stack configuration file</p>
+<pre class="screen">#
+sysname iStack
+#
+vlan batch 11
+#
+stack
+ #
+ stack member 1 domain 10
+ stack member 1 priority 150
+ #
+ stack member 2 domain 10
+#
+interface Stack-Port1/1
+#
+interface Stack-Port2/1
+#
+interface Eth-Trunk10
+ port default vlan 11
+ mode lacp-dynamic
+#
+interface Eth-Trunk20
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+#
+interface 10GE1/0/1
+ eth-trunk 20
+#
+interface 10GE1/0/2
+ eth-trunk 20
+#
+interface 10GE1/0/3
+ eth-trunk 10
+#
+interface 40GE1/0/1
+ port mode stack
+ stack-port 1/1
+#
+interface 40GE1/0/2
+ port mode stack
+ stack-port 1/1
+#
+interface 10GE2/0/1
+ eth-trunk 20
+#
+interface 10GE2/0/2
+ eth-trunk 20
+#
+interface 10GE2/0/3
+ eth-trunk 10
+#
+interface 40GE2/0/1
+ port mode stack
+ stack-port 2/1
+#
+interface 40GE2/0/2
+ port mode stack
+ stack-port 2/1
+#
+return</pre>
+</li><li><p>SwitchC configuration file</p>
+<pre class="screen">#
+sysname SwitchC
+#
+dfs-group 1
+ priority 150
+ source ip 10.1.1.1 peer 10.1.1.2
+ dual-active detection enhanced enable
+#
+vlan batch 11
+#
+<span>stp mode rstp
+stp v-stp enable</span>
+#
+interface MEth0/0/0
+ ip address 10.1.1.1 255.255.255.0
+#
+interface Eth-Trunk0
+ mode lacp-static
+ peer-link 1
+#
+interface Eth-Trunk20
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+ dfs-group 1 m-lag 1
+#
+interface Eth-Trunk30
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+ dfs-group 1 m-lag 2
+#
+interface 10GE1/0/1
+ eth-trunk 20
+#
+interface 10GE1/0/2
+ eth-trunk 20
+#
+interface 10GE1/0/3
+ eth-trunk 0
+#
+interface 10GE<span>1/0/4</span>
+ eth-trunk 0
+#
+interface 10GE1/0/5
+ eth-trunk 30
+#
+interface 10GE1/0/6
+ eth-trunk 30
+#
+return</pre>
+</li><li><p>SwitchD configuration file</p>
+<pre class="screen">#
+sysname SwitchD
+#
+dfs-group 1
+ priority 120
+ source ip 10.1.1.2 peer 10.1.1.1
+ dual-active detection enhanced enable
+#
+vlan batch 11
+#
+<span>stp mode rstp
+stp v-stp enable</span>
+#
+interface MEth0/0/0
+ ip address 10.1.1.2 255.255.255.0
+#
+interface Eth-Trunk0
+ mode lacp-static
+ peer-link 1
+#
+interface Eth-Trunk20
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+ dfs-group 1 m-lag 1
+#
+interface Eth-Trunk30
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+ dfs-group 1 m-lag 2
+#
+interface 10GE1/0/1
+ eth-trunk 20
+#
+interface 10GE1/0/2
+ eth-trunk 20
+#
+interface 10GE1/0/3
+ eth-trunk 0
+#
+interface 10GE<span>1/0/4</span>
+ eth-trunk 0
+#
+interface 10GE1/0/5
+ eth-trunk 30
+#
+interface 10GE1/0/6
+ eth-trunk 30
+#
+return</pre>
+</li><li><p>SwitchE configuration file</p>
+<pre class="screen">#
+sysname SwitchE
+#
+dfs-group 1
+ priority 150
+ source ip 10.2.1.1 peer 10.2.1.2
+ dual-active detection enhanced enable
+#
+vlan batch 11
+#
+<span>stp mode rstp
+stp v-stp enable</span>
+#
+interface Vlanif11
+ ip address 10.3.1.1 255.255.255.0
+ <span>mac-address 0000-5e00-0102</span>
+#
+interface MEth0/0/0
+ ip address 10.2.1.1 255.255.255.0
+#
+interface Eth-Trunk0
+ mode lacp-static
+ peer-link 1
+#
+interface Eth-Trunk40
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+ dfs-group 1 m-lag 1
+#
+interface 10GE1/0/1
+ eth-trunk 40
+#
+interface 10GE1/0/2
+ eth-trunk 40
+#
+interface 10GE1/0/3
+ eth-trunk 0
+#
+interface 10GE<span>1/0/4</span>
+ eth-trunk 0
+#
+interface 10GE1/0/5
+ undo portswitch
+ ip address 10.4.1.1 255.255.255.0
+#
+interface 10GE1/0/6
+ undo portswitch
+ ip address 10.5.1.1 255.255.255.0
+#
+ospf 1
+ area 0.0.0.0
+  network 10.3.1.0 0.0.0.255
+  network 10.4.1.0 0.0.0.255
+  network 10.5.1.0 0.0.0.255
+#
+return</pre>
+</li><li><p>SwitchF configuration file</p>
+<pre class="screen">#
+sysname SwitchF
+#
+dfs-group 1
+ priority 120
+ source ip 10.2.1.2 peer 10.2.1.1
+ dual-active detection enhanced enable
+#
+vlan batch 11
+#
+<span>stp mode rstp
+stp v-stp enable</span>
+#
+interface Vlanif11
+ ip address 10.3.1.1 255.255.255.0
+ <span>mac-address 0000-5e00-0102</span>
+#
+interface MEth0/0/0
+ ip address 10.2.1.2 255.255.255.0
+#
+interface Eth-Trunk0
+ mode lacp-static
+ peer-link 1
+#
+interface Eth-Trunk40
+ port link-type trunk
+ port trunk allow-pass vlan 11
+ mode lacp-static
+ dfs-group 1 m-lag 1
+#
+interface 10GE1/0/1
+ eth-trunk 40
+#
+interface 10GE1/0/2
+ eth-trunk 40
+#
+interface 10GE1/0/3
+ eth-trunk 0
+#
+interface 10GE<span>1/0/4</span>
+ eth-trunk 0
+#
+interface 10GE1/0/5
+ undo portswitch
+ ip address 10.6.1.1 255.255.255.0
+#
+interface 10GE1/0/6
+ undo portswitch
+ ip address 10.7.1.1 255.255.255.0
+#
+ospf 1
+ area 0.0.0.0
+  network 10.3.1.0 0.0.0.255
+  network 10.6.1.0 0.0.0.255
+  network 10.7.1.0 0.0.0.255
+#
+return</pre>
+</li><li><p>SwitchG configuration file</p>
+<pre class="screen">#
+sysname SwitchG
+#
+interface 10GE1/0/1
+ undo portswitch
+ ip address 10.4.1.2 255.255.255.0
+#
+interface 10GE1/0/2
+ undo portswitch
+ ip address 10.7.1.2 255.255.255.0
+#
+ospf 1
+ area 0.0.0.0
+  network 10.4.1.0 0.0.0.255
+  network 10.7.1.0 0.0.0.255
+#
+return</pre>
+</li><li><p>SwitchH configuration file</p>
+<pre class="screen">#
+sysname SwitchH
+#
+interface 10GE1/0/1
+ undo portswitch
+ ip address 10.6.1.2 255.255.255.0
+#
+interface 10GE1/0/2
+ undo portswitch
+ ip address 10.5.1.2 255.255.255.0
+#
+ospf 1
+ area 0.0.0.0
+  network 10.5.1.0 0.0.0.255
+  network 10.6.1.0 0.0.0.255
+#
+return</pre>
+</li></ul>
+</div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_dc_cfgcase_reliab_0000.html">Reliability
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_dc_cfgcase_reliab_0009.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_dc_cfgcase_reliab_0004.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+
+<script language="JavaScript">
+<!--
+initImageViewer('.imgResize');
+var msg_imageMax = "view original image";
+var msg_imageClose = "close";
+//--></script></body>
+</html>

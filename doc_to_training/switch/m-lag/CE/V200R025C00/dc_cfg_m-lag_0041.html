@@ -1,0 +1,170 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="concept">
+<meta name="DC.Title" content="M-LAG Consistency Check">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0003.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0045.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0046.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_CONCEPT_0141112599">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>M-LAG Consistency Check</title>
+</head>
+<body><a name="EN-US_CONCEPT_0141112599"></a><a name="EN-US_CONCEPT_0141112599"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">M-LAG Consistency Check</h1>
+<div><p>The M-LAG is a dual-active system composed of two devices. It is a horizontal virtualization technology that virtualizes two devices into one device (a Layer 2 logical node). The logical topology is clear, and some configurations of two devices in the M-LAG must be consistent. If some configurations of two devices in the M-LAG are inconsistent, the M-LAG may fail to work or a loop may occur.</p>
+<p>When the M-LAG is applied to an enterprise data center network, if the configuration of two devices in the M-LAG is manually performed or compared, the efficiency is low and there are many potential risks of incorrect configurations.</p>
+<p>To address the preceding issues, Huawei proposes M-LAG consistency check. The M-LAG mechanism provides the configuration consistency check to request the configuration of each module. Based on the comparison result after M-LAG consistency check is enabled, you can adjust the configurations of devices in the M-LAG to prevent problems such as network loops or data loss.</p>
+<div class="p" id="EN-US_CONCEPT_0141112599__p_1">The M-LAG configuration falls into two types: key configuration (Type 1) and common configuration (Type 2), as described in <a href="#EN-US_CONCEPT_0141112599__dc_cfg_m-lag_0041_table_02">Table 1</a>. Two M-LAG consistency check modes are available: strict and loose.<ul id="EN-US_CONCEPT_0141112599__ul1186707346175337"><li id="EN-US_CONCEPT_0141112599__li1000914381175337">Key configuration (Type 1): If the configurations of two devices in the M-LAG are inconsistent, problems may occur, for example, loops may occur or packets are discarded for a long period of time though the M-LAG status is normal.<p id="EN-US_CONCEPT_0141112599__p741198062175337"><a name="EN-US_CONCEPT_0141112599__li1000914381175337"></a><a name="li1000914381175337"></a>In strict mode, if the key configuration of two devices in the M-LAG is inconsistent, member interfaces on the M-LAG backup device enter the Error-Down state and the alarm about key configuration inconsistency is generated.</p>
+<p id="EN-US_CONCEPT_0141112599__p1399045647175337">In loose mode, if the key configuration of two devices in the M-LAG is inconsistent, the alarm about key and common configuration inconsistency is generated.</p>
+</li><li id="EN-US_CONCEPT_0141112599__li1210058636175337">Common configuration (Type 2): If the configurations of two devices in the M-LAG are inconsistent, the M-LAG status may be abnormal. Compared with the key configuration, the common configuration problem can be easily detected and has less impact on the live network.<p id="EN-US_CONCEPT_0141112599__p1137441413175337"><a name="EN-US_CONCEPT_0141112599__li1210058636175337"></a><a name="li1210058636175337"></a>Regardless of the mode, if the following common configuration of two devices in the M-LAG is inconsistent, the alarm about key and common configuration inconsistency is generated.</p>
+<p id="EN-US_CONCEPT_0141112599__p9528154511812">In addition, you can enable or disable M-LAG consistency check based on modules for Type 2 configurations. If M-LAG consistency check is enabled but you do not want to perform consistency check on some Type 2 configurations, you can add the configurations of a specified module to the M-LAG consistency check whitelist. Consistency check will not be performed on the configurations in the whitelist.</p>
+</li></ul>
+
+<div class="tableBorder"><a name="EN-US_CONCEPT_0141112599__dc_cfg_m-lag_0041_table_02"></a><a name="dc_cfg_m-lag_0041_table_02"></a><table cellpadding="4" cellspacing="0" summary="" id="EN-US_CONCEPT_0141112599__dc_cfg_m-lag_0041_table_02" frame="border" border="1" rules="all"><caption><b>Table 1 </b>M-LAG consistency check list</caption><thead align="left"><tr id="EN-US_CONCEPT_0141112599__row1721304032175337"><th align="left" class="cellrowborder" valign="top" width="33.33333333333333%" id="mcps1.3.4.3.2.4.1.1" liSelected="liSelected"><p id="EN-US_CONCEPT_0141112599__p1492436247175337">View</p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="33.33333333333333%" id="mcps1.3.4.3.2.4.1.2" liSelected="liSelected"><p id="EN-US_CONCEPT_0141112599__p1232414119175337">Configuration</p>
+</th>
+<th align="left" class="cellrowborder" valign="top" width="33.33333333333333%" id="mcps1.3.4.3.2.4.1.3" liSelected="liSelected"><p id="EN-US_CONCEPT_0141112599__p566230296175337">Type</p>
+</th>
+</tr>
+</thead>
+<tbody><tr id="EN-US_CONCEPT_0141112599__row2070893382175337"><td class="cellrowborder" valign="top" width="33.33333333333333%" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p295648419175337">System view</p>
+<p id="EN-US_CONCEPT_0141112599__p026574314157"></p>
+<p id="EN-US_CONCEPT_0141112599__p1314693310168"></p>
+</td>
+<td class="cellrowborder" valign="top" width="33.33333333333333%" headers="mcps1.3.4.3.2.4.1.2 "><ul id="EN-US_CONCEPT_0141112599__ul2271174971412"><li id="EN-US_CONCEPT_0141112599__li02712049101412">Whether STP is enabled</li><li id="EN-US_CONCEPT_0141112599__li2836252161416">STP working mode</li><li id="EN-US_CONCEPT_0141112599__li1220805991418">Whether VBST is enabled in a VLAN</li><li id="EN-US_CONCEPT_0141112599__li20471118111512">Whether BPDU protection is enabled</li><li id="EN-US_CONCEPT_0141112599__li493125131517">Mappings between MSTIs and VLANs<div class="note" id="EN-US_CONCEPT_0141112599__note2905129111516"><span class="notetitle"> NOTE: </span><div class="notebody"><p id="EN-US_CONCEPT_0141112599__p1490532951516">By default, the device checks the mappings between MSTIs and VLANs only in process 0.</p>
+</div></div>
+</li></ul>
+<p id="EN-US_CONCEPT_0141112599__p810265360175337"></p>
+</td>
+<td class="cellrowborder" rowspan="2" valign="top" width="33.33333333333333%" headers="mcps1.3.4.3.2.4.1.3 "><p id="EN-US_CONCEPT_0141112599__p551905722175337">Type 1</p>
+<p id="EN-US_CONCEPT_0141112599__p16621850929"></p>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row1197052517175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p1701151697175337">M-LAG member interface view</p>
+<p id="EN-US_CONCEPT_0141112599__p2621155015213"></p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.2 "><ul id="EN-US_CONCEPT_0141112599__ul17520195415154"><li id="EN-US_CONCEPT_0141112599__li18520135413154">Whether STP is enabled</li><li id="EN-US_CONCEPT_0141112599__li11721185812150">STP edge port attribute</li><li id="EN-US_CONCEPT_0141112599__li031023131614">Whether root protection is enabled</li><li id="EN-US_CONCEPT_0141112599__li5223162319164">LACP mode</li></ul>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row1292637834175337"><td class="cellrowborder" rowspan="10" valign="top" width="33.33333333333333%" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p88175413175337">System view</p>
+</td>
+<td class="cellrowborder" valign="top" width="33.33333333333333%" headers="mcps1.3.4.3.2.4.1.2 "><p id="EN-US_CONCEPT_0141112599__p411644853175337">VLAN configuration</p>
+</td>
+<td class="cellrowborder" rowspan="15" valign="top" width="33.33333333333333%" headers="mcps1.3.4.3.2.4.1.3 "><p id="EN-US_CONCEPT_0141112599__p287889272175337">Type 2</p>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row17261313181514"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p1972621320154">Whether enhanced M-LAG Layer 3 forwarding is enabled</p>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row16269112220517"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p1826914224517">Whether ARP/ND entry synchronization is enabled</p>
+<p id="EN-US_CONCEPT_0141112599__p8658181393017">Whether enhanced M-LAG route convergence is enabled</p>
+<p id="EN-US_CONCEPT_0141112599__p053515100304">Whether the function of binding a BD to a VLAN in enhanced mode is enabled on both devices in the M-LAG</p>
+<div class="note" id="EN-US_CONCEPT_0141112599__note137292226131"><span class="notetitle"> NOTE: </span><div class="notebody"><p id="EN-US_CONCEPT_0141112599__p67291122171312">If one of the two devices in an M-LAG does not support enhanced consistency check for M-LAG route convergence, the device does not perform consistency check for enhanced M-LAG route convergence.</p>
+</div></div>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row1250148532175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><div class="p" id="EN-US_CONCEPT_0141112599__p673252888175337">Static MAC address entries<ul id="EN-US_CONCEPT_0141112599__ul1607431947175337"><li id="EN-US_CONCEPT_0141112599__li1930680629175337">Static MAC address entry in which the interface is an M-LAG member interface</li><li id="EN-US_CONCEPT_0141112599__li1570356891175337">Static MAC address entry of a VXLAN tunnel</li></ul>
+<div class="note" id="EN-US_CONCEPT_0141112599__note650615083719"><span class="notetitle"> NOTE: </span><div class="notebody"><p id="EN-US_CONCEPT_0141112599__p145061450143712">Layer 2 sub-interfaces of M-LAG member interfaces do not support static MAC address consistency check.</p>
+<p id="EN-US_CONCEPT_0141112599__p639571216422">For a static MAC address of a VXLAN tunnel, you need to compare the MAC address, IP/IPv6 address, and VNI ID.</p>
+</div></div>
+</div>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row1222418436175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p410016056175337">Aging time of dynamic MAC address entries</p>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row376093902175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><div class="p" id="EN-US_CONCEPT_0141112599__p2139532055175337">Static ARP entries<ul id="EN-US_CONCEPT_0141112599__ul378178537175337"><li id="EN-US_CONCEPT_0141112599__li601721817175337">Short static ARP entries</li><li id="EN-US_CONCEPT_0141112599__li872019712175337">Long static ARP entries<ul id="EN-US_CONCEPT_0141112599__ul287163320175337"><li id="EN-US_CONCEPT_0141112599__li2037206611175337">If outbound interfaces are specified in static ARP entries, only the static ARP entries in which the outbound interfaces are M-LAG member interfaces are checked.</li><li id="EN-US_CONCEPT_0141112599__li1465672024175337">If the VLANs to which static ARP entries belong are specified, the VLAN IDs are compared.</li><li id="EN-US_CONCEPT_0141112599__li1990215845175337">If outbound interfaces and the VLANs to which static ARP entries belong are specified, the static ARP entries in which the outbound interfaces are M-LAG member interfaces and the VLAN IDs are compared.</li><li id="EN-US_CONCEPT_0141112599__li1715593137175337">Static ARP entry of an IPv4 VXLAN tunnel</li></ul>
+</li></ul>
+<div class="note" id="EN-US_CONCEPT_0141112599__note1525510788175337"><span class="notetitle"> NOTE: </span><div class="notebody"><p id="EN-US_CONCEPT_0141112599__p1499185113127">The switch cannot check short static ARP entries of a specified VPN instance. If the outbound interface of a long static ARP entry is an M-LAG member interface and is bound to a VPN instance or the VLANIF interface corresponding to the VLAN to which the outbound interface belongs is bound to a VPN instance, the switch cannot check the static ARP entry.</p>
+</div></div>
+</div>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row358297076175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p1186524029175337">Aging time of dynamic ARP entries</p>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row925978988175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><div class="p" id="EN-US_CONCEPT_0141112599__p1231733927175337">Bridge Domain (BD) configuration<ul id="EN-US_CONCEPT_0141112599__ul726872091175337"><li id="EN-US_CONCEPT_0141112599__li242962550175337">BD ID</li><li id="EN-US_CONCEPT_0141112599__li1877065785175337">VNI associated with the BD</li><li id="EN-US_CONCEPT_0141112599__li1768712472453">BD-to-VLAN binding</li></ul>
+<div class="note" id="EN-US_CONCEPT_0141112599__note72019505619"><span class="notetitle"> NOTE: </span><div class="notebody"><p id="EN-US_CONCEPT_0141112599__p1988813488463">If one of the two devices in an M-LAG does not support consistency check for VLAN bound to the BD, the M-LAG does not perform consistency check for VLAN bound to the BD.</p>
+</div></div>
+</div>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row1536212706175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><div class="p" id="EN-US_CONCEPT_0141112599__p1454348626175337">VBDIF interface configuration<ul id="EN-US_CONCEPT_0141112599__ul973009627175337"><li id="EN-US_CONCEPT_0141112599__li381365625175337">BD ID</li><li id="EN-US_CONCEPT_0141112599__li2044909560175337">IPv4 address</li><li id="EN-US_CONCEPT_0141112599__li2026158618175337">IPv6 address</li><li id="EN-US_CONCEPT_0141112599__li799150069175337">VRRP4 group</li><li id="EN-US_CONCEPT_0141112599__li792266922175337">MAC address</li><li id="EN-US_CONCEPT_0141112599__li1851726312175337">Status</li></ul>
+<div class="note" id="EN-US_CONCEPT_0141112599__note1279429144175337"><span class="notetitle"> NOTE: </span><div class="notebody"><p id="EN-US_CONCEPT_0141112599__p611865797175337">The device only checks the virtual MAC address by default.</p>
+<p id="EN-US_CONCEPT_0141112599__p1240892422175337">For the IPv6 address and VRRP4 configuration, the consistency check only take effect when the VBDIF interface is up. If the VBDIF interface is down, the preceding configurations do not take effect on the interface.</p>
+<p id="EN-US_CONCEPT_0141112599__p791343632420">When the VBDIF interface status changes, the IPv6 addresses, VRRP4 group configurations may be inconsistent. After services become stable, the configuration consistency check result is correct.</p>
+<p id="EN-US_CONCEPT_0141112599__p725521672813">If a VRRP4 IP address is configured on the VBDIF interface of the local M-LAG device, the system does not check whether the interface IP addresses are consistent or whether the virtual MAC addresses are consistent.</p>
+</div></div>
+</div>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row1276970391175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><div class="p" id="EN-US_CONCEPT_0141112599__p1557081462175337">VLANIF interface configuration<ul id="EN-US_CONCEPT_0141112599__ul1009763041175337"><li id="EN-US_CONCEPT_0141112599__li2065572797175337">VLAN ID</li><li id="EN-US_CONCEPT_0141112599__li1706134875175337">IPv4 address</li><li id="EN-US_CONCEPT_0141112599__li2002652498175337">IPv6 address</li><li id="EN-US_CONCEPT_0141112599__li2138846759175337">VRRP4 group</li><li id="EN-US_CONCEPT_0141112599__li19960191717112">VRRP6 group</li><li id="EN-US_CONCEPT_0141112599__li987837289175337">MAC address</li><li id="EN-US_CONCEPT_0141112599__li66814986175337">Status</li><li id="EN-US_CONCEPT_0141112599__li26731523132612">Aging time of dynamic ARP entries</li></ul>
+<div class="note" id="EN-US_CONCEPT_0141112599__note51510905175337"><span class="notetitle"> NOTE: </span><div class="notebody"><p id="EN-US_CONCEPT_0141112599__p307870594175337">The device only checks the virtual MAC address by default.</p>
+<p id="EN-US_CONCEPT_0141112599__p2081089354175337">For the IPv6 address, VRRP6 group, and VRRP4 group configuration, the consistency check takes effect only when the VLANIF interface is up. If the VLANIF interface is down, the preceding configurations do not take effect on the interface.</p>
+<p id="EN-US_CONCEPT_0141112599__p28085468204">When the VLANIF interface status changes, the IPv6 address, VRRP6 group, and VRRP4 group configurations may be inconsistent. After services become stable, the configuration consistency check result is correct.</p>
+<p id="EN-US_CONCEPT_0141112599__p14173181835010">If a VRRP4 or VRRP6 IP address is configured on the VLANIF interface of the local M-LAG device, the system does not check whether the interface IP addresses are consistent or whether the virtual MAC addresses are consistent.</p>
+<p id="EN-US_CONCEPT_0141112599__p187632715314">If one of the two M-LAG devices does not support consistency check on the aging time of dynamic ARP entries on VLANIF interfaces, consistency check is not performed for the aging time of dynamic ARP entries on VLANIF interfaces.</p>
+</div></div>
+</div>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row1624755750175337"><td class="cellrowborder" rowspan="5" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p2076579873175337">M-LAG member interface view</p>
+</td>
+<td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.2 "><p id="EN-US_CONCEPT_0141112599__p1505449530175337">STP priority</p>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row1156623365175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p792697455175337">VLAN ID</p>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row668151966175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><p id="EN-US_CONCEPT_0141112599__p1169680411175337">Parameters</p>
+</td>
+</tr>
+<tr id="EN-US_CONCEPT_0141112599__row121260455175337"><td class="cellrowborder" valign="top" headers="mcps1.3.4.3.2.4.1.1 "><div class="p" id="EN-US_CONCEPT_0141112599__p364624100175337">Number of member interfaces of the Eth-Trunk to which an M-LAG member interface belongs<div class="note" id="EN-US_CONCEPT_0141112599__note1326484891175337"><span class="notetitle"> NOTE: </span><div class="notebody"><p id="EN-US_CONCEPT_0141112599__p0147105131217">Only the numbers of member interfaces of Eth-Trunks are compared. The physical Up/Down status or bandwidth of member interfaces is not checked.</p>
+</div></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0003.html">Understanding M-LAG
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0045.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_cfg_m-lag_0046.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="task">
+<meta name="DC.Title" content="(Optional) Enabling the MAC FRR Function">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0021.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0049_c.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0074_c.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_TASK_0268396083">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>(Optional) Enabling the MAC FRR Function</title>
+</head>
+<body><a name="EN-US_TASK_0268396083"></a><a name="EN-US_TASK_0268396083"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">(Optional) Enabling the MAC FRR Function</h1>
+<div class="taskbody"><div class="context"><a name="EN-US_TASK_0268396083__1.3.1"></a><a name="1.3.1"></a><h4 class="sectiontitle">Context</h4>
+<div class="p" id="EN-US_TASK_0268396083__en-us_task_0261226292_01"><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p204902660175337">To speed up convergence when an M-LAG member interface fails, you can enable the MAC FRR function so that backup FRR resources are requested for all MAC address entries with M-LAG member interfaces as outbound interfaces. Active and standby paths are established for traffic forwarding on downlink outbound interfaces. If an M-LAG member interface fails, the outbound interface can be quickly changed to a peer-link interface.</p>
+<div class="note" id="EN-US_TASK_0268396083__en-us_task_0261226292_note1842410214217"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p2207344195113">Only the CE6881<span>, CE5881</span><span>, CE6881K</span>, CE6820<span>, CE6863K</span><span>, CE6881E</span><span>, CE6863E</span>, and CE6863 support the MAC FRR function.</p>
+</div></div>
+<p id="EN-US_TASK_0268396083__en-us_task_0261226292_p161423365143">When an M-LAG is connected to a VXLAN network, MAC address entries of Layer 2 sub-interfaces need to be deleted if an M-LAG member interface fails. The MAC address entry deletion performance determines the traffic convergence performance. To improve the traffic convergence performance upon an interface fault in the M-LAG scenario, you can enable the MAC FRR function on the overlay network in VXLAN networking.</p>
+<p id="EN-US_TASK_0268396083__en-us_task_0261226292_p162914335912">After the MAC FRR function is enabled on the overlay network in VXLAN networking, backup FRR resources are requested for all MAC address entries whose outbound interfaces are Layer 2 sub-interfaces of M-LAG member interfaces. The outbound interfaces can be changed to implicit QinQ Layer 2 sub-interfaces of peer-link interfaces to establish active and standby paths for traffic forwarding. If the FEI side detects that an M-LAG member interface fails, dual-homing networking is changed to single-homing networking. The next hop in the corresponding MAC address entry is changed from the M-LAG member interface to the peer-link interface. This improves the switchover performance when faults occur.</p>
+<div class="note" id="EN-US_TASK_0268396083__en-us_task_0261226292_note14208164411518"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p8624174410243">Only the CE6881<span>, CE5881</span><span>, CE6881K</span><span>, CE6863K</span><span>, CE6881E</span><span>, CE6863E</span>, and CE6863 support the MAC FRR function on the overlay network in VXLAN networking.</p>
+</div></div>
+</div></div>
+<div class="steps"><a name="EN-US_TASK_0268396083__1.3.2"></a><a name="1.3.2"></a><h4 class="sectiontitle">Procedure</h4>
+<ol id="EN-US_TASK_0268396083__en-us_task_0261226292_steps918949800175337"><li id="EN-US_TASK_0268396083__en-us_task_0261226292_step228932472175337"><span id="EN-US_TASK_0268396083__en-us_task_0261226292_cmd1524845127175337">Run <a href="cmdqueryname=system-view"><b><span class="cmdname" id="EN-US_TASK_0268396083__en-us_task_0261226292_cmdname572230138175337">system-view</span></b></a></span><p><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p635175714218">The system view is displayed.</p>
+</p></li><li id="EN-US_TASK_0268396083__en-us_task_0261226292_step34499282111"><span id="EN-US_TASK_0268396083__en-us_task_0261226292_cmd944982811114">Run <a href="cmdqueryname=dfs-group"><b><span class="cmdname" id="EN-US_TASK_0268396083__en-us_task_0261226292_cmdname2095272618175337">dfs-group</span></b></a> <i><span class="varname" id="EN-US_TASK_0268396083__en-us_task_0261226292_varname1310653887175337">dfs-group-id</span></i></span><p><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p16545151314317">The DFS group view is displayed.</p>
+</p></li><li id="EN-US_TASK_0268396083__en-us_task_0261226292_step610472888175337"><span id="EN-US_TASK_0268396083__en-us_task_0261226292_cmd1688446897175337">Run <a href="cmdqueryname=m-lag+mac-address+frr"><b><span class="cmdname" id="EN-US_TASK_0268396083__en-us_task_0261226292_cmdname490855563175337">m-lag mac-address frr</span></b></a></span><p><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p738172611320">The MAC FRR function is enabled.</p>
+<p id="EN-US_TASK_0268396083__en-us_task_0261226292_p65478447314">By default, the MAC FRR function is disabled.</p>
+<p id="EN-US_TASK_0268396083__en-us_task_0261226292_p1241418455175337">After the MAC FRR function is enabled in an M-LAG, backup FRR resources are requested for all MAC address entries with M-LAG member interfaces as outbound interfaces. The outbound interfaces can be changed to peer-link interfaces to establish active and standby paths for traffic forwarding. If the FEI side detects that an M-LAG member interface fails, dual-homing networking is changed to single-homing networking. The next hop in the corresponding MAC address entry is changed from the M-LAG member interface to the peer-link interface. This improves the switchover performance when faults occur.</p>
+<div class="note" id="EN-US_TASK_0268396083__en-us_task_0261226292_note1451004816284"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p1551024832812">After the MAC FRR function is enabled using the <b><span class="cmdname" id="EN-US_TASK_0268396083__en-us_task_0261226292_en-us_cliref_0190965116_cmdname1383713135247">m-lag mac-address frr</span></b> command, run the <strong id="EN-US_TASK_0268396083__en-us_task_0261226292_en-us_cliref_0190965116_b1385184592612">reset mac-address</strong> command to clear MAC addresses. Otherwise, the MAC FRR function cannot work properly.</p>
+<p id="EN-US_TASK_0268396083__en-us_task_0261226292_p3229155312820">After this function is enabled, backup FRR resources are requested only for MAC address entries with M-LAG member interfaces as outbound interfaces, but not for MAC address entries with sub-interfaces of M-LAG member interfaces as outbound interfaces.</p>
+</div></div>
+</p></li><li id="EN-US_TASK_0268396083__en-us_task_0261226292_step3637124242913"><span id="EN-US_TASK_0268396083__en-us_task_0261226292_cmd22751256113918">Run <a href="cmdqueryname=m-lag+mac-address+frr+enhance"><b><span class="cmdname" id="EN-US_TASK_0268396083__en-us_task_0261226292_cmdname146374422291">m-lag mac-address frr enhance</span></b></a></span><p><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p931194953911">The MAC FRR function is enabled on the overlay network in VXLAN networking.</p>
+</p><p><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p14637154211296">By default, the MAC FRR function is disabled on the overlay network in VXLAN networking.</p>
+<div class="note" id="EN-US_TASK_0268396083__en-us_task_0261226292_note1163764212919"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p id="EN-US_TASK_0268396083__en-us_task_0261226292_p4637144210292">After running the <b><span class="cmdname" id="EN-US_TASK_0268396083__en-us_task_0261226292_en-us_cliref_0000001178955908_cmdname1383713135247">m-lag mac-address frr enhance</span></b> command to enable the MAC FRR function on the overlay network in VXLAN networking, you need to run the <strong id="EN-US_TASK_0268396083__en-us_task_0261226292_en-us_cliref_0000001178955908_b1385184592612">reset mac-address</strong> command to clear MAC addresses. Otherwise, the function cannot work properly.</p>
+</div></div>
+</p></li><li id="EN-US_TASK_0268396083__en-us_task_0261226292_step1333029147175337"><span id="EN-US_TASK_0268396083__en-us_task_0261226292_en-us_task_0138780877_cmd183069011182254">Run <span><a href="cmdqueryname=commit"><b><span class="cmdname" id="EN-US_TASK_0268396083__en-us_task_0261226292_en-us_task_0138780877_cmdname87147210182254">commit</span></b></a></span></span><p><p id="EN-US_TASK_0268396083__en-us_task_0261226292_en-us_task_0138780877_p780096067182254">The configuration is committed.</p>
+</p></li></ol></div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0021.html">Configuring M-LAG Through V-STP (Recommended)
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0049_c.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_cfg_m-lag_0074_c.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="task">
+<meta name="DC.Title" content="Example for Configuring M-LAG Upgrade in Maintenance Mode (VXLAN M-LAG Dual-Homing Access Scenario)">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0013.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_cfgcase_0107.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_cfgcase_0019.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_TASK_0000001130917995">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/imagePopup.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/customQuery.js"></script>
+<script language="javascript" type="text/javascript" src="../public_sys-resources/imagePopup.js"></script>
+<title>Example for Configuring M-LAG Upgrade in Maintenance Mode (VXLAN M-LAG Dual-Homing Access Scenario)</title>
+
+<style type="text/css">
+			<!--	pre.screen,pre.codeblock{
+					word-wrap:break-word;
+					word-break:break-all;
+					white-space:pre-wrap !important;
+				}-->
+		</style>
+</head>
+<body><a name="EN-US_TASK_0000001130917995"></a><a name="EN-US_TASK_0000001130917995"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Example for Configuring M-LAG Upgrade in Maintenance Mode (VXLAN M-LAG Dual-Homing Access Scenario)</h1>
+<div class="taskbody"><div class="context"><a name="EN-US_TASK_0000001130917995__1.3.1"></a><a name="1.3.1"></a>
+<div class="p"><h4 class="sectiontitle">Networking Requirements</h4><p>On the network shown in <a href="#EN-US_TASK_0000001130917995__en-us_task_0241512178_en-us_task_0141119105_fig_dc_cfg_vxlan_cfgcase_000601">Figure 1</a>, SwitchA and SwitchB establish an M-LAG, and SwitchC and SwitchD establish an M-LAG. SwitchG to SwitchJ are dual-homed to the M-LAGs through Layer 2 sub-interfaces to connect to the VXLAN network. On the network side, ECMP is used to implement load balancing, and OSPF/OSPFv3/BGP/BGP4+ is used to implement routing. On the user side, Eth-Trunks work in LACP mode. To ensure that services deployed on devices are not affected during an upgrade, you can use M-LAG upgrade in maintenance mode to improve reliability during the upgrade.</p>
+<ol><li>Configure SwitchA to work in maintenance mode and deliver configurations to switch traffic from Switch A to Switch B.</li><li>Upgrade SwitchA. After the upgrade is completed successfully, restore traffic on SwitchA.</li><li>Configure SwitchB to work in maintenance mode and deliver configurations to switch traffic from SwitchB to SwitchA.</li><li>Upgrade SwitchB. After the upgrade is completed successfully, restore traffic on SwitchB.</li></ol>
+<div class="fignone" id="EN-US_TASK_0000001130917995__en-us_task_0241512178_en-us_task_0141119105_fig_dc_cfg_vxlan_cfgcase_000601"><a name="EN-US_TASK_0000001130917995__en-us_task_0241512178_en-us_task_0141119105_fig_dc_cfg_vxlan_cfgcase_000601"></a><a name="en-us_task_0241512178_en-us_task_0141119105_fig_dc_cfg_vxlan_cfgcase_000601"></a><span class="figcap"><b>Figure 1 </b>Network diagram for configuring M-LAG upgrade in maintenance mode</span><br><span><img class="imgResize" src="figure/en-us_image_0000001084102426.png" width="523.6875" height="259.368886" title="Click to enlarge"></span></div>
+</div></div>
+<div class="context"><a name="EN-US_TASK_0000001130917995__1.3.2"></a><a name="1.3.2"></a>
+<div class="p"><h4 class="sectiontitle">Configuration Roadmap</h4><div class="p">The configuration roadmap is as follows:<ol><li>Configure OSPF/OSPFv3/BGP/BGP4+ on the network side to implement Layer 3 connectivity. Configure VXLAN tunnels.</li><li>Configure M-LAG to implement active-active access of user-side devices.</li><li>Upgrade the M-LAG consisting of SwitchA and SwitchB.<ul><li>Install a license on SwitchA to use M-LAG upgrade in maintenance mode.<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>M-LAG upgrade in maintenance mode is controlled by a license. By default, M-LAG upgrade in maintenance mode is disabled on a newly purchased device. To use M-LAG upgrade in maintenance mode, apply for and purchase the license from the device supplier.</p>
+</div></div>
+</li><li>Configure SwitchA to enter the maintenance mode and configure M-LAG upgrade in maintenance mode. Perform the following operations in sequence. Set the cost of OSPF routes to the maximum value and lower the priorities of BGP and BGP4+ routes to be advertised. Enable the device to forcibly set Eth-Trunk interfaces that are added to an M-LAG to the down state to implement traffic switchover.</li><li>Upgrade SwitchA. After SwitchA is upgraded successfully, perform the following operations in sequence to switch traffic back to the device. Disable the device from forcibly setting Eth-Trunk interfaces that are added to an M-LAG to the down state. Restore the cost values of OSPF routes and the priorities of BGP and BGP4+ routes to be advertised.</li><li>Repeat the preceding steps to upgrade SwitchB to complete the upgrade of the M-LAG.</li></ul>
+</li></ol>
+</div>
+</div></div>
+<div class="steps"><a name="EN-US_TASK_0000001130917995__1.3.3"></a><a name="1.3.3"></a><h4 class="sectiontitle">Procedure</h4>
+<ol><li><span>Configure routing protocols and VXLAN tunnels.</span><p><p>The routing protocol and VXLAN tunnel configurations are not provided here. For details, see <a href="dc_dc_cfgcase_vxlan_0014.html">Example for Configuring IPv4 VXLAN in Distributed Gateway Deployment Mode</a> and <a href="dc_dc_cfgcase_vxlan_0017.html">Example for Configuring IPv6 VXLAN in Distributed Gateway Deployment Mode</a>.</p>
+</p></li><li><span>Configure M-LAG.</span><p><ol type="a"><li>Create Eth-Trunk interfaces and add physical Ethernet interfaces to them.<p># Create Eth-Trunk interfaces in LACP mode on SwitchA and add member interfaces to the Eth-Trunk interfaces. The configuration of SwitchB is similar to that of SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>interface eth-trunk 1</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>trunkport 10ge 1/0/4</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>trunkport 10ge 1/0/5</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>interface eth-trunk 10</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk10] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk10] <strong>lacp mixed-rate link enable</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk10] <strong>trunkport 10ge 1/0/2</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk10] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>interface eth-trunk 20</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk20] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk20] <strong>lacp mixed-rate link enable</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk20] <strong>trunkport 10ge 1/0/3</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk20] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+</li><li>Configure V-STP.<p># Configure SwitchA. The configuration of SwitchB is similar to that of SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA]<strong> stp mode rstp</strong>
+[<span class="keyword">*</span>SwitchA]<strong> stp v-stp enable</strong>
+[<span class="keyword">*</span>SwitchA]<strong> interface eth-trunk 10</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk10]<strong> stp edged-port enable</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk10]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchA]<strong> interface eth-trunk 20</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk20]<strong> stp edged-port enable</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk20]<strong> quit</strong>
+[<span class="keyword">*</span>SwitchA]<strong> commit</strong></pre>
+</li><li>Configure a DFS group.<p># Configure SwitchA. The configuration of SwitchB is similar to that of SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>dfs-group 1</strong>
+[<span class="keyword">*</span>SwitchA-dfs-group-1] <strong>source ip 10.3.3.3</strong> <strong>peer 10.4.4.4</strong>
+[<span class="keyword">*</span>SwitchA-dfs-group-1] <strong>dual-active detection enhanced enable</strong>
+[<span class="keyword">*</span>SwitchA-dfs-group-1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+</li><li>Configure a peer-link between SwitchA and SwitchB.<p># Configure SwitchA. The configuration of SwitchB is similar to that of SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>interface eth-trunk 1</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA-Eth-Trunk1] <strong>peer-link 1</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk1] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+</li><li>Bind user-side Eth-Trunk interfaces to the DFS group.<p># Configure SwitchA. The configuration of SwitchB is similar to that of SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>interface eth-trunk 10</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA-Eth-Trunk10] <strong>dfs-group 1 m-lag 1</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk10] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>interface eth-trunk 20</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk20] <strong>dfs-group 1 m-lag 2</strong>
+[<span class="keyword">*</span>SwitchA-Eth-Trunk20] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+</li></ol>
+<p>Verify the configuration.</p>
+<p>Run the <strong>display dfs-group 1 m-lag</strong> command to check M-LAG information.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>display dfs-group 1 m-lag</strong>
+*                : Local node
+Heart beat state : OK
+Node 1 *
+  Dfs-Group ID   : 1
+  Priority       : 100
+  Address        : ip address 10.3.3.3
+  State          : Master
+  Causation      : -
+  System ID      : 0025-9e95-7c11
+  SysName        : SwitchA
+  Version        : <samp class="codeph">V200R020C10</samp>
+  Device Type    : <samp class="codeph">CE6881</samp>
+Node 2
+  Dfs-Group ID   : 1
+  Priority       : 100
+  Address        : ip address 10.4.4.4
+  State          : Backup
+  Causation      : -
+  System ID      : 0025-9e95-7c31
+  SysName        : SwitchB
+  Version        : <samp class="codeph">V200R020C10</samp>
+  Device Type    : <samp class="codeph">CE6881</samp></pre>
+<p>Check M-LAG information on SwitchA.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchA] <strong>display dfs-group 1 node 1 m-lag brief</strong>
+* - Local node
+
+M-Lag ID     Interface      Port State    Status                Consistency-check
+       1     Eth-Trunk 10   Up            active(*)-active      --
+       2     Eth-Trunk 20   Up            active(*)-active      --
+
+Failed reason:
+    1 -- Relationship between vlan and port is inconsistent
+    2 -- STP configuration under the port is inconsistent
+    3 -- STP port priority configuration is inconsistent
+    4 -- LACP mode of M-LAG is inconsistent
+    5 -- M-LAG configuration is inconsistent
+    6 -- The number of M-LAG members is inconsistent </pre>
+<p>Check M-LAG information on SwitchB.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>SwitchB] <strong>display dfs-group 1 node 2 m-lag brief</strong>
+* - Local node
+
+M-Lag ID     Interface      Port State    Status                Consistency-check
+       1     Eth-Trunk 10   Up            active(*)-active      --
+       2     Eth-Trunk 20   Up            active(*)-active      --
+
+Failed reason:
+    1 -- Relationship between vlan and port is inconsistent
+    2 -- STP configuration under the port is inconsistent
+    3 -- STP port priority configuration is inconsistent
+    4 -- LACP mode of M-LAG is inconsistent
+    5 -- M-LAG configuration is inconsistent
+    6 -- The number of M-LAG members is inconsistent</pre>
+</p></li><li><span>Upgrade the M-LAG consisting of SwitchA and SwitchB.</span><p><ol type="a"><li>Install a license on SwitchA. For details about how to install a license, see the <a href="https://support.huawei.com/enterprise/en/doc/EDOC1000150334?idPath=24030814|21782165|21782239|252837181" target="_blank" rel="noopener noreferrer">License Usage Guide</a>.</li><li>Configure SwitchA to enter the maintenance mode and configure M-LAG upgrade in maintenance mode. Perform the following operations in sequence to switch traffic to the backup device SwitchB.<ol class="substepthirdol"><li>Configure SwitchA to enter the maintenance mode.<p># Configure SwitchA.</p>
+<pre class="screen">[<font style="font-size:8pt" Face="Courier New" >~</font>SwitchA] <a href="cmdqueryname=maintenance"><b><span class="cmdname">maintenance</span></b></a></pre>
+</li><li>Set the cost of OSPF or OSPFv3 routes to the maximum value or lower the priorities of BGP and BGP4+ routes to be advertised. (You can perform the operation based on the routing protocol used on the live network.)<pre class="screen">[<span class="keyword">*</span>SwitchA-maintenance] <a href="cmdqueryname=ospf+advertise+max-cost"><b><span class="cmdname">ospf advertise max-cost</span></b></a>
+[<span class="keyword">*</span>SwitchA-maintenance] <a href="cmdqueryname=ospfv3+advertise+max-cost"><b><span class="cmdname">ospfv3 advertise max-cost</span></b></a>
+[<span class="keyword">*</span>SwitchA-maintenance] <strong>commit</strong>
+[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">advertise bgp ipv4-family unicast lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">advertise bgp ipv4-family vpnv4 lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">advertise bgp ipv6-family unicast lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">advertise bgp ipv6-family vpnv6 lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">advertise bgp l2vpn-family evpn lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <strong>commit</strong></pre>
+</li><li>Enable the device to forcibly set Eth-Trunk interfaces that are added to an M-LAG to the down state to divert the uplink traffic from user-side devices to the standby link.<pre class="screen">[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">lacp force-down</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+</li></ol>
+</li><li>Upgrade SwitchA, including loading the system software and restarting the device.<p>For details about the precautions and upgrade operations, see the upgrade guide. To obtain the upgrade guide, log in to Huawei enterprise technical support website (<a href="https://support.huawei.com/enterprise/en/index.html" target="_blank" rel="noopener noreferrer">https://support.huawei.com/enterprise</a>), and obtain the upgrade guide based on the product model and version.</p>
+</li><li>After SwitchA is upgraded successfully (for details about how to verify the upgrade, see the upgrade guide), perform the following operations in sequence to restore traffic. Disable the device from forcibly setting Eth-Trunk interfaces that are added to an M-LAG to the down state. Restore the priorities of BGP or BGP4+ routes to be advertised and the cost values of OSPF or OSPFv3 routes.<ol class="substepthirdol"><li>Configure SwitchA to enter the maintenance mode.<pre class="screen">[<span class="keyword">*</span>SwitchA] <a href="cmdqueryname=maintenance"><b><span class="cmdname">maintenance</span></b></a></pre>
+</li><li>Disable the device from forcibly setting Eth-Trunk interfaces that are added to an M-LAG to the down state.<pre class="screen">[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">undo lacp force-down</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <strong>commit</strong></pre>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>Check whether the ARP, ND, and MAC address entries synchronized by the M-LAG member interface are restored. After the entries are restored, switch traffic back to the device.</p>
+</div></div>
+</li><li>Restore the priorities of BGP or BGP4+ routes to be advertised and the cost values of OSPF or OSPFv3 routes.<pre class="screen">[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">undo advertise bgp l2vpn-family evpn lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">undo advertise bgp ipv6-family vpnv6 lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">undo advertise bgp ipv6-family unicast lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">undo advertise bgp ipv4-family vpnv4 lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <b><span class="cmdname">undo advertise bgp ipv4-family unicast lowest-priority enable</span></b>
+[<span class="keyword">*</span>SwitchA-maintenance] <strong>commit</strong>
+[<span class="keyword">*</span>SwitchA-maintenance] <a href="cmdqueryname=undo+ospf+advertise+max-cost"><b><span class="cmdname">undo ospf advertise max-cost</span></b></a>
+[<span class="keyword">*</span>SwitchA-maintenance] <a href="cmdqueryname=undo+ospfv3+advertise+max-cost"><b><span class="cmdname">undo ospfv3 advertise max-cost</span></b></a>
+[<span class="keyword">*</span>SwitchA-maintenance] <strong>quit</strong>
+[<span class="keyword">*</span>SwitchA] <strong>commit</strong></pre>
+</li></ol>
+</li><li>Repeat the preceding steps to upgrade SwitchB to complete the upgrade of the M-LAG.</li></ol>
+</p></li></ol></div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0013.html">Configuration Examples for M-LAG
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_cfgcase_0107.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_cfg_m-lag_cfgcase_0019.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+
+<script language="JavaScript">
+<!--
+initImageViewer('.imgResize');
+var msg_imageMax = "view original image";
+var msg_imageClose = "close";
+//--></script></body>
+</html>

@@ -1,0 +1,65 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="concept">
+<meta name="DC.Title" content="Application Scenarios for M-LAG">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0001.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0003.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0005.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_CONCEPT_0141112680">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>Application Scenarios for M-LAG</title>
+</head>
+<body><a name="EN-US_CONCEPT_0141112680"></a><a name="EN-US_CONCEPT_0141112680"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Application Scenarios for M-LAG</h1>
+<div><p>M-LAG mainly applies to scenarios where a server or switch is dual-homed to an Ethernet, Transparent Interconnection of Lots of Links (TRILL), Virtual eXtensible Local Area Network (VXLAN), or IP network. It provides load balancing and backup. M-LAG falls into single-level M-LAG and multi-level M-LAG.</p>
+<div class="section"><h4 class="sectiontitle">Single-level M-LAG</h4><div class="p"><ul><li><strong>Connecting a switch in dual-homing mode</strong><p>As shown in <a href="#EN-US_CONCEPT_0141112680__dc_cfg_m-lag_0004_fig_02">Figure 1</a>, to ensure reliability, a switch is connected to a network to implement link redundancy. MSTP can be deployed to implement redundancy, but the link use efficiency is low and many bandwidth resources are wasted. To implement redundancy and improve the link use efficiency, deploy M-LAG between SwitchA and SwitchB so that the switch can be dual-homed to SwitchA and SwitchB. SwitchA and SwitchB load balance traffic. When one device fails, traffic can be rapidly switched to the other device to ensure nonstop service transmission.</p>
+<div class="fignone" id="EN-US_CONCEPT_0141112680__dc_cfg_m-lag_0004_fig_02"><a name="EN-US_CONCEPT_0141112680__dc_cfg_m-lag_0004_fig_02"></a><a name="dc_cfg_m-lag_0004_fig_02"></a><span class="figcap"><b>Figure 1 </b>Connecting a switch in dual-homing mode</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_000402dcb.png"></span></div>
+</li><li><strong>Connecting a server in dual-homing mode</strong><p>As shown in <a href="#EN-US_CONCEPT_0141112680__dc_cfg_m-lag_0004_fig_01">Figure 2</a>, to ensure reliability, a server is often connected to a network through link aggregation. If the device connected to the server fails, services are interrupted. To prevent this problem, a server can connect to a network through M-LAG. That is, deploy M-LAG between SwitchA and SwitchB and connect the server to SwitchA and SwitchB. SwitchA and SwitchB load balance traffic. When one device fails, traffic can be rapidly switched to the other device to ensure nonstop service transmission.</p>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>The configuration of dual homing a server is the same as common link aggregation configuration. Ensure that the server and switches use the same link aggregation mode. The LACP mode at both ends is recommended.</p>
+</div></div>
+<div class="fignone" id="EN-US_CONCEPT_0141112680__dc_cfg_m-lag_0004_fig_01"><a name="EN-US_CONCEPT_0141112680__dc_cfg_m-lag_0004_fig_01"></a><a name="dc_cfg_m-lag_0004_fig_01"></a><span class="figcap"><b>Figure 2 </b>Connecting a server in dual-homing mode</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_000401dcb.png"></span></div>
+</li></ul>
+</div>
+</div>
+<div class="section"><h4 class="sectiontitle">Multi-level M-LAG</h4><p>As shown in <a href="#EN-US_CONCEPT_0141112680__dc_cfg_m-lag_0004_fig_03">Figure 3</a>, after M-LAG is deployed between SwitchA and SwitchB, M-LAG is deployed between SwitchC and SwitchD. The two M-LAGs are connected. This deployment simplifies networking and allows more servers to be connected to the network in dual-homing mode. Before deploying multi-level M-LAG, configure Virtual Spanning Tree Protocol (V-STP) or Virtual VLAN-based Spanning Tree (V-VBST).</p>
+<div class="fignone" id="EN-US_CONCEPT_0141112680__dc_cfg_m-lag_0004_fig_03"><a name="EN-US_CONCEPT_0141112680__dc_cfg_m-lag_0004_fig_03"></a><a name="dc_cfg_m-lag_0004_fig_03"></a><span class="figcap"><b>Figure 3 </b>Networking of multi-level M-LAG</span><br><span><img class="vsd" src="images/fig_dc_cfg_m-lag_000403dcb.png"></span></div>
+</div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0001.html">M-LAG Configuration
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0003.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_cfg_m-lag_0005.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+</body>
+</html>

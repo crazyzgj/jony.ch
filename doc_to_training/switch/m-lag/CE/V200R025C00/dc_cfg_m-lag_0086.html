@@ -1,0 +1,57 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="task">
+<meta name="DC.Title" content="Verifying the Configuration of M-LAG Configured Through V-VBST">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0066.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0085_c.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_TASK_0000001482141124">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>Verifying the Configuration of M-LAG Configured Through V-VBST</title>
+</head>
+<body><a name="EN-US_TASK_0000001482141124"></a><a name="EN-US_TASK_0000001482141124"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Verifying the Configuration of M-LAG Configured Through V-VBST</h1>
+<div class="taskbody"><div class="steps-unordered"><a name="EN-US_TASK_0000001482141124__1.3.1"></a><a name="1.3.1"></a><h4 class="sectiontitle">Procedure</h4>
+<ul><li><span>Run the <a href="cmdqueryname=display+dfs-group"><b><span class="cmdname">display dfs-group</span></b></a> <i><span class="varname">dfs-group-id</span></i> [ <b><span class="cmdname">node</span></b> <i><span class="varname">node-id</span></i> <b><span class="cmdname">m-lag</span></b> [ <b><span class="cmdname">brief</span></b> ] | <b><span class="cmdname">peer-link</span></b> ] command to check M-LAG information.</span></li><li><span>Run the <a href="cmdqueryname=display+stp+vlan"><b><span class="cmdname">display stp vlan</span></b></a> <i><span class="varname">vlan-id</span></i> <strong>v-vbst</strong> command to check the V-VBST calculation result of the spanning tree in a specified VLAN.</span></li></ul></div>
+<div class="postreq"><a name="EN-US_TASK_0000001482141124__1.3.2"></a><a name="1.3.2"></a><h4 class="sectiontitle">Follow-up Procedure</h4>
+<div class="p"><p>After the M-LAG configuration is complete, if the peer-link fails but the heartbeat status is normal, some interfaces on the M-LAG backup device are in Error-Down state. <span>When detecting a fault on an interface, the device sets the interface to the Error-Down state. The interface cannot send or receive packets, and the interface indicator is off. </span>You can run the <a href="cmdqueryname=display+error-down+recovery"><b><span class="cmdname">display error-down recovery</span></b></a> command to view information about all interfaces in Error-Down state on the device.</p>
+<p>When M-LAG is used for dual-homing access on a common Ethernet or IP network, if the peer-link fails but the DAD heartbeat status is normal, interfaces excluding the management interface, peer-link interface, and stack interface on the M-LAG backup device enter the Error-Down state. When the faulty peer-link recovers, the M-LAG member interface in the Error-Down state automatically restores to the Up state after 240s by default, and the other interfaces in the Error-Down state automatically restore to the Up state immediately.</p>
+<p>If an interface enters the Error-Down state, you are advised to locate the cause of the peer-link fault first. You are not advised to manually restore the interface to the Up state or run the <a href="cmdqueryname=error-down+auto-recovery"><b><span class="cmdname">error-down auto-recovery</span></b></a> <strong><span>cause</span></strong> <strong><span>m-lag</span></strong> <strong><span>interval</span></strong> <i><span class="varname">interval-value</span></i> command in the system view to enable the interface to automatically go Up. Otherwise, faults such as excess service packets, packet loss, and service interruption may occur. Exercise caution when performing this operation.</p>
+</div></div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0066.html">Configuring M-LAG Through V-VBST
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0085_c.html"><span class="font-st">&lt; </span>Previous topic</a>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="task">
+<meta name="DC.Title" content="Configuring M-LAG Upgrade in Maintenance Mode">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0035.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0037.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_TASK_0298582296">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>Configuring M-LAG Upgrade in Maintenance Mode</title>
+</head>
+<body><a name="EN-US_TASK_0298582296"></a><a name="EN-US_TASK_0298582296"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Configuring M-LAG Upgrade in Maintenance Mode</h1>
+<div class="taskbody"><div class="context"><a name="EN-US_TASK_0298582296__1.3.1"></a><a name="1.3.1"></a><h4 class="sectiontitle">Context</h4>
+<div class="p"><p>Currently, the following protocols are supported: OSPF, OSPFv3, BGP, BGP4+, and LACP.</p>
+<p>Before upgrading an M-LAG member device, perform the following steps in sequence:</p>
+<ol><li>Enter the maintenance mode view.</li><li>Configure the device to change the cost values of OSPF/OSPFv3 routes or the MED and Local_Pref values of BGP/BGP4+ routes so that traffic sent from other devices to the local device can be switched to another device.</li><li>Run an LACP command to switch traffic from the server-side to another device.</li></ol>
+<p>After the upgrade is complete, perform the following steps in sequence:</p>
+<ol><li>Enter the maintenance mode view.</li><li>Run the undo form of the LACP command to switch traffic from the server-side to the local device.</li><li>Configure the device to restore the cost of OSPF/OSPFv3 routes or the MED and Local_Pref of BGP/BGP4+ routes to the default values. This enables traffic sent from other devices to the local device to be switched back.</li></ol>
+</div></div>
+<div class="steps"><a name="EN-US_TASK_0298582296__1.3.2"></a><a name="1.3.2"></a><h4 class="sectiontitle">Procedure</h4>
+<ol><li><span>Run <a href="cmdqueryname=system-view"><b><span class="cmdname">system-view</span></b></a></span><p><p>The system view is displayed.</p>
+</p></li><li><span>Run <a href="cmdqueryname=maintenance"><b><span class="cmdname">maintenance</span></b></a></span><p><p>The maintenance mode view is displayed.</p>
+</p></li><li><span>Perform the following steps depending on the routing protocol configured on the device.</span><p><ul><li>OSPF routes<p>Run <a href="cmdqueryname=ospf+advertise+max-cost"><b><span class="cmdname">ospf advertise max-cost</span></b></a></p>
+<div class="p">The device is configured to change the costs of all its OSPF LSAs to be advertised to their maximum values.<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>After the <a href="cmdqueryname=ospf+advertise+max-cost"><b><span class="cmdname">ospf advertise max-cost</span></b></a> command is run, the device changes the costs of all its OSPF LSAs to be advertised to their maximum values. The costs of router-LSAs (Type 1) are increased to 65535, and the costs of summary-LSAs (Type 3 and Type 4), AS-external-LSAs (Type 5), and NSSA-LSAs (Type 7) are all increased to 16711680.</p>
+</div></div>
+</div>
+<p>By default, a device does not change the cost of any of its OSPF LSAs to be advertised to the maximum value.</p>
+</li><li>OSPFv3 routes<p>Run <a href="cmdqueryname=ospfv3+advertise+max-cost"><b><span class="cmdname">ospfv3 advertise max-cost</span></b></a></p>
+<p>The device is configured to change the costs of all its OSPFv3 LSAs to be advertised to their maximum values.</p>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>After the <a href="cmdqueryname=ospfv3+advertise+max-cost"><b><span class="cmdname">ospfv3 advertise max-cost</span></b></a> command is run, the device changes the costs of all its OSPFv3 LSAs to be advertised to their maximum values. The costs of router-LSAs (Type 1) are increased to 65535, and the costs of inter-area-prefix-LSAs (Type 3), inter-area-router-LSAs (Type 4), AS-external-LSAs (Type 5), and NSSA-LSAs (Type 7) are all increased to 16711680.</p>
+</div></div>
+<p>By default, a device does not change the cost of any of its OSPFv3 LSAs to be advertised to the maximum value.</p>
+</li><li>BGP-IPv4 unicast address family and BGP-VPN instance IPv4 address family routes<p>Run <b><span class="cmdname">advertise bgp ipv4-family unicast lowest-priority enable</span></b></p>
+<div class="p">BGP is enabled to set the priorities of BGP-IPv4 unicast address family and BGP-VPN instance IPv4 address family routes to be advertised to the lowest.<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>The <b><span class="cmdname">advertise bgp ipv4-family unicast lowest-priority enable</span></b> and <b><span class="cmdname">advertise lowest-priority all-address-family peer-up</span></b> commands can be used to control route advertisement. Either command can enable BGP to set the priorities of routes to be advertised in the preceding address families to the lowest when BGP peers in these address families go from down to up.</p>
+<p>After the <a href="cmdqueryname=advertise+bgp+ipv4-family+unicast+lowest-priority+enable"><b><span class="cmdname">advertise bgp ipv4-family unicast lowest-priority enable</span></b></a> command is run, the MED and Local_Pref attributes of BGP routes to be advertised cannot be modified through an export routing policy.</p>
+</div></div>
+</div>
+<p>By default, BGP does not set the priorities of BGP-IPv4 unicast address family and BGP-VPN instance IPv4 address family routes to the lowest.</p>
+</li><li>BGP-VPNv4 address family routes<p>Run <b><span class="cmdname">advertise bgp ipv4-family vpnv4 lowest-priority enable</span></b></p>
+<div class="p">BGP is enabled to set the priorities of BGP-VPNv4 address family routes to be advertised to the lowest.<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>The <b><span class="cmdname">advertise bgp ipv4-family vpnv4 lowest-priority enable</span></b> and <b><span class="cmdname">advertise lowest-priority all-address-family peer-up</span></b> commands can be used to control route advertisement. Either command can enable BGP to set the priorities of routes to be advertised in the preceding address family to the lowest when BGP peers in the address family go from down to up.</p>
+<p>After the <a href="cmdqueryname=advertise+bgp+ipv4-family+unicast+lowest-priority+enable"><b><span class="cmdname">advertise bgp ipv4-family unicast lowest-priority enable</span></b></a> command is run, the MED and Local_Pref attributes of BGP routes to be advertised cannot be modified through an export routing policy.</p>
+</div></div>
+</div>
+<p>By default, BGP does not set the priorities of BGP-VPNv4 address family routes to be advertised to the lowest.</p>
+</li><li>BGP-IPv6 unicast address family and BGP-VPN instance IPv6 address family routes<p>Run <b><span class="cmdname">advertise bgp ipv6-family unicast lowest-priority enable</span></b></p>
+<div class="p">BGP is enabled to set the priorities of BGP-IPv6 unicast address family and BGP-VPN instance IPv6 address family routes to be advertised to the lowest.<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>The <b><span class="cmdname">advertise bgp ipv6-family unicast lowest-priority enable</span></b> and <b><span class="cmdname">advertise lowest-priority all-address-family peer-up</span></b> commands can be used to control route advertisement. Either command can enable BGP to set the priorities of routes to be advertised in the preceding address families to the lowest when BGP peers in these address families go from down to up.</p>
+<p>After the <a href="cmdqueryname=advertise+bgp+ipv4-family+unicast+lowest-priority+enable"><b><span class="cmdname">advertise bgp ipv4-family unicast lowest-priority enable</span></b></a> command is run, the MED and Local_Pref attributes of BGP routes to be advertised cannot be modified through an export routing policy.</p>
+</div></div>
+</div>
+<p>By default, BGP does not set the priorities of BGP-IPv6 unicast address family and BGP-VPN instance IPv6 address family routes to be advertised to the lowest.</p>
+</li><li>BGP-VPNv6 address family routes<p>Run <b><span class="cmdname">advertise bgp ipv6-family vpnv6 lowest-priority enable</span></b></p>
+<div class="p">BGP is enabled to set the priorities of BGP-VPNv6 address family routes to be advertised to the lowest.<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>The <b><span class="cmdname">advertise bgp ipv6-family vpnv6 lowest-priority enable</span></b> and <b><span class="cmdname">advertise lowest-priority all-address-family peer-up</span></b> commands can be used to control route advertisement. Either command can enable BGP to set the priorities of routes to be advertised in the preceding address family to the lowest when BGP peers in the address family go from down to up.</p>
+<p>After the <a href="cmdqueryname=advertise+bgp+ipv4-family+unicast+lowest-priority+enable"><b><span class="cmdname">advertise bgp ipv4-family unicast lowest-priority enable</span></b></a> command is run, the MED and Local_Pref attributes of BGP routes to be advertised cannot be modified through an export routing policy.</p>
+</div></div>
+</div>
+<p>By default, BGP does not set the priorities of BGP-VPNv6 address family routes to be advertised to the lowest.</p>
+</li><li>BGP-EVPN address family routes<p>Run <b><span class="cmdname">advertise bgp l2vpn-family evpn lowest-priority enable</span></b></p>
+<div class="p">BGP is enabled to set the priorities of BGP-EVPN address family routes to be advertised to the lowest.<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>The <b><span class="cmdname">advertise bgp l2vpn-family evpn lowest-priority enable</span></b> and <b><span class="cmdname">advertise lowest-priority all-address-family peer-up</span></b> commands can be used to control route advertisement. Either command can enable BGP to set the priorities of routes to be advertised in the preceding address family to the lowest when BGP peers in the address family go from down to up.</p>
+<p>After the <a href="cmdqueryname=advertise+bgp+ipv4-family+unicast+lowest-priority+enable"><b><span class="cmdname">advertise bgp ipv4-family unicast lowest-priority enable</span></b></a> command is run, the MED and Local_Pref attributes of BGP routes to be advertised cannot be modified through an export routing policy.</p>
+</div></div>
+</div>
+<p>By default, BGP does not set the priorities of BGP-EVPN address family routes to be advertised to the lowest.</p>
+</li></ul>
+</p></li><li><span>Run <b><span class="cmdname">lacp force-down</span></b></span><p><p>The device is enabled to forcibly set Eth-Trunk interfaces that are added to an M-LAG to down.</p>
+</p><p><p>By default, a device does not forcibly set Eth-Trunk interfaces that are added to an M-LAG to down.</p>
+</p></li><li><span>Run <a href="cmdqueryname=commit"><b><span class="cmdname">commit</span></b></a></span><p><p>The configuration is committed.</p>
+</p></li><li><span>Upgrade the device version. After the upgrade is complete, perform the following steps to switch traffic back to the upgraded device.</span></li><li><span>Run <a href="cmdqueryname=system-view"><b><span class="cmdname">system-view</span></b></a></span><p><p>The system view is displayed.</p>
+</p></li><li><span>Run <a href="cmdqueryname=maintenance"><b><span class="cmdname">maintenance</span></b></a></span><p><p>The maintenance mode view is displayed.</p>
+</p></li><li><span>Run <a href="cmdqueryname=undo+lacp+force-down"><b><span class="cmdname">undo lacp force-down</span></b></a></span><p><p>The device is disabled from forcibly setting Eth-Trunk interfaces that are added to an M-LAG to down.</p>
+</p></li><li><span>Perform the following steps depending on the routing protocol configured on the device to implement route traffic switchback.</span><p><ul><li>OSPF routes<p>Run <a href="cmdqueryname=undo+ospf+advertise+max-cost"><b><span class="cmdname">undo ospf advertise max-cost</span></b></a></p>
+<p>The device is configured to restore the costs of all its OSPF LSAs to be advertised to the default values.</p>
+</li><li>OSPFv3 routes<p>Run <a href="cmdqueryname=undo+ospfv3+advertise+max-cost"><b><span class="cmdname">undo ospfv3 advertise max-cost</span></b></a></p>
+<p>The device is configured to restore the costs of all its OSPFv3 LSAs to be advertised to the default values.</p>
+</li><li>BGP-IPv4 unicast address family and BGP-VPN instance IPv4 address family routes<p>Run <b><span class="cmdname">undo advertise bgp ipv4-family unicast lowest-priority enable</span></b></p>
+<p>BGP is disabled from setting the priorities of BGP-IPv4 unicast address family and BGP-VPN instance IPv4 address family routes to be advertised to the lowest.</p>
+</li><li>BGP-VPNv4 address family routes<p>Run <b><span class="cmdname">undo advertise bgp ipv4-family vpnv4 lowest-priority enable</span></b></p>
+<p>BGP is disabled from setting the priorities of BGP-VPNv4 address family routes to be advertised to the lowest.</p>
+</li><li>BGP-IPv6 unicast address family and BGP-VPN instance IPv6 address family routes<p>Run <b><span class="cmdname">undo advertise bgp ipv6-family unicast lowest-priority enable</span></b></p>
+<p>BGP is disabled from setting the priorities of BGP-IPv6 unicast address family and BGP-VPN instance IPv6 address family routes to be advertised to the lowest.</p>
+</li><li>BGP-VPNv6 address family routes<p>Run <b><span class="cmdname">undo advertise bgp ipv6-family vpnv6 lowest-priority enable</span></b></p>
+<p>BGP is disabled from setting the priorities of BGP-VPNv6 address family routes to be advertised to the lowest.</p>
+</li><li>BGP-EVPN address family routes<p>Run <b><span class="cmdname">undo advertise bgp l2vpn-family evpn lowest-priority enable</span></b></p>
+<p>BGP is disabled from setting the priorities of BGP-EVPN address family routes to be advertised to the lowest.</p>
+</li></ul>
+</p></li><li><span>Run <a href="cmdqueryname=commit"><b><span class="cmdname">commit</span></b></a></span><p><p>The configuration is committed.</p>
+</p></li></ol></div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0035.html">Maintaining M-LAG
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0037.html"><span class="font-st">&lt; </span>Previous topic</a>
+</div>
+</div>
+</body>
+</html>

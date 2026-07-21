@@ -1,0 +1,79 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="concept">
+<meta name="DC.Title" content="Information Exchange Principles">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0003.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0031.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0045.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_CONCEPT_0141112579">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>Information Exchange Principles</title>
+</head>
+<body><a name="EN-US_CONCEPT_0141112579"></a><a name="EN-US_CONCEPT_0141112579"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Information Exchange Principles</h1>
+<div><p>The dual-active system that is set up based on M-LAG provides device-level reliability. <a href="#EN-US_CONCEPT_0141112579__fig1236031072014">Figure 1</a> shows the M-LAG establishment process. The process includes the following stages:</p>
+<div class="fignone" id="EN-US_CONCEPT_0141112579__fig1236031072014"><a name="EN-US_CONCEPT_0141112579__fig1236031072014"></a><a name="fig1236031072014"></a><span class="figcap"><b>Figure 1 </b>M-LAG establishment</span><br><span><img class="vsd" src="figure/en-us_image_0249813646.png"></span></div>
+<div class="p"><ol><li><p>DFS group pairing</p>
+<p>After two M-LAG devices are configured, they send DFS group Hello packets to each other through the peer-link. When receiving Hello packets from the remote device, the local device checks whether the DFS group ID in the packets is the same as that of the local device. If the DFS group IDs are the same, DFS group pairing of the two devices is successful.</p>
+</li><li><p>DFS group master/backup negotiation</p>
+<p>After the pairing is successful, the two devices send DFS group device information packets to each other. The devices determine the DFS group master and backup status based on the DFS group priorities and system MAC addresses carried in the packets.</p>
+<p>SwitchB is used as an example. When receiving packets from SwitchA, SwitchB checks and records information about SwitchA, and compares its DFS group priority with that of SwitchA. If SwitchA has a higher DFS group priority than SwitchB, SwitchA is the DFS master device and SwitchB is the DFS backup device. If SwitchA and SwitchB have the same DFS group priority, the device with a smaller MAC address functions as the DFS master device.</p>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>A DFS group consists of a master device and a backup device. Under normal circumstances, both the master and backup devices forward service traffic and their forwarding behaviors are the same. The master and backup devices have different forwarding behaviors only when a fault occurs.</p>
+</div></div>
+</li><li><p>Master/backup negotiation of M-LAG member interfaces</p>
+<p>After DFS group master/backup negotiation is successful, the two devices send M-LAG device information packets carrying configuration information of M-LAG member interfaces to each other through the peer-link. After member interface information is synchronized, master and backup M-LAG member interfaces are determined.</p>
+<p>When the local and remote member interfaces synchronize information, the interface that changes from Down to Up first becomes the master M-LAG member interface, and the other interface becomes the backup M-LAG member interface. By default, revertive switching is not performed between the master and backup interfaces. That is, if the device where the original master M-LAG member interface resides recovers from a failure, the original backup interface that becomes the master interface remains in master state, and the original master interface that recovers from a failure is still in backup state. The master/backup negotiation mechanism of M-LAG member interfaces differs from that of the DFS group.</p>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>The master and backup M-LAG member interfaces have different forwarding behaviors only when the M-LAG forwards multicast traffic.</p>
+</div></div>
+</li><li><p>DAD</p>
+<p>After the M-LAG master and backup devices are negotiated, the two devices send DAD packets through the DAD link. If both devices receive DAD packets from each other within 45 seconds, the dual-active system starts to work. If no DAD packet is received within 45 seconds, the heartbeat times out. If either the M-LAG master or backup device detects that the peer-link fails, it quickly sends DAD packets to accelerate DAD.</p>
+<div class="p">Under normal circumstances, the DAD link does not participate in any traffic forwarding behaviors in the M-LAG. It is only used to detect whether two master devices exist when the DFS group pairing or peer-link fails. Therefore, the M-LAG still works properly even if DAD fails. The DAD link can be an external link, for example, if the M-LAG is connected to an IP network and the two member devices can communicate through the IP network, the link that enables communication between the member devices can function as the DAD link. An independent link that provides Layer 3 reachability can also be configured as the DAD link, for example, a link between management interfaces of the member devices can function as the DAD link.<ul><li>The DAD link is deployed between management interfaces. Management interface IP addresses bound to the DFS group must be reachable to each other, and VPN instances are bound to management interfaces to ensure that DAD packets and service packets are separated.</li><li>The DAD link is deployed on a service network, and the IP address bound to the DFS group must be reachable at Layer 3. If peer-link interfaces establish a routing neighbor relationship, DAD packets on the service network are transmitted through the peer-link using the optimal route. If the peer-link fails, DAD packets are transmitted to the remote device through the suboptimal path during route convergence, and the DAD time is 0.5s or 1s longer.</li></ul>
+</div>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p><span>T</span>wo devices send DAD packets at the specified interval immediately after the heartbeat link is Up. In double-fault failure recovery scenarios where enhanced DAD for double-fault failures is enabled, faults on the original DFS master or backup device are rectified and the peer-link fault persists. If the local and remote devices' IP addresses are bound to the DFS group, M-LAG devices negotiate the HB DFS master/backup status based on the DFS information carried in DAD packets, and the corresponding interfaces on the HB DFS backup device are triggered to enter the Error-Down state, preventing abnormal traffic forwarding in the scenario where two master devices exist.</p>
+</div></div>
+</li><li><p>M-LAG information synchronization</p>
+<p>When working properly, the two devices send M-LAG synchronization packets through the peer-link to synchronize information with each other in real time. M-LAG synchronization packets include MAC address entries, ARP entries, and STP packets information. The devices also send the status of M-LAG member interfaces. In this way, traffic forwarding is not affected when any device fails, ensuring that normal services are not interrupted.</p>
+<p>You can run the <strong>display fei m-lag synchronization packet statistics</strong> command to view the supported packet types.</p>
+<div class="note"><img src="../public_sys-resources/note_3.0-en-us.png"><span class="notetitle"> </span><div class="notebody"><p>For the CE6881, CE6881K, CE6881E, CE6863<span>, CE6863E</span>, CE6863K, CE6820, CE5881, and CE6870EI, after a VLANIF or VBDIF interface is configured on an M-LAG member device, the real MAC address of the VLANIF or VBDIF interface is synchronized to the peer device through the M-LAG synchronization channel and delivered as a dynamic MAC address.</p>
+</div></div>
+</li></ol>
+</div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0003.html">Understanding M-LAG
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_0031.html"><span class="font-st">&lt; </span>Previous topic</a>
+<a href="../dc/dc_cfg_m-lag_0045.html">Next topic<span class="font-st"> &gt;</span></a>
+</div>
+</div>
+</body>
+</html>

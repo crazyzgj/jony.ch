@@ -1,0 +1,240 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="DC.Type" content="task">
+<meta name="DC.Title" content="Example for Configuring Inter-device Link Aggregation in LACP Mode (Standalone Device)">
+<meta name="abstract" content="">
+<meta name="description" content="">
+<meta name="product" content="">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_0013.html">
+<meta name="DC.Relation" scheme="URI" content="../dc/dc_cfg_m-lag_cfgcase_0019.html">
+<meta name="prodname" content="">
+<meta name="version" content="">
+<meta name="brand" content="">
+<meta name="DC.Publisher" content="20250123">
+<meta name="DC.Format" content="XHTML">
+<meta name="DC.Identifier" content="EN-US_TASK_0000001309017829">
+<meta name="DC.Language" content="en-us">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/commonltr.css">
+<link rel="stylesheet" type="text/css" href="../public_sys-resources/mediaQuery.css">
+<script language="javascript" type="text/javascript" src="../public_sys-resources/browseVersion.js"></script>
+<title>Example for Configuring Inter-device Link Aggregation in LACP Mode (Standalone Device)</title>
+
+<style type="text/css">
+			<!--	pre.screen,pre.codeblock{
+					word-wrap:break-word;
+					word-break:break-all;
+					white-space:pre-wrap !important;
+				}-->
+		</style>
+</head>
+<body><a name="EN-US_TASK_0000001309017829"></a><a name="EN-US_TASK_0000001309017829"></a>
+
+<div class="articleBoxWithoutHead">
+<h1 class="topicTitle-h1">Example for Configuring Inter-device Link Aggregation in LACP Mode (Standalone Device)</h1>
+<div class="taskbody"><p></p>
+<div class="context"><a name="EN-US_TASK_0000001309017829__1.4.1"></a><a name="1.4.1"></a>
+<div class="p"><h4 class="sectiontitle">Networking Requirements</h4><p>In <a href="#EN-US_TASK_0000001309017829__fig_01">Figure 1</a>, DeviceA is dual-homed to DeviceB and DeviceC. The Eth-Trunk in LACP mode is deployed on DeviceA, and its member interfaces are connected to 10GE1/0/1 and 10GE1/0/2 of DeviceB and DeviceC. 10GE1/0/1 and 10GE1/0/2 use the same rate and duplex mode. Traffic needs to be load balanced on the two devices.</p>
+<div class="fignone" id="EN-US_TASK_0000001309017829__fig_01"><a name="EN-US_TASK_0000001309017829__fig_01"></a><a name="fig_01"></a><span class="figcap"><b>Figure 1 </b>Dual-active networking where a device is dual-homed through the Eth-Trunk in LACP mode</span><br><span><img class="vsd" src="figure/en-us_image_0000001309019445.png"></span></div>
+</div></div>
+<div class="context"><a name="EN-US_TASK_0000001309017829__1.4.2"></a><a name="1.4.2"></a>
+<div class="p"><h4 class="sectiontitle">Configuration Roadmap</h4><p>The configuration roadmap is as follows:</p>
+<ol><li><p>Create Eth-Trunk 1 in static LACP mode on DeviceA, DeviceB, and DeviceC and add member interfaces to Eth-Trunk 1 to implement link aggregation.</p>
+</li><li><p>Configure the same LACP system ID on DeviceB and DeviceC.</p>
+</li><li><p>Configure the same LACP system priority on DeviceB and DeviceC.</p>
+</li><li><p>Configure number of Eth-Trunk member interfaces on DeviceC to increase by 32768 to prevent repeated numbers of Eth-Trunk member interfaces in LACP mode on DeviceB and DeviceC.</p>
+</li></ol>
+</div></div>
+<div class="steps"><a name="EN-US_TASK_0000001309017829__1.4.3"></a><a name="1.4.3"></a><h4 class="sectiontitle">Procedure</h4>
+<ol><li><span>Create Eth-Trunk 1 in LACP mode on DeviceA, DeviceB, and DeviceC and add member interfaces to Eth-Trunk 1.</span><p><pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname DeviceA</strong>
+[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceA] <strong>interface eth-trunk 1</strong>
+[<span class="keyword">*</span>DeviceA-Eth-Trunk1] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>DeviceA-Eth-Trunk1] <strong>trunkport 10ge 1/0/1 to 1/0/4</strong>
+[<span class="keyword">*</span>DeviceA-Eth-Trunk1] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceA-Eth-Trunk1] <strong>quit</strong></pre>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname DeviceB</strong>
+<span>[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+</span>[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceB] <strong>interface eth-trunk 1</strong>
+[<span class="keyword">*</span>DeviceB-Eth-Trunk1] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>DeviceB-Eth-Trunk1] <strong>trunkport 10ge 1/0/1 to 1/0/2</strong>
+[<span class="keyword">*</span>DeviceB-Eth-Trunk1] <strong>commit</strong></pre>
+<pre class="screen">&lt;<span class="keyword">HUAWEI</span>&gt; <strong>system-view</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span><span class="keyword">HUAWEI</span>] <strong>sysname DeviceC</strong>
+<span>[<span class="keyword">*</span><span class="keyword">HUAWEI</span>] <strong>commit</strong>
+</span>[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceC] <strong>interface eth-trunk 1</strong>
+[<span class="keyword">*</span>DeviceC-Eth-Trunk1] <strong>mode lacp-static</strong>
+[<span class="keyword">*</span>DeviceC-Eth-Trunk1] <strong>trunkport 10ge 1/0/1 to 1/0/2</strong>
+[<span class="keyword">*</span>DeviceC-Eth-Trunk1] <strong>commit</strong></pre>
+</p></li><li><span>Set the LACP system ID on DeviceB and DeviceC to 00e0-fc12-3456.</span><p><pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceB-Eth-Trunk1] <strong>lacp system-id 00e0-fc12-3456</strong>
+[<span class="keyword">*</span>DeviceB-Eth-Trunk1] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceB-Eth-Trunk1] <strong>quit</strong></pre>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceC-Eth-Trunk1] <strong>lacp system-id 00e0-fc12-3456</strong>
+[<span class="keyword">*</span>DeviceC-Eth-Trunk1] <strong>commit</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceC-Eth-Trunk1] <strong>quit</strong></pre>
+</p></li><li><span>Set the LACP system priority on DeviceB and DeviceC to 100.</span><p><pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceB] <strong>lacp priority 100</strong>
+[<span class="keyword">*</span>DeviceB] <strong>commit</strong></pre>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceC] <strong>lacp priority 100</strong>
+[<span class="keyword">*</span>DeviceC] <strong>commit</strong></pre>
+</p></li><li><span>Configure numbers of Eth-Trunk member interfaces on DeviceC to increase by 32768.</span><p><pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceC] <strong>interface eth-trunk 1</strong>
+[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceC-Eth-Trunk1] <strong>lacp port-id-extension enable</strong>
+[<span class="keyword">*</span>DeviceC-Eth-Trunk1] <strong>commit</strong></pre>
+</p></li><li><span>Verify the configuration.</span><p><p># Check information about the Eth-Trunk of each device and check whether the negotiation is successful.</p>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceA] <strong>display eth-trunk 1</strong>
+Eth-Trunk1's state information is:
+(h): high priority
+(r): reference port
+Local:
+LAG ID: 1                       Working Mode: Static
+Preempt Delay: Disabled         Hash Arithmetic: profile default
+System Priority: 100            System ID: 00e0-fc12-3457
+Least Active-linknumber: 1      Max Active-linknumber: 16
+<span>Operating Status: up</span>            Number Of Up Ports In Trunk: 4
+Timeout Period: Slow
+PortKeyMode: Auto
+--------------------------------------------------------------------------------
+ActorPortName          Status   PortType PortPri PortNo PortKey PortState Weight
+10GE1/0/1(r)           <span>Selected</span> 10GE     32768   3      321     10111100  1
+10GE1/0/2              <span>Selected</span> 10GE     32768   1      321     10100010  1
+10GE1/0/3              <span>Selected</span> 10GE     32768   4      321     10111100  1
+10GE1/0/4              <span>Selected</span> 10GE     32768   2      321     10100010  1
+
+
+Partner:
+--------------------------------------------------------------------------------
+ActorPortName          SysPri   SystemID        PortPri PortNo PortKey PortState
+10GE1/0/1              100      00e0-fc12-3456  32768   32769  321     10111100
+10GE1/0/2              100      00e0-fc12-3456  32768   32770  321     10111100
+10GE1/0/1              100      00e0-fc12-3456  32768   4      321     10111100
+10GE1/0/2              100      00e0-fc12-3456  32768   5      321     10111100</pre>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceB] <strong>display eth-trunk 1</strong>
+Eth-Trunk1's state information is:
+(h): high priority
+(r): reference port
+Local:
+LAG ID: 1                       Working Mode: Static
+Preempt Delay: Disabled         Hash Arithmetic: profile default
+System Priority: 100            System ID: 00e0-fc12-3456
+Least Active-linknumber: 1      Max Active-linknumber: 32
+<span>Operating Status: up</span>            Number Of Up Ports In Trunk: 2
+Timeout Period: Slow
+PortKeyMode: Auto
+--------------------------------------------------------------------------------
+ActorPortName          Status   PortType PortPri PortNo PortKey PortState Weight
+10GE1/0/1(hr)          <span>Selected</span> 10GE     32768   4      321     10111100  1
+10GE1/0/2(h)           <span>Selected</span> 10GE     32768   5      321     10111100  1
+
+Partner:
+--------------------------------------------------------------------------------
+ActorPortName          SysPri   SystemID        PortPri PortNo PortKey PortState
+10GE1/0/3              100      00e0-fc12-3457  32768   4      321     10111100
+10GE1/0/4              100      00e0-fc12-3457  32768   2      321     10100010</pre>
+<pre class="screen">[<span class="keyword"><font style="font-size:8pt" Face="Courier New" >~</font></span>DeviceC] <strong>display eth-trunk 1</strong>
+Eth-Trunk1's state information is:
+(h): high priority
+(r): reference port
+Local:
+LAG ID: 1                       Working Mode: Static
+Preempt Delay: Disabled         Hash Arithmetic: profile default
+System Priority: 100            System ID: 00e0-fc12-3456
+Least Active-linknumber: 1      Max Active-linknumber: 16
+<span>Operating Status: up</span>            Number Of Up Ports In Trunk: 2
+Timeout Period: Slow
+PortKeyMode: Auto
+--------------------------------------------------------------------------------
+ActorPortName          Status   PortType PortPri PortNo PortKey PortState Weight
+10GE1/0/1(hr)          <span>Selected</span> 10GE     32768   <span>32769</span>  321     10111100  1
+10GE1/0/2(h)           <span>Selected</span> 10GE     32768   <span>32770</span>  321     10111100  1
+
+Partner:
+--------------------------------------------------------------------------------
+ActorPortName          SysPri   SystemID        PortPri PortNo PortKey PortState
+10GE1/0/1              100      00e0-fc12-3457  32768   3      321     10111100
+10GE1/0/2              100      00e0-fc12-3457  32768   1      321     10100010</pre>
+<p>The preceding information shows that the value of <strong>Operating Status</strong> on each device is <strong>up</strong>, negotiation of Eth-Trunk 1 is successful. Member interfaces on DeviceB and DeviceC are active interfaces in Selected state, member interfaces of DeviceB and DeviceC can load balance traffic. The <strong>PortNo</strong> parameter on DeviceC indicates that the numbers of Eth-Trunk member interfaces on DeviceC to increase by 32768.</p>
+</p></li></ol></div>
+<div class="example"><a name="EN-US_TASK_0000001309017829__1.4.4"></a><a name="1.4.4"></a><h4 class="sectiontitle">Configuration Files</h4><ul><li><p>DeviceA configuration file</p>
+<pre class="screen">#
+sysname DeviceA
+#
+interface Eth-Trunk1
+ mode lacp-static
+# 
+interface 10GE1/0/1
+ eth-trunk 1
+#
+interface 10GE1/0/2
+ eth-trunk 1
+#
+interface 10GE1/0/3
+ eth-trunk 1
+#
+interface 10GE1/0/4
+ eth-trunk 1
+#
+return</pre>
+</li><li><p>DeviceB configuration file</p>
+<pre class="screen">#
+sysname DeviceB
+#
+lacp priority 100
+#
+interface Eth-Trunk1
+ mode lacp-static
+ lacp system-id 00e0-fc12-3456
+#
+interface 10GE1/0/1
+ eth-trunk 1
+#
+interface 10GE1/0/2
+ eth-trunk 1
+#
+return</pre>
+</li><li><p>DeviceC configuration file</p>
+<pre class="screen">#
+sysname DeviceC
+#
+lacp priority 100
+#
+interface Eth-Trunk1
+ mode lacp-static
+ lacp system-id 00e0-fc12-3456
+ lacp port-id-extension enable
+#
+interface 10GE1/0/1
+ eth-trunk 1
+#
+interface 10GE1/0/2
+ eth-trunk 1
+#
+return</pre>
+</li></ul>
+</div>
+</div>
+
+</div>
+<div class="footerNavBar clearfix">
+
+<div class="parentlink">
+Parent Topic:
+<a href="../dc/dc_cfg_m-lag_0013.html">Configuration Examples for M-LAG
+</a>
+</div>
+<div class="copyrightBottomBar">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="copyrightBottomBar_responsive">
+Copyright &copy; Huawei Technologies Co., Ltd.</div>
+<div class="bottomNavBtn clearfix">
+<a href="../dc/dc_cfg_m-lag_cfgcase_0019.html"><span class="font-st">&lt; </span>Previous topic</a>
+</div>
+</div>
+</body>
+</html>
