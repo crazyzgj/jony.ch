@@ -2,32 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://192.168.1.220:1313/docs/tools/option43/</loc>
+    <loc>http://127.0.0.1:1313/docs/tools/option43/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/sdwan/</loc>
+    <loc>http://127.0.0.1:1313/docs/sdwan/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/tools/subnet/</loc>
+    <loc>http://127.0.0.1:1313/docs/tools/subnet/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/wlan/</loc>
+    <loc>http://127.0.0.1:1313/docs/wlan/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/nac/</loc>
+    <loc>http://127.0.0.1:1313/docs/nac/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/tools/ip-lookup/</loc>
+    <loc>http://127.0.0.1:1313/docs/tools/ip-lookup/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/dc/</loc>
+    <loc>http://127.0.0.1:1313/docs/switch/huawei-m-lag/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/tools/batch-generator/</loc>
+    <loc>http://127.0.0.1:1313/docs/switch/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/python/</loc>
+    <loc>http://127.0.0.1:1313/docs/tools/batch-generator/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/</loc>
+    <loc>http://127.0.0.1:1313/docs/python/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/categories/</loc>
+    <loc>http://127.0.0.1:1313/docs/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/</loc>
+    <loc>http://127.0.0.1:1313/categories/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/docs/tools/</loc>
+    <loc>http://127.0.0.1:1313/</loc>
   </url><url>
-    <loc>http://192.168.1.220:1313/tags/</loc>
+    <loc>http://127.0.0.1:1313/docs/tools/</loc>
+  </url><url>
+    <loc>http://127.0.0.1:1313/tags/</loc>
   </url>
 </urlset>

@@ -6,8 +6,21 @@ bookCollapseSection: false
 
 # Huawei M-LAG technical details
 ## Concept
+Multichassis Link Aggregation Group (M-LAG) implements link aggregation among multiple devices. In a dual-active system, one device is connected to two devices through M-LAG to achieve device-level link reliability.
+
+**Advantages:**
+- **High reliability:** M-LAG protects link reliability for entire devices.
+- **Simplified network and configuration:** M-LAG is a horizontal virtualization technology that virtualizes two dual-homed devices into one device. M-LAG prevents loops on a Layer 2 network and implements redundancy.
+- **Independent upgrade:** Two devices can be upgraded independently, preventing service interruption.
 
 ## Configuration
+Based on Huawei CE switches (V200R025C00), M-LAG configuration supports multiple STP modes:
+1. **Root bridge mode:** The M-LAG master and backup devices must be configured as root bridges with the same bridge ID.
+2. **V-STP mode (Recommended):** V-STP virtualizes the M-LAG master and backup devices enabled with STP into one device to perform STP calculation. This mode supports flexible networking and multi-level M-LAG.
+3. **V-VBST mode:** Virtualizes devices enabled with VBST into one device to perform VBST calculation, solving port blocking problems after STP is enabled.
+
+When configuring the DFS Group on CE V200R025C00, you can specify the peer IP address to negotiate the HB DFS master/backup status and improve reliability:
+`source ip <ip-address> [ peer <peer-ip-address> ]`
 
 ## Configuration Generator
 
@@ -236,6 +249,16 @@ bookCollapseSection: false
         <input type="text" id="root-mac" placeholder="e.g. 00e0-fc00-0001">
       </div>
     </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="local-ip">DFS Local IP</label>
+        <input type="text" id="local-ip" value="10.1.1.1" placeholder="e.g. 10.1.1.1">
+      </div>
+      <div class="form-group">
+        <label for="peer-ip">DFS Peer IP (Optional)</label>
+        <input type="text" id="peer-ip" placeholder="e.g. 10.1.1.2">
+      </div>
+    </div>
     <button class="btn-generate" id="btn-generate">
       <span style="margin-right: 8px;">⚡</span> Generate Configuration
     </button>
@@ -253,6 +276,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const stpMode = document.getElementById('stp-mode');
   const macContainer = document.getElementById('mac-input-container');
   const rootMac = document.getElementById('root-mac');
+  const localIp = document.getElementById('local-ip');
+  const peerIp = document.getElementById('peer-ip');
   const btnGenerate = document.getElementById('btn-generate');
   const outputArea = document.getElementById('output-area');
   const configOutput = document.getElementById('config-output');
@@ -316,10 +341,19 @@ document.addEventListener('DOMContentLoaded', function() {
       output += `\n! DFS Group Configuration\n`;
       output += `dfs-group 1\n`;
       output += ` priority 150\n`;
-      output += ` source ip 10.1.1.1\n`;
+      let sourceIpCmd = ` source ip ${localIp && localIp.value ? localIp.value : '10.1.1.1'}`;
+      if (devType.value === 'CE' && devVersion.value === 'V200R025C00' && peerIp && peerIp.value) {
+        sourceIpCmd += ` peer ${peerIp.value}`;
+      } else if (peerIp && peerIp.value) {
+        sourceIpCmd += ` peer ${peerIp.value}`;
+      }
+      output += sourceIpCmd + `\n`;
       
       output += `\n! Peer-link Configuration\n`;
       output += `interface Eth-Trunk 0\n`;
+      if (stpMode.value === 'root-bridge') {
+        output += ` stp disable\n`;
+      }
       output += ` trunkport m-lag peer-link 1\n`;
       
       output += `\n! M-LAG Member Interface Configuration\n`;
