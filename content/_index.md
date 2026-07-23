@@ -304,7 +304,7 @@ bookToC: false
       <img src="logo.svg" alt="Logo" class="hero-logo" style="height: 80px; width: 80px;" />
       <h1>Jonys Tech Book</h1>
     </div>
-    <h2>Systematic summary, Reject invalid involution.</h2>
+    <h2>Knowledge is free, but ideas are not.</h2>
     <p>Sharing Networking, Data Center and Automation Programming Technologies.</p>
     <div class="hero-buttons">
       <a href="/docs/sdwan/" class="btn btn-primary">Read Now</a>

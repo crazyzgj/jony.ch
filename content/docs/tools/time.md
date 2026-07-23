@@ -891,18 +891,44 @@ async function verifyNetworkTime() {
 
   try {
     let serverTimeMs = null;
+    // Attempt 1: Akamai Time API
     try {
-      const resp = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC', { cache: 'no-store' });
+      const resp = await fetch('https://time.akamai.com/', { cache: 'no-store' });
       if (resp.ok) {
-        const data = await resp.json();
-        serverTimeMs = new Date(data.utc_datetime).getTime();
+        const text = await resp.text();
+        const sec = parseFloat(text.trim());
+        if (!isNaN(sec) && sec > 0) {
+          serverTimeMs = sec * 1000;
+        }
       }
-    } catch (e) {
-      const resp = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
-      const dateHead = resp.headers.get('date');
-      if (dateHead) {
-        serverTimeMs = new Date(dateHead).getTime();
-      }
+    } catch (e) {}
+
+    // Attempt 2: Cloudflare Trace API
+    if (!serverTimeMs) {
+      try {
+        const resp = await fetch('https://cloudflare.com/cdn-cgi/trace', { cache: 'no-store' });
+        if (resp.ok) {
+          const text = await resp.text();
+          const match = text.match(/^ts=(.+)$/m);
+          if (match) {
+            const sec = parseFloat(match[1]);
+            if (!isNaN(sec) && sec > 0) {
+              serverTimeMs = sec * 1000;
+            }
+          }
+        }
+      } catch (e) {}
+    }
+
+    // Attempt 3: Origin HTTP Date Header fallback
+    if (!serverTimeMs) {
+      try {
+        const resp = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+        const dateHead = resp.headers.get('date');
+        if (dateHead) {
+          serverTimeMs = new Date(dateHead).getTime();
+        }
+      } catch (e) {}
     }
 
     const endTime = performance.now();
