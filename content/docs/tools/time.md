@@ -504,11 +504,11 @@ A comprehensive utility for real-time clock comparison, network time verificatio
         </div>
         <div class="flip-panel-date" id="flipLocalDate">2026-07-23</div>
       </div>
-      <!-- Network / UTC Standard Flip Clock Panel -->
+      <!-- Network Standard Time (Local Timezone) Flip Clock Panel -->
       <div class="flip-clock-panel">
         <div class="flip-panel-label">
-          <span>🌐 Network Standard Time (UTC)</span>
-          <span style="color: #4ade80; font-size: 0.8rem;">UTC+00:00</span>
+          <span>🌐 Network Standard Time</span>
+          <span id="flipNetTz" style="color: #4ade80; font-size: 0.8rem;">GMT+02:00</span>
         </div>
         <div class="flip-clock-display">
           <div class="flip-group">
