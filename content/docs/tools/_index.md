@@ -170,4 +170,11 @@ bookToC: false
     <h3>Batch Config Generator</h3>
     <p>Automatically generate repetitive configuration scripts or JSON based on templates with dynamic variables.</p>
   </a>
+
+  <!-- Time & Timestamp Tool -->
+  <a href="/docs/tools/time/" class="tool-card">
+    <div class="tool-icon">⏱️</div>
+    <h3>Time & Timestamp</h3>
+    <p>Real-time clock comparison (兑时), network time sync, timestamp conversion, and timezone calculations.</p>
+  </a>
 </div>

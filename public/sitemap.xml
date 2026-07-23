@@ -2,34 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://127.0.0.1:1313/docs/tools/option43/</loc>
+    <loc>https://jony.ch/docs/tools/option43/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/sdwan/</loc>
+    <loc>https://jony.ch/docs/sdwan/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/tools/subnet/</loc>
+    <loc>https://jony.ch/docs/tools/subnet/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/wlan/</loc>
+    <loc>https://jony.ch/docs/wlan/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/nac/</loc>
+    <loc>https://jony.ch/docs/nac/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/tools/ip-lookup/</loc>
+    <loc>https://jony.ch/docs/tools/ip-lookup/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/switch/huawei-m-lag/</loc>
+    <loc>https://jony.ch/docs/switch/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/switch/</loc>
+    <loc>https://jony.ch/docs/tools/batch-generator/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/tools/batch-generator/</loc>
+    <loc>https://jony.ch/docs/python/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/python/</loc>
+    <loc>https://jony.ch/docs/tools/time/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/</loc>
+    <loc>https://jony.ch/docs/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/categories/</loc>
+    <loc>https://jony.ch/categories/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/</loc>
+    <loc>https://jony.ch/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/docs/tools/</loc>
+    <loc>https://jony.ch/docs/tools/</loc>
   </url><url>
-    <loc>http://127.0.0.1:1313/tags/</loc>
+    <loc>https://jony.ch/tags/</loc>
   </url>
 </urlset>

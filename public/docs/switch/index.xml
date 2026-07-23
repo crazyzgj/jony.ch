@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Switch Technology on Jonys-Book</title>
-		<link>http://127.0.0.1:1313/docs/switch/</link>
+		<link>https://jony.ch/docs/switch/</link>
 		<description>Recent content in Switch Technology on Jonys-Book</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -10,13 +10,6 @@
 		
 		
 		
-			<atom:link href="http://127.0.0.1:1313/docs/switch/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>Huawei M-LAG</title>
-				<link>http://127.0.0.1:1313/docs/switch/huawei-m-lag/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://127.0.0.1:1313/docs/switch/huawei-m-lag/</guid>
-				<description>&lt;h1 id=&#34;huawei-m-lag-technical-details&#34;&gt;Huawei M-LAG technical details&lt;a class=&#34;anchor&#34; href=&#34;#huawei-m-lag-technical-details&#34;&gt;#&lt;/a&gt;&lt;/h1&gt;&#xD;&#xA;&lt;h2 id=&#34;concept&#34;&gt;Concept&lt;a class=&#34;anchor&#34; href=&#34;#concept&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xD;&#xA;&lt;p&gt;Multichassis Link Aggregation Group (M-LAG) implements link aggregation among multiple devices. In a dual-active system, one device is connected to two devices through M-LAG to achieve device-level link reliability.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Advantages:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;High reliability:&lt;/strong&gt; M-LAG protects link reliability for entire devices.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Simplified network and configuration:&lt;/strong&gt; M-LAG is a horizontal virtualization technology that virtualizes two dual-homed devices into one device. M-LAG prevents loops on a Layer 2 network and implements redundancy.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Independent upgrade:&lt;/strong&gt; Two devices can be upgraded independently, preventing service interruption.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;a class=&#34;anchor&#34; href=&#34;#configuration&#34;&gt;#&lt;/a&gt;&lt;/h2&gt;&#xD;&#xA;&lt;p&gt;Based on Huawei CE switches (V200R025C00), M-LAG configuration supports multiple STP modes:&lt;/p&gt;</description>
-			</item>
+			<atom:link href="https://jony.ch/docs/switch/index.xml" rel="self" type="application/rss+xml" />
 	</channel>
 </rss>

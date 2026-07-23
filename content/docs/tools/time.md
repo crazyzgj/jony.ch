@@ -1,0 +1,1166 @@
+---
+title: "Time & Timestamp Tools"
+weight: 6
+bookToC: false
+---
+
+# Time & Timestamp Tools
+
+A comprehensive utility for real-time clock comparison, network time verification, timestamp conversion, and timezone calculations.
+
+<style>
+/* Modern styling for Time Tools */
+.time-tools-wrapper {
+  margin-top: 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1e293b;
+}
+
+/* Top Live Flip Clock Header Container */
+.flip-clock-dashboard {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.25);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.flip-clock-dashboard::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(255,255,255,0) 70%);
+  pointer-events: none;
+}
+
+.flip-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.flip-dashboard-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulse-dot 1.5s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* Flip Clocks Grid Layout */
+.flip-clocks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.5rem;
+}
+
+.flip-clock-panel {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.4rem;
+  backdrop-filter: blur(8px);
+}
+
+.flip-panel-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.flip-clock-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+/* Individual Flip Digit Cards */
+.flip-group {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.flip-card-unit {
+  position: relative;
+  width: 42px;
+  height: 58px;
+  background: #1e293b;
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  perspective: 300px;
+}
+
+.flip-card-unit::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+  z-index: 5;
+}
+
+.flip-card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.25s ease-in-out;
+}
+
+.flip-card-unit.do-flip .flip-card-inner {
+  animation: flipLeaf 0.4s ease-in-out;
+}
+
+@keyframes flipLeaf {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(-90deg); filter: brightness(1.2); }
+  100% { transform: rotateX(0deg); }
+}
+
+.flip-separator {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #38bdf8;
+  margin: 0 0.15rem;
+  animation: blink-colon 1s infinite;
+}
+
+@keyframes blink-colon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.flip-panel-date {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.8rem;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Tool Sections Styling */
+.tool-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.8rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+}
+
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 0.8rem;
+}
+
+.section-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 8px;
+  font-size: 1.1rem;
+}
+
+/* Time Sync Grid */
+.sync-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.sync-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sync-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px -2px rgba(0,0,0,0.05);
+}
+
+.sync-card-header {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sync-card-time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.sync-card-date {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.2rem;
+}
+
+/* Offset Banner */
+.offset-banner {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.offset-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.offset-text {
+  font-size: 0.95rem;
+  color: #0369a1;
+  font-weight: 500;
+}
+
+.offset-text strong {
+  color: #0c4a6e;
+  font-family: monospace;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #CF0A2C;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-primary:hover {
+  background-color: #b00824;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+/* Converter Inputs */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .form-grid-2col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.input-group {
+  margin-bottom: 1.2rem;
+}
+
+.input-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #334155;
+  margin-bottom: 0.4rem;
+}
+
+.input-control {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-control:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.preset-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.preset-pill {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preset-pill:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+/* Output Box */
+.output-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.output-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.output-row:last-child {
+  border-bottom: none;
+}
+
+.output-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.output-value-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-grow: 1;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.output-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+  word-break: break-all;
+  text-align: right;
+}
+
+.unit-badge {
+  display: inline-block;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+</style>
+
+<div class="time-tools-wrapper">
+
+  <!-- TOP HEADER: LIVE RETRO FLIP CLOCKS -->
+  <div class="flip-clock-dashboard">
+    <div class="flip-dashboard-header">
+      <div class="flip-dashboard-title">
+        <span>⏱️ Live Local & Network Standard Time</span>
+        <span class="live-badge">
+          <span class="live-dot"></span> LIVE
+        </span>
+      </div>
+    </div>
+    <div class="flip-clocks-grid">
+      <!-- Local Flip Clock Panel -->
+      <div class="flip-clock-panel">
+        <div class="flip-panel-label">
+          <span>💻 Local Device Time</span>
+          <span id="flipLocalTz" style="color: #38bdf8; font-size: 0.8rem;">GMT+02:00</span>
+        </div>
+        <div class="flip-clock-display">
+          <div class="flip-group">
+            <div class="flip-card-unit" id="lh1"><div class="flip-card-inner">0</div></div>
+            <div class="flip-card-unit" id="lh2"><div class="flip-card-inner">0</div></div>
+          </div>
+          <div class="flip-separator">:</div>
+          <div class="flip-group">
+            <div class="flip-card-unit" id="lm1"><div class="flip-card-inner">0</div></div>
+            <div class="flip-card-unit" id="lm2"><div class="flip-card-inner">0</div></div>
+          </div>
+          <div class="flip-separator">:</div>
+          <div class="flip-group">
+            <div class="flip-card-unit" id="ls1"><div class="flip-card-inner">0</div></div>
+            <div class="flip-card-unit" id="ls2"><div class="flip-card-inner">0</div></div>
+          </div>
+        </div>
+        <div class="flip-panel-date" id="flipLocalDate">2026-07-23</div>
+      </div>
+      <!-- Network / UTC Standard Flip Clock Panel -->
+      <div class="flip-clock-panel">
+        <div class="flip-panel-label">
+          <span>🌐 Network Standard Time (UTC)</span>
+          <span style="color: #4ade80; font-size: 0.8rem;">UTC+00:00</span>
+        </div>
+        <div class="flip-clock-display">
+          <div class="flip-group">
+            <div class="flip-card-unit" id="nh1"><div class="flip-card-inner">0</div></div>
+            <div class="flip-card-unit" id="nh2"><div class="flip-card-inner">0</div></div>
+          </div>
+          <div class="flip-separator">:</div>
+          <div class="flip-group">
+            <div class="flip-card-unit" id="nm1"><div class="flip-card-inner">0</div></div>
+            <div class="flip-card-unit" id="nm2"><div class="flip-card-inner">0</div></div>
+          </div>
+          <div class="flip-separator">:</div>
+          <div class="flip-group">
+            <div class="flip-card-unit" id="ns1"><div class="flip-card-inner">0</div></div>
+            <div class="flip-card-unit" id="ns2"><div class="flip-card-inner">0</div></div>
+          </div>
+        </div>
+        <div class="flip-panel-date" id="flipNetDate">2026-07-23</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: Clock Comparison & Sync -->
+  <div class="tool-section">
+    <h2 class="section-title">
+      <span class="section-icon">🌐</span> 1. Clock Comparison & Sync (Local & Standard Time)
+    </h2>
+    <p style="color: #64748b; margin-bottom: 1.2rem; font-size: 0.95rem;">
+      Compare your device's local clock against UTC, Central European Time (CET/CEST), and major global timezones.
+    </p>
+    <div class="sync-grid">
+      <!-- Local Device Time -->
+      <div class="sync-card" style="border-left: 4px solid #3b82f6;">
+        <div class="sync-card-header">
+          <span>💻 Local Device Time</span>
+          <span id="localTzOffset" style="font-size:0.75rem; color:#2563eb; font-weight:bold;">GMT+02:00</span>
+        </div>
+        <div class="sync-card-time" id="syncLocalTime">00:00:00.000</div>
+        <div class="sync-card-date" id="syncLocalDate">2026-07-23</div>
+      </div>
+      <!-- Standard UTC Time -->
+      <div class="sync-card" style="border-left: 4px solid #10b981;">
+        <div class="sync-card-header">
+          <span>🌐 Standard UTC</span>
+          <span style="font-size:0.75rem; color:#059669; font-weight:bold;">UTC+00:00</span>
+        </div>
+        <div class="sync-card-time" id="syncUtcTime">00:00:00.000</div>
+        <div class="sync-card-date" id="syncUtcDate">2026-07-23</div>
+      </div>
+      <!-- Central European Time (CET / CEST) -->
+      <div class="sync-card" style="border-left: 4px solid #f59e0b;">
+        <div class="sync-card-header">
+          <span>🇪🇺 Central European Time (CET/CEST)</span>
+          <span id="cetTzLabel" style="font-size:0.75rem; color:#d97706; font-weight:bold;">UTC+02:00</span>
+        </div>
+        <div class="sync-card-time" id="syncCetTime">00:00:00.000</div>
+        <div class="sync-card-date" id="syncCetDate">2026-07-23</div>
+      </div>
+      <!-- Beijing Time -->
+      <div class="sync-card" style="border-left: 4px solid #CF0A2C;">
+        <div class="sync-card-header">
+          <span>🇨🇳 Beijing Time (CST)</span>
+          <span style="font-size:0.75rem; color:#CF0A2C; font-weight:bold;">UTC+08:00</span>
+        </div>
+        <div class="sync-card-time" id="syncCstTime">00:00:00.000</div>
+        <div class="sync-card-date" id="syncCstDate">2026-07-23</div>
+      </div>
+      <!-- Tokyo Time -->
+      <div class="sync-card" style="border-left: 4px solid #8b5cf6;">
+        <div class="sync-card-header">
+          <span>🇯🇵 Tokyo (JST)</span>
+          <span style="font-size:0.75rem; color:#7c3aed; font-weight:bold;">UTC+09:00</span>
+        </div>
+        <div class="sync-card-time" id="syncTokyoTime">00:00:00.000</div>
+        <div class="sync-card-date" id="syncTokyoDate">2026-07-23</div>
+      </div>
+    </div>
+    <!-- Network Offset Banner -->
+    <div class="offset-banner">
+      <div class="offset-info">
+        <span style="font-size: 1.5rem;">⏱️</span>
+        <div>
+          <div class="offset-text" id="networkSyncStatus">
+            Local Clock Offset: <strong id="offsetVal">Checking...</strong> | RTT Latency: <strong id="rttVal">-- ms</strong>
+          </div>
+          <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.15rem;" id="syncDetailMsg">
+            Click the button to measure offset between local system time and network standard time.
+          </div>
+        </div>
+      </div>
+      <div>
+        <button class="btn-primary" onclick="verifyNetworkTime()">
+          🔄 Verify Network Sync
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Timestamp to Date/Time Converter -->
+  <div class="tool-section">
+    <h2 class="section-title">
+      <span class="section-icon">🔄</span> 2. Timestamp to Date/Time
+    </h2>
+    <div class="form-grid form-grid-2col">
+      <div>
+        <div class="input-group">
+          <label>Enter Timestamp:</label>
+          <input type="text" id="tsInput" class="input-control" placeholder="e.g. 1774268936 or 1774268936000" oninput="convertTsToDate()" />
+          <div class="preset-pills">
+            <button class="preset-pill" onclick="setTsInput('now')">Current Time</button>
+            <button class="preset-pill" onclick="setTsInput('todayStart')">Today 00:00</button>
+            <button class="preset-pill" onclick="setTsInput('yesterdayStart')">Yesterday 00:00</button>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Detected Unit / Standard:</label>
+          <select id="tsUnitSelect" class="input-control" onchange="convertTsToDate()">
+            <option value="auto">Auto Detect (s / ms / μs / ns)</option>
+            <option value="s">Seconds (s) - 10 Digits</option>
+            <option value="ms">Milliseconds (ms) - 13 Digits</option>
+            <option value="us">Microseconds (μs) - 16 Digits</option>
+            <option value="ns">Nanoseconds (ns) - 19 Digits</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Target Timezone:</label>
+          <select id="tsTzSelect" class="input-control" onchange="convertTsToDate()">
+            <option value="local">Local Time</option>
+            <option value="UTC">UTC (Coordinated Universal Time)</option>
+            <option value="Europe/Paris">Central European Time (CET/CEST)</option>
+            <option value="Asia/Shanghai">Beijing Time (UTC+8 / CST)</option>
+            <option value="Asia/Tokyo">Tokyo Time (UTC+9 / JST)</option>
+            <option value="Europe/London">London (UTC+0 / GMT/BST)</option>
+            <option value="America/New_York">New York (UTC-5 / EST/EDT)</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label style="display: block; font-weight: 600; font-size: 0.9rem; color: #334155; margin-bottom: 0.4rem;">
+          Converted Results:
+        </label>
+        <div class="output-box">
+          <div class="output-row">
+            <span class="output-label">Standard Format</span>
+            <div class="output-value-group">
+              <span class="output-value" id="outDateStd">--</span>
+              <button class="btn-secondary" onclick="copyText('outDateStd')">Copy</button>
+            </div>
+          </div>
+          <div class="output-row">
+            <span class="output-label">With Milliseconds</span>
+            <div class="output-value-group">
+              <span class="output-value" id="outDateMs">--</span>
+              <button class="btn-secondary" onclick="copyText('outDateMs')">Copy</button>
+            </div>
+          </div>
+          <div class="output-row">
+            <span class="output-label">ISO 8601</span>
+            <div class="output-value-group">
+              <span class="output-value" id="outDateIso">--</span>
+              <button class="btn-secondary" onclick="copyText('outDateIso')">Copy</button>
+            </div>
+          </div>
+          <div class="output-row">
+            <span class="output-label">RFC 2822</span>
+            <div class="output-value-group">
+              <span class="output-value" id="outDateRfc">--</span>
+              <button class="btn-secondary" onclick="copyText('outDateRfc')">Copy</button>
+            </div>
+          </div>
+          <div class="output-row">
+            <span class="output-label">Relative Time</span>
+            <div class="output-value-group">
+              <span class="output-value" id="outDateRelative" style="color: #2563eb;">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Date/Time String to Timestamp Converter -->
+  <div class="tool-section">
+    <h2 class="section-title">
+      <span class="section-icon">📅</span> 3. Date/Time to Timestamp
+    </h2>
+    <div class="form-grid form-grid-2col">
+      <div>
+        <div class="input-group">
+          <label>Pick Date & Time:</label>
+          <input type="datetime-local" id="datePicker" class="input-control" step="1" onchange="syncPickerToText()" />
+        </div>
+        <div class="input-group">
+          <label>Or Enter Custom Date/Time String:</label>
+          <input type="text" id="dateStrInput" class="input-control" placeholder="e.g. 2026-07-23 12:28:56" oninput="convertDateToTs()" />
+          <div class="preset-pills">
+            <button class="preset-pill" onclick="setDatePreset('now')">Now</button>
+            <button class="preset-pill" onclick="setDatePreset('todayStart')">Today 00:00</button>
+            <button class="preset-pill" onclick="setDatePreset('todayEnd')">Today 23:59:59</button>
+            <button class="preset-pill" onclick="setDatePreset('yesterdayStart')">Yesterday 00:00</button>
+            <button class="preset-pill" onclick="setDatePreset('tomorrowStart')">Tomorrow 00:00</button>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Input Timezone Context:</label>
+          <select id="dateTzSelect" class="input-control" onchange="convertDateToTs()">
+            <option value="local">Local Timezone</option>
+            <option value="UTC">UTC (Universal Time)</option>
+            <option value="+02:00">UTC+02:00 (Central European Summer Time / CEST)</option>
+            <option value="+08:00">UTC+08:00 (Beijing / CST)</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label style="display: block; font-weight: 600; font-size: 0.9rem; color: #334155; margin-bottom: 0.4rem;">
+          Generated Timestamps:
+        </label>
+        <div class="output-box">
+          <div class="output-row">
+            <span class="output-label">Seconds (10-digit) <span class="unit-badge">s</span></span>
+            <div class="output-value-group">
+              <span class="output-value" id="outTsSec">--</span>
+              <button class="btn-secondary" onclick="copyText('outTsSec')">Copy</button>
+            </div>
+          </div>
+          <div class="output-row">
+            <span class="output-label">Milliseconds (13-digit) <span class="unit-badge">ms</span></span>
+            <div class="output-value-group">
+              <span class="output-value" id="outTsMs">--</span>
+              <button class="btn-secondary" onclick="copyText('outTsMs')">Copy</button>
+            </div>
+          </div>
+          <div class="output-row">
+            <span class="output-label">Microseconds (16-digit) <span class="unit-badge">μs</span></span>
+            <div class="output-value-group">
+              <span class="output-value" id="outTsUs">--</span>
+              <button class="btn-secondary" onclick="copyText('outTsUs')">Copy</button>
+            </div>
+          </div>
+          <div class="output-row">
+            <span class="output-label">Nanoseconds (19-digit) <span class="unit-badge">ns</span></span>
+            <div class="output-value-group">
+              <span class="output-value" id="outTsNs">--</span>
+              <button class="btn-secondary" onclick="copyText('outTsNs')">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let networkTimeOffsetMs = 0;
+
+// State tracking for flip digits to trigger animation on digit change
+const flipDigitState = {};
+
+function updateFlipDigit(id, newChar) {
+  const container = document.getElementById(id);
+  if (!container) return;
+  const inner = container.querySelector('.flip-card-inner');
+  if (!inner) return;
+
+  if (flipDigitState[id] !== newChar) {
+    flipDigitState[id] = newChar;
+    inner.innerText = newChar;
+    container.classList.remove('do-flip');
+    // Force reflow
+    void container.offsetWidth;
+    container.classList.add('do-flip');
+  }
+}
+
+function initLiveClock() {
+  updateClocks();
+  setInterval(() => {
+    updateClocks();
+  }, 200);
+}
+
+function updateClocks() {
+  const now = new Date();
+  const netTime = new Date(now.getTime() - networkTimeOffsetMs);
+
+  // Update Local Flip Clock Digits
+  const lH = String(now.getHours()).padStart(2, '0');
+  const lM = String(now.getMinutes()).padStart(2, '0');
+  const lS = String(now.getSeconds()).padStart(2, '0');
+
+  updateFlipDigit('lh1', lH[0]);
+  updateFlipDigit('lh2', lH[1]);
+  updateFlipDigit('lm1', lM[0]);
+  updateFlipDigit('lm2', lM[1]);
+  updateFlipDigit('ls1', lS[0]);
+  updateFlipDigit('ls2', lS[1]);
+
+  document.getElementById('flipLocalDate').innerText = formatDateString(now, 'local');
+
+  // Local TZ offset display
+  const offsetMin = -now.getTimezoneOffset();
+  const sign = offsetMin >= 0 ? '+' : '-';
+  const absMin = Math.abs(offsetMin);
+  const tzH = String(Math.floor(absMin / 60)).padStart(2, '0');
+  const tzM = String(absMin % 60).padStart(2, '0');
+  document.getElementById('flipLocalTz').innerText = `GMT${sign}${tzH}:${tzM}`;
+  document.getElementById('localTzOffset').innerText = `GMT${sign}${tzH}:${tzM}`;
+
+  // Update Network (UTC) Flip Clock Digits
+  const nH = String(netTime.getUTCHours()).padStart(2, '0');
+  const nM = String(netTime.getUTCMinutes()).padStart(2, '0');
+  const nS = String(netTime.getUTCSeconds()).padStart(2, '0');
+
+  updateFlipDigit('nh1', nH[0]);
+  updateFlipDigit('nh2', nH[1]);
+  updateFlipDigit('nm1', nM[0]);
+  updateFlipDigit('nm2', nM[1]);
+  updateFlipDigit('ns1', nS[0]);
+  updateFlipDigit('ns2', nS[1]);
+
+  document.getElementById('flipNetDate').innerText = formatDateString(netTime, 'UTC');
+
+  // Section 1 Sync Cards (Precise with Milliseconds)
+  const msStr = String(now.getMilliseconds()).padStart(3, '0');
+
+  // Local
+  document.getElementById('syncLocalTime').innerText = formatTimeString(now, 'local') + '.' + msStr;
+  document.getElementById('syncLocalDate').innerText = formatDateString(now, 'local');
+
+  // UTC
+  document.getElementById('syncUtcTime').innerText = formatTimeString(now, 'UTC') + '.' + msStr;
+  document.getElementById('syncUtcDate').innerText = formatDateString(now, 'UTC');
+
+  // CET / CEST (Europe/Paris)
+  document.getElementById('syncCetTime').innerText = formatTimeString(now, 'Europe/Paris') + '.' + msStr;
+  document.getElementById('syncCetDate').innerText = formatDateString(now, 'Europe/Paris');
+
+  // Beijing (Asia/Shanghai)
+  document.getElementById('syncCstTime').innerText = formatTimeString(now, 'Asia/Shanghai') + '.' + msStr;
+  document.getElementById('syncCstDate').innerText = formatDateString(now, 'Asia/Shanghai');
+
+  // Tokyo (Asia/Tokyo)
+  document.getElementById('syncTokyoTime').innerText = formatTimeString(now, 'Asia/Tokyo') + '.' + msStr;
+  document.getElementById('syncTokyoDate').innerText = formatDateString(now, 'Asia/Tokyo');
+}
+
+// Format helpers
+function formatTimeString(date, tz) {
+  const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  if (tz && tz !== 'local') options.timeZone = tz;
+  return new Intl.DateTimeFormat('en-GB', options).format(date);
+}
+
+function formatDateString(date, tz) {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  if (tz && tz !== 'local') options.timeZone = tz;
+  const parts = new Intl.DateTimeFormat('en-CA', options).formatToParts(date);
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+  return `${year}-${month}-${day}`;
+}
+
+// Network Time Verification & Sync
+async function verifyNetworkTime() {
+  const detailEl = document.getElementById('syncDetailMsg');
+  const offsetValEl = document.getElementById('offsetVal');
+  const rttValEl = document.getElementById('rttVal');
+
+  offsetValEl.innerText = 'Checking...';
+  rttValEl.innerText = 'Measuring...';
+  detailEl.innerText = 'Sending HTTP request to measure network latency and reference time...';
+
+  const startTime = performance.now();
+  const reqStartTs = Date.now();
+
+  try {
+    let serverTimeMs = null;
+    try {
+      const resp = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC', { cache: 'no-store' });
+      if (resp.ok) {
+        const data = await resp.json();
+        serverTimeMs = new Date(data.utc_datetime).getTime();
+      }
+    } catch (e) {
+      const resp = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+      const dateHead = resp.headers.get('date');
+      if (dateHead) {
+        serverTimeMs = new Date(dateHead).getTime();
+      }
+    }
+
+    const endTime = performance.now();
+    const reqEndTs = Date.now();
+    const rtt = Math.round(endTime - startTime);
+
+    if (serverTimeMs) {
+      const estimatedServerTime = serverTimeMs + (rtt / 2);
+      const diffMs = reqEndTs - estimatedServerTime; // Local - Server
+      networkTimeOffsetMs = diffMs;
+      const diffSec = (diffMs / 1000).toFixed(3);
+
+      rttValEl.innerText = `${rtt} ms`;
+
+      if (Math.abs(diffMs) < 100) {
+        offsetValEl.innerHTML = `<span style="color:#10b981;">Accurate (${diffSec > 0 ? '+' : ''}${diffSec}s)</span>`;
+        detailEl.innerText = `Your local clock is synchronized within ${Math.abs(diffMs)}ms of standard time.`;
+      } else if (diffMs > 0) {
+        offsetValEl.innerHTML = `<span style="color:#ef4444;">FAST by +${diffSec}s</span>`;
+        detailEl.innerText = `Your local clock is running approximately ${diffSec} seconds fast compared to network time.`;
+      } else {
+        offsetValEl.innerHTML = `<span style="color:#ef4444;">SLOW by ${diffSec}s</span>`;
+        detailEl.innerText = `Your local clock is running approximately ${Math.abs(diffSec)} seconds slow compared to network time.`;
+      }
+    } else {
+      throw new Error('Unable to parse server date header.');
+    }
+  } catch (err) {
+    rttValEl.innerText = 'N/A';
+    offsetValEl.innerHTML = `<span style="color:#f59e0b;">Local High-Precision RTC active</span>`;
+    detailEl.innerText = `Network check unavailable (offline or API blocked). High-precision system timer is active.`;
+  }
+}
+
+// Timestamp -> Date Logic
+function setTsInput(preset) {
+  const input = document.getElementById('tsInput');
+  const now = new Date();
+  if (preset === 'now') {
+    input.value = Math.floor(now.getTime() / 1000);
+  } else if (preset === 'todayStart') {
+    now.setHours(0,0,0,0);
+    input.value = Math.floor(now.getTime() / 1000);
+  } else if (preset === 'yesterdayStart') {
+    now.setDate(now.getDate() - 1);
+    now.setHours(0,0,0,0);
+    input.value = Math.floor(now.getTime() / 1000);
+  }
+  convertTsToDate();
+}
+
+function convertTsToDate() {
+  const valStr = document.getElementById('tsInput').value.trim();
+  const unit = document.getElementById('tsUnitSelect').value;
+  const tz = document.getElementById('tsTzSelect').value;
+
+  const stdEl = document.getElementById('outDateStd');
+  const msEl = document.getElementById('outDateMs');
+  const isoEl = document.getElementById('outDateIso');
+  const rfcEl = document.getElementById('outDateRfc');
+  const relEl = document.getElementById('outDateRelative');
+
+  if (!valStr || isNaN(valStr)) {
+    stdEl.innerText = '--';
+    msEl.innerText = '--';
+    isoEl.innerText = '--';
+    rfcEl.innerText = '--';
+    relEl.innerText = '--';
+    return;
+  }
+
+  let num = Number(valStr);
+  let ms = num;
+
+  if (unit === 'auto') {
+    if (valStr.length <= 11) ms = num * 1000;          // seconds
+    else if (valStr.length <= 14) ms = num;            // milliseconds
+    else if (valStr.length <= 17) ms = Math.floor(num / 1000); // microseconds
+    else ms = Math.floor(num / 1000000);              // nanoseconds
+  } else if (unit === 's') {
+    ms = num * 1000;
+  } else if (unit === 'us') {
+    ms = Math.floor(num / 1000);
+  } else if (unit === 'ns') {
+    ms = Math.floor(num / 1000000);
+  }
+
+  const d = new Date(ms);
+  if (isNaN(d.getTime())) {
+    stdEl.innerText = 'Invalid Date';
+    msEl.innerText = 'Invalid Date';
+    isoEl.innerText = 'Invalid Date';
+    rfcEl.innerText = 'Invalid Date';
+    relEl.innerText = 'Invalid Date';
+    return;
+  }
+
+  const optStd = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  if (tz !== 'local') optStd.timeZone = tz;
+
+  const parts = new Intl.DateTimeFormat('en-CA', optStd).formatToParts(d);
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+  const hour = parts.find(p => p.type === 'hour').value;
+  const minute = parts.find(p => p.type === 'minute').value;
+  const second = parts.find(p => p.type === 'second').value;
+  const millisecond = String(d.getMilliseconds()).padStart(3, '0');
+
+  stdEl.innerText = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  msEl.innerText = `${year}-${month}-${day} ${hour}:${minute}:${second}.${millisecond}`;
+  isoEl.innerText = d.toISOString();
+  rfcEl.innerText = d.toUTCString();
+
+  const diffSec = Math.round((d.getTime() - Date.now()) / 1000);
+  if (Math.abs(diffSec) < 5) {
+    relEl.innerText = 'Just now';
+  } else if (diffSec > 0) {
+    if (diffSec < 60) relEl.innerText = `In ${diffSec} seconds`;
+    else if (diffSec < 3600) relEl.innerText = `In ${Math.round(diffSec/60)} minutes`;
+    else if (diffSec < 86400) relEl.innerText = `In ${Math.round(diffSec/3600)} hours`;
+    else relEl.innerText = `In ${Math.round(diffSec/86400)} days`;
+  } else {
+    const abs = Math.abs(diffSec);
+    if (abs < 60) relEl.innerText = `${abs} seconds ago`;
+    else if (abs < 3600) relEl.innerText = `${Math.round(abs/60)} minutes ago`;
+    else if (abs < 86400) relEl.innerText = `${Math.round(abs/3600)} hours ago`;
+    else relEl.innerText = `${Math.round(abs/86400)} days ago`;
+  }
+}
+
+// Date -> Timestamp Logic
+function setDatePreset(type) {
+  const now = new Date();
+  if (type === 'now') {
+    // Keep exact time
+  } else if (type === 'todayStart') {
+    now.setHours(0,0,0,0);
+  } else if (type === 'todayEnd') {
+    now.setHours(23,59,59,999);
+  } else if (type === 'yesterdayStart') {
+    now.setDate(now.getDate() - 1);
+    now.setHours(0,0,0,0);
+  } else if (type === 'tomorrowStart') {
+    now.setDate(now.getDate() + 1);
+    now.setHours(0,0,0,0);
+  }
+
+  const picker = document.getElementById('datePicker');
+  picker.value = formatPickerValue(now);
+
+  document.getElementById('dateStrInput').value = `${formatDateString(now, 'local')} ${formatTimeString(now, 'local')}`;
+  convertDateToTs();
+}
+
+function syncPickerToText() {
+  const pickerVal = document.getElementById('datePicker').value;
+  if (pickerVal) {
+    const formatted = pickerVal.replace('T', ' ');
+    document.getElementById('dateStrInput').value = formatted;
+  }
+  convertDateToTs();
+}
+
+function formatPickerValue(d) {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const hour = String(d.getHours()).padStart(2, '0');
+  const minute = String(d.getMinutes()).padStart(2, '0');
+  const second = String(d.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
+}
+
+function convertDateToTs() {
+  const str = document.getElementById('dateStrInput').value.trim();
+  const tzOption = document.getElementById('dateTzSelect').value;
+
+  const secEl = document.getElementById('outTsSec');
+  const msEl = document.getElementById('outTsMs');
+  const usEl = document.getElementById('outTsUs');
+  const nsEl = document.getElementById('outTsNs');
+
+  if (!str) {
+    secEl.innerText = '--';
+    msEl.innerText = '--';
+    usEl.innerText = '--';
+    nsEl.innerText = '--';
+    return;
+  }
+
+  let parseableStr = str;
+
+  if (/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}(:\d{2})?$/.test(str)) {
+    if (tzOption === 'UTC') {
+      parseableStr = str.replace(' ', 'T') + 'Z';
+    } else if (tzOption === '+02:00') {
+      parseableStr = str.replace(' ', 'T') + '+02:00';
+    } else if (tzOption === '+08:00') {
+      parseableStr = str.replace(' ', 'T') + '+08:00';
+    } else {
+      parseableStr = str.replace(' ', 'T');
+    }
+  }
+
+  const d = new Date(parseableStr);
+  if (isNaN(d.getTime())) {
+    secEl.innerText = 'Invalid Date';
+    msEl.innerText = 'Invalid Date';
+    usEl.innerText = 'Invalid Date';
+    nsEl.innerText = 'Invalid Date';
+    return;
+  }
+
+  const ms = d.getTime();
+  secEl.innerText = Math.floor(ms / 1000);
+  msEl.innerText = ms;
+  usEl.innerText = ms + '000';
+  nsEl.innerText = ms + '000000';
+}
+
+function copyText(elementId) {
+  const text = document.getElementById(elementId).innerText;
+  if (!text || text === '--' || text.includes('Invalid')) return;
+
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Copied to clipboard!');
+  }).catch(err => {
+    const input = document.createElement('input');
+    input.value = text;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    showToast('Copied to clipboard!');
+  });
+}
+
+function showToast(msg) {
+  let toast = document.getElementById('timeToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'timeToast';
+    toast.style.cssText = 'position:fixed;bottom:30px;right:30px;background:#0f172a;color:#fff;padding:0.75rem 1.25rem;border-radius:8px;box-shadow:0 10px 25px rgba(0,0,0,0.2);z-index:99999;font-weight:600;font-size:0.9rem;transition:all 0.3s ease;opacity:0;transform:translateY(10px);';
+    document.body.appendChild(toast);
+  }
+  toast.innerText = msg;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateY(0)';
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(10px)';
+  }, 2000);
+}
+
+// Initialize on page load
+window.addEventListener('DOMContentLoaded', () => {
+  initLiveClock();
+  setTsInput('now');
+  setDatePreset('now');
+  verifyNetworkTime();
+});
+</script>
