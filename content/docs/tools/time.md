@@ -815,13 +815,16 @@ function updateClocks() {
   const absMin = Math.abs(offsetMin);
   const tzH = String(Math.floor(absMin / 60)).padStart(2, '0');
   const tzM = String(absMin % 60).padStart(2, '0');
-  document.getElementById('flipLocalTz').innerText = `GMT${sign}${tzH}:${tzM}`;
-  document.getElementById('localTzOffset').innerText = `GMT${sign}${tzH}:${tzM}`;
+  const localTzStr = `GMT${sign}${tzH}:${tzM}`;
 
-  // Update Network (UTC) Flip Clock Digits
-  const nH = String(netTime.getUTCHours()).padStart(2, '0');
-  const nM = String(netTime.getUTCMinutes()).padStart(2, '0');
-  const nS = String(netTime.getUTCSeconds()).padStart(2, '0');
+  document.getElementById('flipLocalTz').innerText = localTzStr;
+  document.getElementById('localTzOffset').innerText = localTzStr;
+  document.getElementById('flipNetTz').innerText = localTzStr;
+
+  // Update Network Flip Clock Digits (in same Local Timezone)
+  const nH = String(netTime.getHours()).padStart(2, '0');
+  const nM = String(netTime.getMinutes()).padStart(2, '0');
+  const nS = String(netTime.getSeconds()).padStart(2, '0');
 
   updateFlipDigit('nh1', nH[0]);
   updateFlipDigit('nh2', nH[1]);
@@ -830,7 +833,7 @@ function updateClocks() {
   updateFlipDigit('ns1', nS[0]);
   updateFlipDigit('ns2', nS[1]);
 
-  document.getElementById('flipNetDate').innerText = formatDateString(netTime, 'UTC');
+  document.getElementById('flipNetDate').innerText = formatDateString(netTime, 'local');
 
   // Section 1 Sync Cards (Precise with Milliseconds)
   const msStr = String(now.getMilliseconds()).padStart(3, '0');

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -12,7 +12,7 @@ https://github.com/alex-shpak/hugo-book
 ⏱️ Live Local &amp; Network Standard Time LIVE 💻 Local Device Time GMT&#43;02:00 0 0 : 0 0 : 0 0 2026-07-23 🌐 Network Standard Time GMT&#43;02:00 0 0 : 0 0 : 0 0 2026-07-23 🌐 1. Clock Comparison &amp; Sync (Local &amp; Standard Time) Compare your device&#39;s local clock against UTC, Central European Time (CET/CEST), and major global timezones. ">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
-<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://192.168.1.220:1313/docs/tools/time/">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="https://jony.ch/docs/tools/time/">
 	<meta property="og:site_name" content="Jonys-Book">
 	<meta property="og:title" content="Time & Timestamp Tools">
 	<meta property="og:description" content="Time &amp; Timestamp Tools# A comprehensive utility for real-time clock comparison, network time verification, timestamp conversion, and timezone calculations.
@@ -30,11 +30,11 @@ https://github.com/alex-shpak/hugo-book
 <title>Time &amp; Timestamp Tools • Jonys-Book</title>
 <link rel="icon" href="/logo.svg" >
 <link rel="manifest" href="/manifest.json">
-<link rel="canonical" href="http://192.168.1.220:1313/docs/tools/time/">
+<link rel="canonical" href="https://jony.ch/docs/tools/time/">
 <link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
 
 
-  <script defer type="module" src="/en.search.min.e94f767d6e98d260446962cf57f820bd3ff7dcab1e9b6c8975801d96b35dde40.js" integrity="sha256-6U92fW6Y0mBEaWLPV/ggvT/33Ksem2yJdYAdlrNd3kA=" crossorigin="anonymous"></script>
+  <script defer type="module" src="/en.search.min.2f5d9c0f32fe17102febd28edb70a2e82468b240915ba515d2fb56371f3a7a31.js" integrity="sha256-L12cDzL&#43;FxAv69KO23Ci6CRoskCRW6UV0vtWNx86ejE=" crossorigin="anonymous"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1086,13 +1086,16 @@ function updateClocks() {
   const absMin = Math.abs(offsetMin);
   const tzH = String(Math.floor(absMin / 60)).padStart(2, '0');
   const tzM = String(absMin % 60).padStart(2, '0');
-  document.getElementById('flipLocalTz').innerText = `GMT${sign}${tzH}:${tzM}`;
-  document.getElementById('localTzOffset').innerText = `GMT${sign}${tzH}:${tzM}`;
+  const localTzStr = `GMT${sign}${tzH}:${tzM}`;
 
-  // Update Network (UTC) Flip Clock Digits
-  const nH = String(netTime.getUTCHours()).padStart(2, '0');
-  const nM = String(netTime.getUTCMinutes()).padStart(2, '0');
-  const nS = String(netTime.getUTCSeconds()).padStart(2, '0');
+  document.getElementById('flipLocalTz').innerText = localTzStr;
+  document.getElementById('localTzOffset').innerText = localTzStr;
+  document.getElementById('flipNetTz').innerText = localTzStr;
+
+  // Update Network Flip Clock Digits (in same Local Timezone)
+  const nH = String(netTime.getHours()).padStart(2, '0');
+  const nM = String(netTime.getMinutes()).padStart(2, '0');
+  const nS = String(netTime.getSeconds()).padStart(2, '0');
 
   updateFlipDigit('nh1', nH[0]);
   updateFlipDigit('nh2', nH[1]);
@@ -1101,7 +1104,7 @@ function updateClocks() {
   updateFlipDigit('ns1', nS[0]);
   updateFlipDigit('ns2', nS[1]);
 
-  document.getElementById('flipNetDate').innerText = formatDateString(netTime, 'UTC');
+  document.getElementById('flipNetDate').innerText = formatDateString(netTime, 'local');
 
   // Section 1 Sync Cards (Precise with Milliseconds)
   const msStr = String(now.getMilliseconds()).padStart(3, '0');
