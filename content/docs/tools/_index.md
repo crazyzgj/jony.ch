@@ -143,6 +143,13 @@ bookToC: false
 </div>
 
 <div class="tools-grid">
+  <!-- Configuration Reader Tool -->
+  <a href="/docs/tools/config-reader/" class="tool-card">
+    <div class="tool-icon">📄</div>
+    <h3>Configuration Reader</h3>
+    <p>Parse, organize, and analyze Huawei, Cisco, and network device configurations with Monaco Editor syntax highlighting and outline navigation.</p>
+  </a>
+
   <!-- Option 43 Tool -->
   <a href="/docs/tools/option43/" class="tool-card">
     <div class="tool-icon">🧮</div>
