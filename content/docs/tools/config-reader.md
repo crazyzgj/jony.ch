@@ -13,7 +13,6 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     margin-top: 1rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
-
   /* Browser Full Window Mode */
   .cr-container.cr-full-window {
     position: fixed !important;
@@ -29,16 +28,13 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     background: #ffffff;
     border-radius: 0 !important;
   }
-
   .cr-container.cr-full-window .cr-toolbar {
     border-radius: 0 !important;
   }
-
   .cr-container.cr-full-window .cr-main-layout {
     height: calc(100vh - 58px) !important;
     border-radius: 0 !important;
   }
-
   .cr-toolbar {
     display: flex;
     justify-content: space-between;
@@ -50,20 +46,17 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     border: 1px solid #cbd5e1;
     border-radius: 10px 10px 0 0;
   }
-
   .cr-toolbar-group {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
   }
-
   .cr-label {
     font-size: 0.85rem;
     font-weight: 600;
     color: #475569;
   }
-
   .cr-select {
     padding: 0.45rem 0.75rem;
     border: 1px solid #cbd5e1;
@@ -74,12 +67,10 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     outline: none;
     cursor: pointer;
   }
-
   .cr-select:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
   }
-
   .cr-btn {
     display: inline-flex;
     align-items: center;
@@ -94,33 +85,19 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     cursor: pointer;
     transition: all 0.15s ease;
   }
-
   .cr-btn:hover {
     background: #f1f5f9;
     color: #0f172a;
   }
-
   .cr-btn-primary {
     background: #2563eb;
     color: #ffffff;
     border-color: #2563eb;
   }
-
   .cr-btn-primary:hover {
     background: #1d4ed8;
     color: #ffffff;
   }
-
-  .cr-btn-danger {
-    background: #fff1f2;
-    color: #e11d48;
-    border-color: #fecdd3;
-  }
-
-  .cr-btn-danger:hover {
-    background: #ffe4e6;
-  }
-
   /* Main Split Layout: Sidebar + Monaco Editor */
   .cr-main-layout {
     display: flex;
@@ -133,7 +110,6 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     position: relative;
   }
-
   /* Sidebar Styles (Default Visible) */
   .cr-sidebar {
     width: 290px;
@@ -144,7 +120,6 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     flex-direction: column;
     transition: width 0.2s ease;
   }
-
   .cr-sidebar.collapsed {
     display: none !important;
     width: 0 !important;
@@ -152,7 +127,6 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     overflow: hidden !important;
     border-right: none !important;
   }
-
   .cr-sidebar-header {
     display: flex;
     align-items: center;
@@ -164,13 +138,11 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     font-weight: 700;
     color: #1e293b;
   }
-
   .cr-sidebar-title {
     display: flex;
     align-items: center;
     gap: 0.4rem;
   }
-
   .cr-badge {
     font-size: 0.75rem;
     font-weight: 600;
@@ -179,13 +151,11 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     padding: 1px 7px;
     border-radius: 12px;
   }
-
   .cr-sidebar-search {
     padding: 0.6rem 0.85rem;
     border-bottom: 1px solid #e2e8f0;
     background: #ffffff;
   }
-
   .cr-sidebar-search input {
     width: 100%;
     padding: 0.4rem 0.65rem;
@@ -195,18 +165,15 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     outline: none;
     box-sizing: border-box;
   }
-
   .cr-sidebar-search input:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
   }
-
   .cr-index-list {
     flex: 1;
     overflow-y: auto;
     padding: 0.35rem 0;
   }
-
   .cr-index-item {
     display: flex;
     align-items: center;
@@ -218,19 +185,16 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     color: #334155;
     transition: background 0.15s ease, color 0.15s ease;
   }
-
   .cr-index-item:hover {
     background: #e2e8f0;
     color: #0f172a;
   }
-
   .cr-index-item.active {
     background: #eff6ff;
     color: #1d4ed8;
     font-weight: 600;
     border-left: 3px solid #2563eb;
   }
-
   .cr-index-left {
     display: flex;
     align-items: center;
@@ -238,18 +202,15 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     min-width: 0;
     flex: 1;
   }
-
   .cr-index-icon {
     font-size: 0.85rem;
     flex-shrink: 0;
   }
-
   .cr-index-title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
   .cr-index-line {
     font-size: 0.72rem;
     color: #64748b;
@@ -260,7 +221,6 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     flex-shrink: 0;
     margin-left: 0.4rem;
   }
-
   .cr-index-count {
     font-size: 0.7rem;
     font-weight: 600;
@@ -271,7 +231,6 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     border-radius: 10px;
     flex-shrink: 0;
   }
-
   .cr-vpn-ref-badge {
     font-size: 0.7rem;
     font-weight: 600;
@@ -285,12 +244,10 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     transition: all 0.15s ease;
     flex-shrink: 0;
   }
-
   .cr-vpn-ref-badge:hover {
     background: #10b981;
     color: #ffffff;
   }
-
   .cr-if-ref-badge {
     font-size: 0.7rem;
     font-weight: 600;
@@ -304,49 +261,41 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     transition: all 0.15s ease;
     flex-shrink: 0;
   }
-
   .cr-if-ref-badge:hover {
     background: #f59e0b;
     color: #ffffff;
   }
-
   .cr-index-empty {
     padding: 2rem 1rem;
     text-align: center;
     font-size: 0.85rem;
     color: #94a3b8;
   }
-
   .cr-editor-frame {
     flex: 1;
     height: 100%;
     position: relative;
     overflow: hidden;
   }
-
   #monacoContainer {
     width: 100%;
     height: 100%;
   }
-
   /* Custom Monaco Underlines for Interactive Symbols */
   .monaco-vpn-underline {
     border-bottom: 1.5px dashed #2563eb !important;
     cursor: pointer;
   }
-
   .monaco-interface-underline {
     border-bottom: 1.5px dashed #d97706 !important;
     cursor: pointer;
   }
-
   /* Custom Monaco Cipher Highlight */
   .monaco-cipher-highlight {
     background-color: rgba(239, 68, 68, 0.18) !important;
     border: 1px dashed #ef4444 !important;
     border-radius: 3px;
   }
-
   /* Reference Modal Overlay */
   .cr-modal-overlay {
     display: none;
@@ -446,7 +395,6 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     border-color: #2563eb;
     color: #1d4ed8;
   }
-
   /* Dark Theme Adjustments */
   .cr-dark .cr-toolbar {
     background: #1e293b;
@@ -555,12 +503,8 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     <div class="cr-toolbar-group">
       <button class="cr-btn cr-btn-primary" onclick="foldAll()">↔️ Fold All</button>
       <button class="cr-btn cr-btn-primary" onclick="unfoldAll()">↕️ Unfold All</button>
-      <button class="cr-btn" onclick="loadHuaweiSample()">📋 Huawei Sample</button>
-      <button class="cr-btn" onclick="loadCiscoSample()">📋 Cisco Sample</button>
-      <button class="cr-btn" onclick="analyzeConfiguration()">⚡ Highlight</button>
       <button class="cr-btn" onclick="copyConfig()">📋 Copy</button>
       <button class="cr-btn" onclick="downloadConfig()">💾 Download</button>
-      <button class="cr-btn cr-btn-danger" onclick="clearConfig()">🗑️ Clear</button>
     </div>
   </div>
 
@@ -614,8 +558,8 @@ ipv6
 #
 # --- Example 1: 2-Word Prefix Folding ---
 #
-ip route-static vpn-instance underlay_1 80.158.50.5 255.255.255.255 GigabitEthernet0/0/8 185.155.191.145 tag 4400 description agile-controller
-ip route-static vpn-instance underlay_3 80.158.50.5 255.255.255.255 GigabitEthernet0/0/9 185.155.191.153 tag 4400 description agile-controller
+ip route-static vpn-instance underlay_1 80.158.50.5 255.255.255.255 GE0/0/8 185.155.191.145 tag 4400 description agile-controller
+ip route-static vpn-instance underlay_3 80.158.50.5 255.255.255.255 GE0/0/9 185.155.191.153 tag 4400 description agile-controller
 #
 authentication-profile name COOP-NAC
  mac-access-profile mac-authen
@@ -648,11 +592,16 @@ ip vpn-instance underlay_Sunrise_R1
   vpn-target 11:11 export-extcommunity
   vpn-target 11:11 import-extcommunity
 #
-# --- Example 3: Commands with leading spaces, VPN bindings & Interface references ---
+# --- Example 3: Short Interface Names (GE0/0/7, vlanif10) ---
+#
+Interface GE0/0/7
+#
+Interface vlanif10
+ ip address 10.0.0.1 255.255.255.0
 #
  http secure-server ssl-policy default_policy
  http secure-server enable
- http server permit interface GigabitEthernet0/0/0
+ http server permit interface GE0/0/7
 #
 dns resolve 
 #
@@ -705,36 +654,31 @@ firewall zone Local
 #
 mi-server
 #
-interface Vlanif1
- ip address 10.0.0.1 255.255.255.0
-#
-interface GigabitEthernet0/0/0
+interface GE0/0/0
  ip binding vpn-instance underlay_3
  ip address 77.73.243.205 255.255.255.248
  qos lr cir 900000 kbps outbound
  traffic tm-post-processing enable
  tcp adjust-mss 1200
 #
-interface GigabitEthernet0/0/1
+interface GE0/0/1
 #
-interface GigabitEthernet0/0/2
+interface GE0/0/2
 #
-interface GigabitEthernet0/0/3
+interface GE0/0/3
 #
-interface GigabitEthernet0/0/4
+interface GE0/0/4
 #
-interface GigabitEthernet0/0/5
+interface GE0/0/5
 #
-interface GigabitEthernet0/0/6
+interface GE0/0/6
 #
-interface GigabitEthernet0/0/7
+interface GE0/0/8
 #
-interface GigabitEthernet0/0/8
-#
-interface GigabitEthernet0/0/9
+interface GE0/0/9
  ip address dhcp-alloc
 #
-interface GigabitEthernet0/0/10
+interface GE0/0/10
 #
 interface Cellular0/0/0
 #
@@ -754,7 +698,7 @@ fib regularly-refresh disable
  agile controller host 80.158.50.5 port 10020 vpn-instance underlay_3
 #
 ip route-static vpn-instance underlay_Sunrise_R1 0.0.0.0 0.0.0.0 46.140.188.105
-ip route-static vpn-instance underlay_Sunrise_R1 80.158.50.5 255.255.255.255 GigabitEthernet0/0/10 46.140.188.105 tag 4400 description agile-controller
+ip route-static vpn-instance underlay_Sunrise_R1 80.158.50.5 255.255.255.255 GE0/0/10 46.140.188.105 tag 4400 description agile-controller
 ip route-static vpn-instance underlay_Sunrise_R1 90.84.184.170 255.255.255.255 NULL0 preference 1
 #
 user-interface con 0
@@ -880,7 +824,13 @@ require(['vs/editor/editor.main'], function() {
     automaticLayout: true,
     fontFamily: '"Fira Code", Consolas, Monaco, monospace',
     fontSize: 13,
-    minimap: { enabled: true },
+    minimap: {
+      enabled: true,
+      scale: 2,
+      maxColumn: 120,
+      showSlider: 'always',
+      renderCharacters: true
+    },
     scrollBeyondLastLine: false,
     renderLineHighlight: 'all',
     folding: true,
@@ -918,7 +868,6 @@ require(['vs/editor/editor.main'], function() {
 });
 
 function registerMonacoJumpCommand() {
-  // Register custom Monaco command executable directly from Hover markdown links
   monaco.editor.registerCommand('configReader.jumpToLine', function(accessor, lineNum) {
     const line = parseInt(lineNum, 10);
     if (!isNaN(line) && editorInstance) {
@@ -962,7 +911,7 @@ function registerLanguages() {
         [/^\s*#.*$/, 'comment'],
         [/^\[.*\]$/, 'keyword.flow'],
         [/%^%#[^%]+%^%#/, 'string.cipher'],
-        [/\b(GigabitEthernet|Vlanif|Eth-Trunk|Cellular|NULL|LoopBack)\d+(\/\d+)*(\.\d+)?\b/, 'type.identifier'],
+        [/\b(GigabitEthernet|GE|10GE|XGigabitEthernet|Eth-Trunk|Vlanif|vlanif|Cellular|NULL|LoopBack|Loopback)\d+(\/\d+)*(\.\d+)?\b/i, 'type.identifier'],
         [/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/, 'number.float'],
         [/[a-zA-Z0-9_\-]+/, {
           cases: {
@@ -986,7 +935,7 @@ function registerLanguages() {
     tokenizer: {
       root: [
         [/^\s*!.*$/, 'comment'],
-        [/\b(GigabitEthernet|TenGigabitEthernet|FastEthernet|Loopback|Vlan)\d+(\/\d+)*\b/, 'type.identifier'],
+        [/\b(GigabitEthernet|TenGigabitEthernet|FastEthernet|Loopback|Vlan)\d+(\/\d+)*\b/i, 'type.identifier'],
         [/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/, 'number.float'],
         [/[a-zA-Z0-9_\-]+/, {
           cases: {
@@ -1123,7 +1072,6 @@ function registerFoldingProviders() {
   });
 }
 
-// Extract full multi-line definition block text for a given declaration line
 function getDefinitionBlockText(model, startLineNum) {
   const lineCount = model.getLineCount();
   const startLine = model.getLineContent(startLineNum);
@@ -1148,7 +1096,6 @@ function getDefinitionBlockText(model, startLineNum) {
   return blockLines.join('\n');
 }
 
-// VPN Instance & Interface Reference Analyzers
 function analyzeVpnInstances() {
   vpnAnalysisMap.clear();
   if (!editorInstance) return;
@@ -1215,6 +1162,7 @@ function analyzeVpnInstances() {
   }
 }
 
+// Generic Interface Analyzer: 2-word rule "interface <ifName>" (case-insensitive)
 function analyzeInterfaceReferences() {
   interfaceAnalysisMap.clear();
   if (!editorInstance) return;
@@ -1242,7 +1190,8 @@ function analyzeInterfaceReferences() {
     return 'Global Configuration';
   }
 
-  const ifDefRegex = /^\s*interface\s+([a-zA-Z0-9\/\.\-]+)/i;
+  // Generic 2-word rule:^\s*interface\s+(\S+)\s*$ (case-insensitive)
+  const ifDefRegex = /^\s*interface\s+(\S+)\s*$/i;
   for (let i = 0; i < lineCount; i++) {
     const match = ifDefRegex.exec(lines[i]);
     if (match) {
@@ -1268,7 +1217,7 @@ function analyzeInterfaceReferences() {
     interfaceAnalysisMap.forEach((ifInfo) => {
       if (lineNum !== ifInfo.defLineNum) {
         const escapedName = ifInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        const refRegex = new RegExp(`\\b${escapedName}\\b`, 'i');
+        const refRegex = new RegExp(`(?<![a-zA-Z0-9_./-])${escapedName}(?![a-zA-Z0-9_./-])`, 'i');
         if (refRegex.test(lineText)) {
           const sectionHeader = getSectionHeader(i);
           ifInfo.references.push({
@@ -1296,7 +1245,7 @@ function registerReferenceHoverProviders() {
         const lineText = model.getLineContent(position.lineNumber);
         const col = position.column;
 
-        // 1. VPN Instance Hover (column-position check)
+        // 1. VPN Instance Hover (column position check)
         const vpnRegex = /vpn-instance\s+([a-zA-Z0-9_\-]+)/gi;
         let match;
         while ((match = vpnRegex.exec(lineText)) !== null) {
@@ -1313,14 +1262,14 @@ function registerReferenceHoverProviders() {
               contents.push({ value: `**🔒 VPN Instance:** \`${escapeHoverText(vpnInfo.name)}\` (Referenced **${refCount}** times)` });
 
               contents.push({
-                value: `**★ Definition Block (Line ${vpnInfo.defLineNum}):** [Jump to Definition](command:configReader.jumpToLine?${vpnInfo.defLineNum})\n\`\`\`\n${escapeHoverText(vpnInfo.defBlockText)}\n\`\`\``,
+                value: `[**★ Definition Block (Line ${vpnInfo.defLineNum}):**](command:configReader.jumpToLine?${vpnInfo.defLineNum})\n\`\`\`\n${escapeHoverText(vpnInfo.defBlockText)}\n\`\`\``,
                 isTrusted: true
               });
 
               if (refCount === 0) {
                 contents.push({ value: '_No usage references found in configuration._' });
               } else {
-                let refMarkdown = '**Usage Locations by Section (click link to jump):**\n';
+                let refMarkdown = '**Usage Locations by Section (click line to jump):**\n';
                 vpnInfo.references.forEach(ref => {
                   refMarkdown += `- [📍 **${escapeHoverText(ref.sectionHeader)}** (L${ref.lineNum}): \`${escapeHoverText(ref.text)}\`](command:configReader.jumpToLine?${ref.lineNum})\n`;
                 });
@@ -1335,44 +1284,49 @@ function registerReferenceHoverProviders() {
           }
         }
 
-        // 2. Interface Reference Hover (column-position check)
-        const ifRegex = /\b(GigabitEthernet|TenGigabitEthernet|FastEthernet|Eth-Trunk|Vlanif|Cellular|LoopBack|NULL)\d+(\/\d+)*(\.\d+)?\b/gi;
-        while ((match = ifRegex.exec(lineText)) !== null) {
-          const startCol = match.index + 1;
-          const endCol = match.index + 1 + match[0].length;
+        // 2. Interface Reference Hover (column position check using generic interface map)
+        let hoverResult = null;
+        interfaceAnalysisMap.forEach((ifInfo) => {
+          if (hoverResult) return;
 
-          if (col >= startCol && col <= endCol) {
-            const ifName = match[0];
-            const ifInfo = interfaceAnalysisMap.get(ifName.toLowerCase());
-            if (ifInfo) {
+          const escapedName = ifInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          const ifRegex = new RegExp(`(?<![a-zA-Z0-9_./-])${escapedName}(?![a-zA-Z0-9_./-])`, 'gi');
+          let ifMatch;
+          while ((ifMatch = ifRegex.exec(lineText)) !== null) {
+            const startCol = ifMatch.index + 1;
+            const endCol = ifMatch.index + 1 + ifMatch[0].length;
+
+            if (col >= startCol && col <= endCol) {
               const refCount = ifInfo.references.length;
               const contents = [];
 
               contents.push({ value: `**🔌 Interface:** \`${escapeHoverText(ifInfo.name)}\` (Referenced **${refCount}** times)` });
 
               contents.push({
-                value: `**★ Definition Block (Line ${ifInfo.defLineNum}):** [Jump to Definition](command:configReader.jumpToLine?${ifInfo.defLineNum})\n\`\`\`\n${escapeHoverText(ifInfo.defBlockText)}\n\`\`\``,
+                value: `[**★ Definition Block (Line ${ifInfo.defLineNum}):**](command:configReader.jumpToLine?${ifInfo.defLineNum})\n\`\`\`\n${escapeHoverText(ifInfo.defBlockText)}\n\`\`\``,
                 isTrusted: true
               });
 
               if (refCount === 0) {
                 contents.push({ value: '_No usage references found in configuration._' });
               } else {
-                let refMarkdown = '**Usage Locations by Section (click link to jump):**\n';
+                let refMarkdown = '**Usage Locations by Section (click line to jump):**\n';
                 ifInfo.references.forEach(ref => {
                   refMarkdown += `- [📍 **${escapeHoverText(ref.sectionHeader)}** (L${ref.lineNum}): \`${escapeHoverText(ref.text)}\`](command:configReader.jumpToLine?${ref.lineNum})\n`;
                 });
                 contents.push({ value: refMarkdown, isTrusted: true });
               }
 
-              return {
+              hoverResult = {
                 range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol),
                 contents: contents
               };
+              break;
             }
           }
-        }
+        });
 
+        if (hoverResult) return hoverResult;
         return null;
       }
     });
@@ -1516,8 +1470,8 @@ function updateFoldingIndex() {
       }
     }
 
-    // Check Interface
-    const ifMatch = /interface\s+([a-zA-Z0-9\/\.\-]+)/i.exec(lineText);
+    // Check Interface (Generic 2-word rule)
+    const ifMatch = /^\s*interface\s+(\S+)\s*$/i.exec(lineText);
     if (ifMatch) {
       const ifName = ifMatch[1];
       const ifInfo = interfaceAnalysisMap.get(ifName.toLowerCase());
@@ -1611,7 +1565,7 @@ function openRefModal(type, refName, event) {
     <div class="cr-def-block-card">
       <div class="cr-def-block-title">
         <span>★ Definition Block (Line ${refInfo.defLineNum})</span>
-        <span class="cr-index-line" style="cursor: pointer;" onclick="jumpToLine(${refInfo.defLineNum}); closeVpnModal();">Jump to L${refInfo.defLineNum}</span>
+        <span class="cr-index-line" style="cursor: pointer;" onclick="jumpToLine(${refInfo.defLineNum}); closeVpnModal();">L${refInfo.defLineNum}</span>
       </div>
       <div class="cr-vpn-ref-code" onclick="jumpToLine(${refInfo.defLineNum}); closeVpnModal();">
 ${escapeHtml(refInfo.defBlockText)}
@@ -1763,18 +1717,6 @@ function onThemeChange() {
   }
 }
 
-function loadHuaweiSample() {
-  document.getElementById('vendorSelect').value = 'huawei';
-  if (editorInstance) editorInstance.setValue(HUAWEI_SAMPLE);
-  onVendorChange();
-}
-
-function loadCiscoSample() {
-  document.getElementById('vendorSelect').value = 'cisco';
-  if (editorInstance) editorInstance.setValue(CISCO_SAMPLE);
-  onVendorChange();
-}
-
 function analyzeConfiguration() {
   if (!editorInstance) return;
   const model = editorInstance.getModel();
@@ -1811,16 +1753,20 @@ function analyzeConfiguration() {
       });
     }
 
-    // Interface dashed underline decoration
-    const ifRegex = /\b(GigabitEthernet|TenGigabitEthernet|FastEthernet|Eth-Trunk|Vlanif|Cellular|LoopBack|NULL)\d+(\/\d+)*(\.\d+)?\b/gi;
-    while ((match = ifRegex.exec(lineText)) !== null) {
-      newDecorations.push({
-        range: new monaco.Range(lineNum, match.index + 1, lineNum, match.index + 1 + match[0].length),
-        options: {
-          inlineClassName: 'monaco-interface-underline'
-        }
-      });
-    }
+    // Interface dashed underline decoration using generic interface map
+    interfaceAnalysisMap.forEach((ifInfo) => {
+      const escapedName = ifInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      const ifRegex = new RegExp(`(?<![a-zA-Z0-9_./-])${escapedName}(?![a-zA-Z0-9_./-])`, 'gi');
+      let ifMatch;
+      while ((ifMatch = ifRegex.exec(lineText)) !== null) {
+        newDecorations.push({
+          range: new monaco.Range(lineNum, ifMatch.index + 1, lineNum, ifMatch.index + 1 + ifMatch[0].length),
+          options: {
+            inlineClassName: 'monaco-interface-underline'
+          }
+        });
+      }
+    });
   });
 
   currentDecorations = editorInstance.deltaDecorations(currentDecorations, newDecorations);
@@ -1842,12 +1788,5 @@ function downloadConfig() {
   a.href = URL.createObjectURL(blob);
   a.download = `config-${Date.now()}.cfg`;
   a.click();
-}
-
-function clearConfig() {
-  if (editorInstance) editorInstance.setValue('');
-  analyzeVpnInstances();
-  analyzeInterfaceReferences();
-  updateFoldingIndex();
 }
 </script>
