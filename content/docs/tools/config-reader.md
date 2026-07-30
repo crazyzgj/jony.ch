@@ -6,7 +6,7 @@ bookToC: false
 
 # Configuration Reader
 
-Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like `authentication-profile name` or indented blocks), and use the interactive **Config Index** sidebar to search sections, inspect **VPN Instance** and **Interface References** with full definition blocks, and maximize to browser full window with saved state.
+Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like `authentication-profile name` or indented blocks), and use the interactive **Config Index** sidebar to search sections, inspect **VPN Instance**, **Interface**, and **Profile References** with full definition blocks, and maximize to browser full window with saved state.
 
 <style>
   .cr-container {
@@ -265,6 +265,23 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     background: #f59e0b;
     color: #ffffff;
   }
+  .cr-prof-ref-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #7c3aed;
+    background: #ede9fe;
+    border: 1px solid #ddd6fe;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  .cr-prof-ref-badge:hover {
+    background: #8b5cf6;
+    color: #ffffff;
+  }
   .cr-index-empty {
     padding: 2rem 1rem;
     text-align: center;
@@ -288,6 +305,10 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
   }
   .monaco-interface-underline {
     border-bottom: 1.5px dashed #d97706 !important;
+    cursor: pointer;
+  }
+  .monaco-profile-underline {
+    border-bottom: 1.5px dashed #8b5cf6 !important;
     cursor: pointer;
   }
   /* Custom Monaco Cipher Highlight */
@@ -525,6 +546,7 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
         <!-- Dynamically rendered index items -->
       </div>
     </div>
+
     <!-- Monaco Editor Container -->
     <div class="cr-editor-frame">
       <div id="monacoContainer"></div>
@@ -549,7 +571,7 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
 
 <script>
-// Huawei sample configuration including user's specific VPN & Interface examples
+// Huawei sample configuration including user's specific Eth-Trunk & Profile examples
 const HUAWEI_SAMPLE = `[V300R024C00SPC100]
 #
  drop illegal-mac alarm
@@ -561,24 +583,40 @@ ipv6
 ip route-static vpn-instance underlay_1 80.158.50.5 255.255.255.255 GE0/0/8 185.155.191.145 tag 4400 description agile-controller
 ip route-static vpn-instance underlay_3 80.158.50.5 255.255.255.255 GE0/0/9 185.155.191.153 tag 4400 description agile-controller
 #
-authentication-profile name COOP-NAC
- mac-access-profile mac-authen
- authentication mode multi-authen max-user 100
- access-domain coop-nac force
- authentication event authen-fail action authorize vlan 10
- authentication event authen-server-down action close re-authen
- authentication event authen-server-down action authorize vlan 10
- authentication event authen-server-up action re-authen
- authentication event authen-server-noreply action authorize keep
+# --- Example 2: Eth-Trunk & Member Interfaces ---
 #
-authentication-profile name default_authen_profile
-authentication-profile name dot1x_authen_profile
-authentication-profile name dot1xmac_authen_profile
-authentication-profile name mac_authen_profile
-authentication-profile name multi_authen_profile
-authentication-profile name portal_authen_profile
+interface Eth-Trunk1
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 745 816 893 901 to 902
+ mode lacp-static
 #
-# --- Example 2: VPN Instance Creation & Reference Tracking ---
+interface 40GE0/0/1
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE0/0/2
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+# --- Example 3: Profiles (authentication-profile, security-profile, vap-profile) ---
+#
+authentication-profile name zephyros2
+ dot1x-access-profile zephyros2
+ access-domain zephyros2 force
+#
+security-profile name coopguest
+ security open
+#
+vap-profile name coopguest
+ forward-mode tunnel
+ service-vlan vlan-pool DMZ-Group
+ ssid-profile coopguest
+ security-profile coopguest
+ authentication-profile zephyros2
+ sac-profile default
+#
+# --- Example 4: VPN Instance Creation & Reference Tracking ---
 #
 ip vpn-instance underlay_3
  ipv4-family
@@ -591,8 +629,6 @@ ip vpn-instance underlay_Sunrise_R1
   route-distinguisher 1111:1111
   vpn-target 11:11 export-extcommunity
   vpn-target 11:11 import-extcommunity
-#
-# --- Example 3: Short Interface Names (GE0/0/7, vlanif10) ---
 #
 Interface GE0/0/7
 #
@@ -661,10 +697,6 @@ interface GE0/0/0
  traffic tm-post-processing enable
  tcp adjust-mss 1200
 #
-interface GE0/0/1
-#
-interface GE0/0/2
-#
 interface GE0/0/3
 #
 interface GE0/0/4
@@ -672,11 +704,6 @@ interface GE0/0/4
 interface GE0/0/5
 #
 interface GE0/0/6
-#
-interface GE0/0/8
-#
-interface GE0/0/9
- ip address dhcp-alloc
 #
 interface GE0/0/10
 #
@@ -807,6 +834,7 @@ let currentDecorations = [];
 let allIndexItems = [];
 let vpnAnalysisMap = new Map();
 let interfaceAnalysisMap = new Map();
+let profileAnalysisMap = new Map();
 
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
 
@@ -843,6 +871,7 @@ require(['vs/editor/editor.main'], function() {
   editorInstance.onDidChangeModelContent(() => {
     analyzeVpnInstances();
     analyzeInterfaceReferences();
+    analyzeProfiles();
     updateFoldingIndex();
     analyzeConfiguration();
   });
@@ -863,6 +892,7 @@ require(['vs/editor/editor.main'], function() {
   // Initial analysis & index build
   analyzeVpnInstances();
   analyzeInterfaceReferences();
+  analyzeProfiles();
   updateFoldingIndex();
   analyzeConfiguration();
 });
@@ -904,14 +934,14 @@ function registerLanguages() {
       'ssl', 'policy', 'ike', 'proposal', 'firewall', 'zone', 'snmp-agent', 'user-interface',
       'cellular', 'profile', 'undo', 'return', 'quit', 'ipv6', 'dns', 'pki', 'realm',
       'portal-access-profile', 'free-rule-template', 'ops', 'autostart', 'secelog', 'agile',
-      'controller', 'fib', 'enable', 'disable', 'permit', 'description', 'bind', 'binding'
+      'controller', 'fib', 'enable', 'disable', 'permit', 'description', 'bind', 'binding', 'eth-trunk'
     ],
     tokenizer: {
       root: [
         [/^\s*#.*$/, 'comment'],
         [/^\[.*\]$/, 'keyword.flow'],
         [/%^%#[^%]+%^%#/, 'string.cipher'],
-        [/\b(GigabitEthernet|GE|10GE|XGigabitEthernet|Eth-Trunk|Vlanif|vlanif|Cellular|NULL|LoopBack|Loopback)\d+(\/\d+)*(\.\d+)?\b/i, 'type.identifier'],
+        [/\b(GigabitEthernet|40GE|10GE|GE|XGigabitEthernet|Eth-Trunk|Vlanif|vlanif|Cellular|NULL|LoopBack|Loopback)\d+(\/\d+)*(\.\d+)?\b/i, 'type.identifier'],
         [/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/, 'number.float'],
         [/[a-zA-Z0-9_\-]+/, {
           cases: {
@@ -1162,7 +1192,7 @@ function analyzeVpnInstances() {
   }
 }
 
-// Generic Interface Analyzer: 2-word rule "interface <ifName>" (case-insensitive)
+// Generic Interface Analyzer: 2-word rule "interface <ifName>" (case-insensitive) & Eth-Trunk association
 function analyzeInterfaceReferences() {
   interfaceAnalysisMap.clear();
   if (!editorInstance) return;
@@ -1190,7 +1220,7 @@ function analyzeInterfaceReferences() {
     return 'Global Configuration';
   }
 
-  // Generic 2-word rule:^\s*interface\s+(\S+)\s*$ (case-insensitive)
+  // Generic 2-word rule: ^\s*interface\s+(\S+)\s*$ (case-insensitive)
   const ifDefRegex = /^\s*interface\s+(\S+)\s*$/i;
   for (let i = 0; i < lineCount; i++) {
     const match = ifDefRegex.exec(lines[i]);
@@ -1199,11 +1229,17 @@ function analyzeInterfaceReferences() {
       if (!interfaceAnalysisMap.has(ifName.toLowerCase())) {
         const defLineNum = i + 1;
         const defBlockText = getDefinitionBlockText(model, defLineNum);
+
+        // Check if interface is Eth-Trunk<ID>
+        const trunkMatch = /^Eth-Trunk(\d+)$/i.exec(ifName);
+        const trunkId = trunkMatch ? trunkMatch[1] : null;
+
         interfaceAnalysisMap.set(ifName.toLowerCase(), {
           name: ifName,
           defLineNum: defLineNum,
           defText: lines[i].trim(),
           defBlockText: defBlockText,
+          trunkId: trunkId,
           references: []
         });
       }
@@ -1217,10 +1253,98 @@ function analyzeInterfaceReferences() {
     interfaceAnalysisMap.forEach((ifInfo) => {
       if (lineNum !== ifInfo.defLineNum) {
         const escapedName = ifInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+
+        // Match 1: Standard interface reference match
         const refRegex = new RegExp(`(?<![a-zA-Z0-9_./-])${escapedName}(?![a-zA-Z0-9_./-])`, 'i');
-        if (refRegex.test(lineText)) {
+
+        // Match 2: If Eth-Trunk<ID>, also match "eth-trunk <ID>" (e.g. eth-trunk 1, NOT eth-trunk 111)
+        let ethTrunkMatch = false;
+        if (ifInfo.trunkId) {
+          const ethTrunkRegex = new RegExp(`\\beth-trunk\\s+${ifInfo.trunkId}\\b`, 'i');
+          if (ethTrunkRegex.test(lineText)) {
+            ethTrunkMatch = true;
+          }
+        }
+
+        if (refRegex.test(lineText) || ethTrunkMatch) {
           const sectionHeader = getSectionHeader(i);
           ifInfo.references.push({
+            lineNum: lineNum,
+            text: lineText.trim(),
+            sectionHeader: sectionHeader
+          });
+        }
+      }
+    });
+  }
+}
+
+// Generic Profile Analyzer: "<profile-type> name <profile-name>" & references
+function analyzeProfiles() {
+  profileAnalysisMap.clear();
+  if (!editorInstance) return;
+  const model = editorInstance.getModel();
+  if (!model) return;
+
+  const lines = model.getLinesContent();
+  const lineCount = lines.length;
+
+  function cleanTitle(str) {
+    return str.replace(/[#!]/g, '').trim();
+  }
+
+  function getSectionHeader(lineIdx) {
+    for (let k = lineIdx; k >= 0; k--) {
+      const lText = lines[k];
+      const trimmed = lText.trim();
+      if (!trimmed || trimmed === '#' || trimmed === '!' || trimmed.startsWith('#') || trimmed.startsWith('!')) continue;
+
+      const indent = lText.search(/\S/);
+      if (indent === 0) {
+        return cleanTitle(trimmed);
+      }
+    }
+    return 'Global Configuration';
+  }
+
+  // Profile Definition Regex: "<profile-type> name <profile-name>" or "radius-server template <name>"
+  const profDefRegex = /^\s*([a-zA-Z0-9_\-]+(?:\s+template|\s+profile)?)\s+name\s+([a-zA-Z0-9_\-]+)/i;
+  for (let i = 0; i < lineCount; i++) {
+    const match = profDefRegex.exec(lines[i]);
+    if (match) {
+      const profType = match[1].trim();
+      const profName = match[2].trim();
+      const key = `${profType.toLowerCase()}:${profName.toLowerCase()}`;
+
+      if (!profileAnalysisMap.has(key)) {
+        const defLineNum = i + 1;
+        const defBlockText = getDefinitionBlockText(model, defLineNum);
+        profileAnalysisMap.set(key, {
+          type: profType,
+          name: profName,
+          defLineNum: defLineNum,
+          defText: lines[i].trim(),
+          defBlockText: defBlockText,
+          references: []
+        });
+      }
+    }
+  }
+
+  for (let i = 0; i < lineCount; i++) {
+    const lineNum = i + 1;
+    const lineText = lines[i];
+
+    profileAnalysisMap.forEach((profInfo) => {
+      if (lineNum !== profInfo.defLineNum) {
+        const escType = profInfo.type.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const escName = profInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+
+        // Usage pattern: "<profile-type> <profile-name>" OR "<profile-type> name <profile-name>"
+        const refRegex = new RegExp(`\\b${escType}\\s+(?:name\\s+)?${escName}\\b`, 'i');
+        if (refRegex.test(lineText)) {
+          const sectionHeader = getSectionHeader(i);
+          profInfo.references.push({
             lineNum: lineNum,
             text: lineText.trim(),
             sectionHeader: sectionHeader
@@ -1284,7 +1408,7 @@ function registerReferenceHoverProviders() {
           }
         }
 
-        // 2. Interface Reference Hover (column position check using generic interface map)
+        // 2. Interface & Eth-Trunk Reference Hover
         let hoverResult = null;
         interfaceAnalysisMap.forEach((ifInfo) => {
           if (hoverResult) return;
@@ -1297,13 +1421,49 @@ function registerReferenceHoverProviders() {
             const endCol = ifMatch.index + 1 + ifMatch[0].length;
 
             if (col >= startCol && col <= endCol) {
-              const refCount = ifInfo.references.length;
+              hoverResult = buildInterfaceHover(ifInfo, position, startCol, endCol);
+              break;
+            }
+          }
+
+          // Check if Eth-Trunk member command on line: eth-trunk <ID>
+          if (!hoverResult && ifInfo.trunkId) {
+            const ethTrunkRegex = new RegExp(`\\beth-trunk\\s+${ifInfo.trunkId}\\b`, 'gi');
+            let trunkMatch;
+            while ((trunkMatch = ethTrunkRegex.exec(lineText)) !== null) {
+              const startCol = trunkMatch.index + 1;
+              const endCol = trunkMatch.index + 1 + trunkMatch[0].length;
+
+              if (col >= startCol && col <= endCol) {
+                hoverResult = buildInterfaceHover(ifInfo, position, startCol, endCol);
+                break;
+              }
+            }
+          }
+        });
+
+        if (hoverResult) return hoverResult;
+
+        // 3. Profile Reference Hover
+        profileAnalysisMap.forEach((profInfo) => {
+          if (hoverResult) return;
+
+          const escType = profInfo.type.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          const escName = profInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          const profRegex = new RegExp(`\\b${escType}\\s+(?:name\\s+)?${escName}\\b`, 'gi');
+          let profMatch;
+          while ((profMatch = profRegex.exec(lineText)) !== null) {
+            const startCol = profMatch.index + 1;
+            const endCol = profMatch.index + 1 + profMatch[0].length;
+
+            if (col >= startCol && col <= endCol) {
+              const refCount = profInfo.references.length;
               const contents = [];
 
-              contents.push({ value: `**🔌 Interface:** \`${escapeHoverText(ifInfo.name)}\` (Referenced **${refCount}** times)` });
+              contents.push({ value: `**🛡️ Profile:** \`${escapeHoverText(profInfo.type)} ${escapeHoverText(profInfo.name)}\` (Referenced **${refCount}** times)` });
 
               contents.push({
-                value: `[**★ Definition Block (Line ${ifInfo.defLineNum}):**](command:configReader.jumpToLine?${ifInfo.defLineNum})\n\`\`\`\n${escapeHoverText(ifInfo.defBlockText)}\n\`\`\``,
+                value: `[**★ Definition Block (Line ${profInfo.defLineNum}):**](command:configReader.jumpToLine?${profInfo.defLineNum})\n\`\`\`\n${escapeHoverText(profInfo.defBlockText)}\n\`\`\``,
                 isTrusted: true
               });
 
@@ -1311,7 +1471,7 @@ function registerReferenceHoverProviders() {
                 contents.push({ value: '_No usage references found in configuration._' });
               } else {
                 let refMarkdown = '**Usage Locations by Section (click line to jump):**\n';
-                ifInfo.references.forEach(ref => {
+                profInfo.references.forEach(ref => {
                   refMarkdown += `- [📍 **${escapeHoverText(ref.sectionHeader)}** (L${ref.lineNum}): \`${escapeHoverText(ref.text)}\`](command:configReader.jumpToLine?${ref.lineNum})\n`;
                 });
                 contents.push({ value: refMarkdown, isTrusted: true });
@@ -1331,6 +1491,33 @@ function registerReferenceHoverProviders() {
       }
     });
   });
+}
+
+function buildInterfaceHover(ifInfo, position, startCol, endCol) {
+  const refCount = ifInfo.references.length;
+  const contents = [];
+
+  contents.push({ value: `**🔌 Interface:** \`${escapeHoverText(ifInfo.name)}\` (Referenced **${refCount}** times)` });
+
+  contents.push({
+    value: `[**★ Definition Block (Line ${ifInfo.defLineNum}):**](command:configReader.jumpToLine?${ifInfo.defLineNum})\n\`\`\`\n${escapeHoverText(ifInfo.defBlockText)}\n\`\`\``,
+    isTrusted: true
+  });
+
+  if (refCount === 0) {
+    contents.push({ value: '_No usage references found in configuration._' });
+  } else {
+    let refMarkdown = '**Usage Locations by Section (click line to jump):**\n';
+    ifInfo.references.forEach(ref => {
+      refMarkdown += `- [📍 **${escapeHoverText(ref.sectionHeader)}** (L${ref.lineNum}): \`${escapeHoverText(ref.text)}\`](command:configReader.jumpToLine?${ref.lineNum})\n`;
+    });
+    contents.push({ value: refMarkdown, isTrusted: true });
+  }
+
+  return {
+    range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol),
+    contents: contents
+  };
 }
 
 function updateFoldingIndex() {
@@ -1470,7 +1657,7 @@ function updateFoldingIndex() {
       }
     }
 
-    // Check Interface (Generic 2-word rule)
+    // Check Interface
     const ifMatch = /^\s*interface\s+(\S+)\s*$/i.exec(lineText);
     if (ifMatch) {
       const ifName = ifMatch[1];
@@ -1479,6 +1666,21 @@ function updateFoldingIndex() {
         item.isInterface = true;
         item.refName = ifName;
         item.refCount = ifInfo.references.length;
+      }
+    }
+
+    // Check Profile
+    const profMatch = /^\s*([a-zA-Z0-9_\-]+(?:\s+template|\s+profile)?)\s+name\s+([a-zA-Z0-9_\-]+)/i.exec(lineText);
+    if (profMatch) {
+      const profType = profMatch[1].trim();
+      const profName = profMatch[2].trim();
+      const key = `${profType.toLowerCase()}:${profName.toLowerCase()}`;
+      const profInfo = profileAnalysisMap.get(key);
+      if (profInfo) {
+        item.isProfile = true;
+        item.profKey = key;
+        item.refName = `${profType} ${profName}`;
+        item.refCount = profInfo.references.length;
       }
     }
   }
@@ -1520,6 +1722,8 @@ function renderIndexList(items) {
       refBadge = `<span class="cr-vpn-ref-badge" onclick="openRefModal('vpn', '${escapeHtml(item.refName)}', event)" title="View VPN References">Ref: ${item.refCount}</span>`;
     } else if (item.isInterface) {
       refBadge = `<span class="cr-if-ref-badge" onclick="openRefModal('interface', '${escapeHtml(item.refName)}', event)" title="View Interface References">Ref: ${item.refCount}</span>`;
+    } else if (item.isProfile) {
+      refBadge = `<span class="cr-prof-ref-badge" onclick="openRefModal('profile', '${escapeHtml(item.profKey)}', event)" title="View Profile References">Ref: ${item.refCount}</span>`;
     }
 
     html += `
@@ -1548,6 +1752,10 @@ function openRefModal(type, refName, event) {
     refInfo = interfaceAnalysisMap.get(refName.toLowerCase());
     icon = '🔌';
     titlePrefix = 'Interface';
+  } else if (type === 'profile') {
+    refInfo = profileAnalysisMap.get(refName.toLowerCase());
+    icon = '🛡️';
+    titlePrefix = 'Profile';
   } else {
     refInfo = vpnAnalysisMap.get(refName.toLowerCase());
   }
@@ -1558,7 +1766,8 @@ function openRefModal(type, refName, event) {
 
   if (!refInfo || !modalBody || !modalOverlay) return;
 
-  modalTitle.innerText = `${icon} ${titlePrefix}: ${refInfo.name}`;
+  const displayName = refInfo.type ? `${refInfo.type} ${refInfo.name}` : refInfo.name;
+  modalTitle.innerText = `${icon} ${titlePrefix}: ${displayName}`;
 
   let bodyHtml = `
     <!-- Top Creation/Definition Block Section -->
@@ -1698,6 +1907,7 @@ function onVendorChange() {
   monaco.editor.setModelLanguage(editorInstance.getModel(), langMap[vendor] || 'huawei-vrp');
   analyzeVpnInstances();
   analyzeInterfaceReferences();
+  analyzeProfiles();
   updateFoldingIndex();
   analyzeConfiguration();
 }
@@ -1753,7 +1963,7 @@ function analyzeConfiguration() {
       });
     }
 
-    // Interface dashed underline decoration using generic interface map
+    // Interface dashed underline decoration
     interfaceAnalysisMap.forEach((ifInfo) => {
       const escapedName = ifInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
       const ifRegex = new RegExp(`(?<![a-zA-Z0-9_./-])${escapedName}(?![a-zA-Z0-9_./-])`, 'gi');
@@ -1763,6 +1973,35 @@ function analyzeConfiguration() {
           range: new monaco.Range(lineNum, ifMatch.index + 1, lineNum, ifMatch.index + 1 + ifMatch[0].length),
           options: {
             inlineClassName: 'monaco-interface-underline'
+          }
+        });
+      }
+
+      if (ifInfo.trunkId) {
+        const ethTrunkRegex = new RegExp(`\\beth-trunk\\s+${ifInfo.trunkId}\\b`, 'gi');
+        let trunkMatch;
+        while ((trunkMatch = ethTrunkRegex.exec(lineText)) !== null) {
+          newDecorations.push({
+            range: new monaco.Range(lineNum, trunkMatch.index + 1, lineNum, trunkMatch.index + 1 + trunkMatch[0].length),
+            options: {
+              inlineClassName: 'monaco-interface-underline'
+            }
+          });
+        }
+      }
+    });
+
+    // Profile dashed underline decoration
+    profileAnalysisMap.forEach((profInfo) => {
+      const escType = profInfo.type.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      const escName = profInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      const profRegex = new RegExp(`\\b${escType}\\s+(?:name\\s+)?${escName}\\b`, 'gi');
+      let profMatch;
+      while ((profMatch = profRegex.exec(lineText)) !== null) {
+        newDecorations.push({
+          range: new monaco.Range(lineNum, profMatch.index + 1, lineNum, profMatch.index + 1 + profMatch[0].length),
+          options: {
+            inlineClassName: 'monaco-profile-underline'
           }
         });
       }
