@@ -546,7 +546,6 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
         <!-- Dynamically rendered index items -->
       </div>
     </div>
-
     <!-- Monaco Editor Container -->
     <div class="cr-editor-frame">
       <div id="monacoContainer"></div>
@@ -580,8 +579,8 @@ ipv6
 #
 # --- Example 1: 2-Word Prefix Folding ---
 #
-ip route-static vpn-instance underlay_1 80.158.50.5 255.255.255.255 GE0/0/8 185.155.191.145 tag 4400 description agile-controller
-ip route-static vpn-instance underlay_3 80.158.50.5 255.255.255.255 GE0/0/9 185.155.191.153 tag 4400 description agile-controller
+ip route-static vpn-instance underlay_1 80.158.50.5 255.255.255.255 GE0/0/8 10.0.0.1 tag 4400 description agile-controller
+ip route-static vpn-instance underlay_3 80.158.50.5 255.255.255.255 GE0/0/9 10.0.0.2 tag 4400 description agile-controller
 #
 # --- Example 2: Eth-Trunk & Member Interfaces ---
 #
@@ -590,184 +589,7 @@ interface Eth-Trunk1
  undo port trunk allow-pass vlan 1
  port trunk allow-pass vlan 745 816 893 901 to 902
  mode lacp-static
-#
-interface 40GE0/0/1
- eth-trunk 1
- device transceiver 40GBASE-FIBER
-#
-interface 40GE0/0/2
- eth-trunk 1
- device transceiver 40GBASE-FIBER
-#
-# --- Example 3: Profiles (authentication-profile, security-profile, vap-profile) ---
-#
-authentication-profile name zephyros2
- dot1x-access-profile zephyros2
- access-domain zephyros2 force
-#
-security-profile name coopguest
- security open
-#
-vap-profile name coopguest
- forward-mode tunnel
- service-vlan vlan-pool DMZ-Group
- ssid-profile coopguest
- security-profile coopguest
- authentication-profile zephyros2
- sac-profile default
-#
-# --- Example 4: VPN Instance Creation & Reference Tracking ---
-#
-ip vpn-instance underlay_3
- ipv4-family
-  route-distinguisher 1020:1020
-  vpn-target 1.20:20 export-extcommunity
-  vpn-target 1.20:20 import-extcommunity
-#
-ip vpn-instance underlay_Sunrise_R1
- ipv4-family
-  route-distinguisher 1111:1111
-  vpn-target 11:11 export-extcommunity
-  vpn-target 11:11 import-extcommunity
-#
-Interface GE0/0/7
-#
-Interface vlanif10
- ip address 10.0.0.1 255.255.255.0
-#
- http secure-server ssl-policy default_policy
- http secure-server enable
- http server permit interface GE0/0/7
-#
-dns resolve 
-#
-dhcp enable
-#
-radius-server template default
-#
-pki realm default
- certificate-check none
-#
-ssl policy default_policy type server
- pki-realm default
- version tls1.2 
- ciphersuite rsa_aes_128_sha256 rsa_aes_256_sha256 ecdhe_rsa_aes128_gcm_sha256 ecdhe_rsa_aes256_gcm_sha384 
-#
-ike proposal default
- encryption-algorithm aes-256 aes-192 aes-128 
- dh group14 
- authentication-algorithm sha2-512 sha2-384 sha2-256 
- authentication-method pre-share
- integrity-algorithm hmac-sha2-256 
- prf hmac-sha2-256 
-#
-free-rule-template name default_free_rule
-#
-portal-access-profile name portal_access_profile
-#
-aaa
- authentication-scheme default
-  authentication-mode local
- authentication-scheme radius
-  authentication-mode radius
- authorization-scheme default
-  authorization-mode local
- accounting-scheme default
-  accounting-mode none
- local-aaa-user password policy administrator
- domain default
-  authentication-scheme default
-  accounting-scheme default
-  radius-server default
- domain default_admin
-  authentication-scheme default
-  accounting-scheme default
-#
-web
- set fast-configuration state disable
-#
-firewall zone Local
-#
-mi-server
-#
-interface GE0/0/0
- ip binding vpn-instance underlay_3
- ip address 77.73.243.205 255.255.255.248
- qos lr cir 900000 kbps outbound
- traffic tm-post-processing enable
- tcp adjust-mss 1200
-#
-interface GE0/0/3
-#
-interface GE0/0/4
-#
-interface GE0/0/5
-#
-interface GE0/0/6
-#
-interface GE0/0/10
-#
-interface Cellular0/0/0
-#
-interface NULL0
-#
-cellular profile default
- modem auto-recovery dial action modem-reboot fail-times 128
- modem auto-recovery icmp-unreachable action modem-reboot
- modem auto-recovery services-unavailable action modem-reboot test-times 0 interval 3600
-#
-undo icmp name timestamp-request receive
-#
- snmp-agent trap enable
-#
-fib regularly-refresh disable
-#
- agile controller host 80.158.50.5 port 10020 vpn-instance underlay_3
-#
-ip route-static vpn-instance underlay_Sunrise_R1 0.0.0.0 0.0.0.0 46.140.188.105
-ip route-static vpn-instance underlay_Sunrise_R1 80.158.50.5 255.255.255.255 GE0/0/10 46.140.188.105 tag 4400 description agile-controller
-ip route-static vpn-instance underlay_Sunrise_R1 90.84.184.170 255.255.255.255 NULL0 preference 1
-#
-user-interface con 0
- authentication-mode aaa
-user-interface vty 0
- authentication-mode aaa
- user privilege level 15
-user-interface vty 1 4
-#
-wlan ac
- traffic-profile name default
- security-profile name default
- security-profile name default-wds
-  security wpa2 psk pass-phrase %^%#/6e3Sy(2D<@GzXGU&XXP>@])(3LI"8WL<zDnYWf)%^%# aes
- ssid-profile name default
- vap-profile name default
- wds-profile name default
- regulatory-domain-profile name default
- air-scan-profile name default
- rrm-profile name default
- radio-2g-profile name default
- radio-5g-profile name default
- wids-spoof-profile name default
- wids-profile name default
- ap-system-profile name default
- port-link-profile name default
- wired-port-profile name default
- ap-group name default
-#
-dot1x-access-profile name dot1x_access_profile
-#
-mac-access-profile name mac_access_profile
-#
-ops
-#
-autostart
-#
-secelog
-#
- ms-channel 
-#
-return`;
+`;
 
 const CISCO_SAMPLE = `! Cisco IOS Gateway Configuration Example
 version 15.6
