@@ -6,7 +6,7 @@ bookToC: false
 
 # Configuration Reader
 
-Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like `authentication-profile name` or indented blocks), and use the interactive **Config Index** sidebar to search sections, inspect **VPN Instance References** with section headers, and maximize to browser full window.
+Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like `authentication-profile name` or indented blocks), and use the interactive **Config Index** sidebar to search sections, inspect **VPN Instance** and **Interface References** with full definition blocks, and maximize to browser full window with saved state.
 
 <style>
   .cr-container {
@@ -131,9 +131,10 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     height: 680px;
     background: #ffffff;
     box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    position: relative;
   }
 
-  /* Sidebar Styles (Default Hidden) */
+  /* Sidebar Styles (Default Visible) */
   .cr-sidebar {
     width: 290px;
     flex-shrink: 0;
@@ -141,14 +142,15 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     background: #f8fafc;
     display: flex;
     flex-direction: column;
-    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.2s ease;
   }
 
   .cr-sidebar.collapsed {
-    width: 0;
-    margin-left: -290px;
-    overflow: hidden;
-    border-right: none;
+    display: none !important;
+    width: 0 !important;
+    margin-left: 0 !important;
+    overflow: hidden !important;
+    border-right: none !important;
   }
 
   .cr-sidebar-header {
@@ -281,10 +283,30 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     margin-left: 4px;
     cursor: pointer;
     transition: all 0.15s ease;
+    flex-shrink: 0;
   }
 
   .cr-vpn-ref-badge:hover {
     background: #10b981;
+    color: #ffffff;
+  }
+
+  .cr-if-ref-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #d97706;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .cr-if-ref-badge:hover {
+    background: #f59e0b;
     color: #ffffff;
   }
 
@@ -307,6 +329,17 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     height: 100%;
   }
 
+  /* Custom Monaco Underlines for Interactive Symbols */
+  .monaco-vpn-underline {
+    border-bottom: 1.5px dashed #2563eb !important;
+    cursor: pointer;
+  }
+
+  .monaco-interface-underline {
+    border-bottom: 1.5px dashed #d97706 !important;
+    cursor: pointer;
+  }
+
   /* Custom Monaco Cipher Highlight */
   .monaco-cipher-highlight {
     background-color: rgba(239, 68, 68, 0.18) !important;
@@ -314,7 +347,7 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     border-radius: 3px;
   }
 
-  /* VPN Modal Overlay */
+  /* Reference Modal Overlay */
   .cr-modal-overlay {
     display: none;
     position: fixed;
@@ -335,8 +368,8 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     background: #ffffff;
     border-radius: 12px;
     width: 90%;
-    max-width: 650px;
-    max-height: 80vh;
+    max-width: 720px;
+    max-height: 85vh;
     display: flex;
     flex-direction: column;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -365,6 +398,21 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     overflow-y: auto;
     font-size: 0.875rem;
   }
+  .cr-def-block-card {
+    margin-bottom: 1.25rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+  }
+  .cr-def-block-title {
+    font-weight: 700;
+    color: #1d4ed8;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .cr-vpn-ref-group {
     margin-bottom: 1rem;
     background: #f8fafc;
@@ -385,10 +433,12 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     font-size: 0.82rem;
     background: #ffffff;
     border: 1px solid #cbd5e1;
-    padding: 0.4rem 0.7rem;
+    padding: 0.45rem 0.75rem;
     border-radius: 6px;
     color: #334155;
     cursor: pointer;
+    white-space: pre-wrap;
+    word-break: break-all;
     transition: all 0.15s ease;
   }
   .cr-vpn-ref-code:hover {
@@ -465,6 +515,13 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     border-color: #334155;
     color: #f1f5f9;
   }
+  .cr-dark .cr-def-block-card {
+    background: #1e3a8a;
+    border-color: #3b82f6;
+  }
+  .cr-dark .cr-def-block-title {
+    color: #93c5fd;
+  }
   .cr-dark .cr-vpn-ref-group {
     background: #1e293b;
     border-color: #334155;
@@ -480,7 +537,7 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
   <!-- Toolbar -->
   <div class="cr-toolbar">
     <div class="cr-toolbar-group">
-      <button class="cr-btn" id="crSidebarToggleBtn" onclick="toggleSidebar()">📑 Show Index</button>
+      <button class="cr-btn" id="crSidebarToggleBtn" onclick="toggleSidebar()">📑 Hide Index</button>
       <button class="cr-btn" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
       <span class="cr-label" style="margin-left: 0.4rem;">Language:</span>
       <select id="vendorSelect" class="cr-select" onchange="onVendorChange()">
@@ -509,8 +566,8 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
 
   <!-- Main Split View Layout -->
   <div class="cr-main-layout">
-    <!-- Config Index Sidebar (Default Collapsed) -->
-    <div class="cr-sidebar collapsed" id="crSidebar">
+    <!-- Config Index Sidebar (Default Visible) -->
+    <div class="cr-sidebar" id="crSidebar">
       <div class="cr-sidebar-header">
         <div class="cr-sidebar-title">
           <span>📑 Config Index</span>
@@ -531,11 +588,11 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
   </div>
 </div>
 
-<!-- VPN Reference Details Modal -->
+<!-- Reference Details Modal -->
 <div id="crVpnModal" class="cr-modal-overlay" onclick="closeVpnModal(event)">
   <div class="cr-modal-card" onclick="event.stopPropagation()">
     <div class="cr-modal-header">
-      <span id="crVpnModalTitle">🔒 VPN Reference Details</span>
+      <span id="crVpnModalTitle">🔒 Reference Details</span>
       <button class="cr-modal-close" onclick="closeVpnModal()">×</button>
     </div>
     <div class="cr-modal-body" id="crVpnModalBody">
@@ -548,7 +605,7 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
 
 <script>
-// Huawei sample configuration including user's specific VPN Instance examples
+// Huawei sample configuration including user's specific VPN & Interface examples
 const HUAWEI_SAMPLE = `[V300R024C00SPC100]
 #
  drop illegal-mac alarm
@@ -591,7 +648,7 @@ ip vpn-instance underlay_Sunrise_R1
   vpn-target 11:11 export-extcommunity
   vpn-target 11:11 import-extcommunity
 #
-# --- Example 3: Commands with leading spaces & VPN bindings ---
+# --- Example 3: Commands with leading spaces, VPN bindings & Interface references ---
 #
  http secure-server ssl-policy default_policy
  http secure-server enable
@@ -697,7 +754,7 @@ fib regularly-refresh disable
  agile controller host 80.158.50.5 port 10020 vpn-instance underlay_3
 #
 ip route-static vpn-instance underlay_Sunrise_R1 0.0.0.0 0.0.0.0 46.140.188.105
-ip route-static vpn-instance underlay_Sunrise_R1 80.158.50.5 255.255.255.255 GE0/0/10 46.140.188.105 tag 4400 description agile-controller
+ip route-static vpn-instance underlay_Sunrise_R1 80.158.50.5 255.255.255.255 GigabitEthernet0/0/10 46.140.188.105 tag 4400 description agile-controller
 ip route-static vpn-instance underlay_Sunrise_R1 90.84.184.170 255.255.255.255 NULL0 preference 1
 #
 user-interface con 0
@@ -805,13 +862,15 @@ let editorInstance = null;
 let currentDecorations = [];
 let allIndexItems = [];
 let vpnAnalysisMap = new Map();
+let interfaceAnalysisMap = new Map();
 
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
 
 require(['vs/editor/editor.main'], function() {
   registerLanguages();
   registerFoldingProviders();
-  registerVpnHoverProvider();
+  registerMonacoJumpCommand();
+  registerReferenceHoverProviders();
 
   const container = document.getElementById('monacoContainer');
   editorInstance = monaco.editor.create(container, {
@@ -830,10 +889,12 @@ require(['vs/editor/editor.main'], function() {
     lineNumbers: 'on'
   });
 
-  // Listen to document changes to update folding index & VPN analysis
+  // Listen to document changes to update folding index & reference analysis
   editorInstance.onDidChangeModelContent(() => {
     analyzeVpnInstances();
+    analyzeInterfaceReferences();
     updateFoldingIndex();
+    analyzeConfiguration();
   });
 
   // Listen to Esc key to exit full window
@@ -841,16 +902,47 @@ require(['vs/editor/editor.main'], function() {
     if (e.key === 'Escape') {
       const crCont = document.getElementById('crContainer');
       if (crCont && crCont.classList.contains('cr-full-window')) {
-        toggleFullWindow();
+        toggleFullWindow(false);
       }
     }
   });
 
-  // Initial VPN analysis & index build
+  // Restore user preferences (Full Window & Sidebar state)
+  restoreUserPreferences();
+
+  // Initial analysis & index build
   analyzeVpnInstances();
+  analyzeInterfaceReferences();
   updateFoldingIndex();
   analyzeConfiguration();
 });
+
+function registerMonacoJumpCommand() {
+  // Register custom Monaco command executable directly from Hover markdown links
+  monaco.editor.registerCommand('configReader.jumpToLine', function(accessor, lineNum) {
+    const line = parseInt(lineNum, 10);
+    if (!isNaN(line) && editorInstance) {
+      editorInstance.revealLineInCenter(line);
+      editorInstance.setPosition({ lineNumber: line, column: 1 });
+      editorInstance.focus();
+    }
+  });
+}
+
+function restoreUserPreferences() {
+  const savedFullWindow = localStorage.getItem('configReader_fullWindow');
+  if (savedFullWindow === 'true') {
+    toggleFullWindow(true);
+  }
+
+  const savedShowIndex = localStorage.getItem('configReader_showIndex');
+  if (savedShowIndex === 'false') {
+    const sidebar = document.getElementById('crSidebar');
+    const toggleBtn = document.getElementById('crSidebarToggleBtn');
+    if (sidebar) sidebar.classList.add('collapsed');
+    if (toggleBtn) toggleBtn.innerText = '📑 Show Index';
+  }
+}
 
 function registerLanguages() {
   monaco.languages.register({ id: 'huawei-vrp' });
@@ -1031,7 +1123,32 @@ function registerFoldingProviders() {
   });
 }
 
-// VPN Instance Analyzer & Hover Provider
+// Extract full multi-line definition block text for a given declaration line
+function getDefinitionBlockText(model, startLineNum) {
+  const lineCount = model.getLineCount();
+  const startLine = model.getLineContent(startLineNum);
+  const blockLines = [startLine];
+
+  for (let i = startLineNum; i < lineCount; i++) {
+    const line = model.getLineContent(i + 1);
+    const trimmed = line.trim();
+
+    if (!trimmed || trimmed === '#' || trimmed === '!' || trimmed.startsWith('#') || trimmed.startsWith('!')) {
+      break;
+    }
+
+    const indent = line.search(/\S/);
+    if (indent === 0 && i !== startLineNum - 1) {
+      break;
+    }
+
+    blockLines.push(line);
+  }
+
+  return blockLines.join('\n');
+}
+
+// VPN Instance & Interface Reference Analyzers
 function analyzeVpnInstances() {
   vpnAnalysisMap.clear();
   if (!editorInstance) return;
@@ -1059,24 +1176,25 @@ function analyzeVpnInstances() {
     return 'Global Configuration';
   }
 
-  // 1. Detect VPN Instance definitions: ip vpn-instance <name>
   const vpnDefRegex = /^\s*ip\s+vpn-instance\s+([a-zA-Z0-9_\-]+)/i;
   for (let i = 0; i < lineCount; i++) {
     const match = vpnDefRegex.exec(lines[i]);
     if (match) {
       const vpnName = match[1];
       if (!vpnAnalysisMap.has(vpnName.toLowerCase())) {
+        const defLineNum = i + 1;
+        const defBlockText = getDefinitionBlockText(model, defLineNum);
         vpnAnalysisMap.set(vpnName.toLowerCase(), {
           name: vpnName,
-          defLineNum: i + 1,
+          defLineNum: defLineNum,
           defText: lines[i].trim(),
+          defBlockText: defBlockText,
           references: []
         });
       }
     }
   }
 
-  // 2. Find usage references across the configuration
   for (let i = 0; i < lineCount; i++) {
     const lineNum = i + 1;
     const lineText = lines[i];
@@ -1097,46 +1215,165 @@ function analyzeVpnInstances() {
   }
 }
 
-function registerVpnHoverProvider() {
+function analyzeInterfaceReferences() {
+  interfaceAnalysisMap.clear();
+  if (!editorInstance) return;
+  const model = editorInstance.getModel();
+  if (!model) return;
+
+  const lines = model.getLinesContent();
+  const lineCount = lines.length;
+
+  function cleanTitle(str) {
+    return str.replace(/[#!]/g, '').trim();
+  }
+
+  function getSectionHeader(lineIdx) {
+    for (let k = lineIdx; k >= 0; k--) {
+      const lText = lines[k];
+      const trimmed = lText.trim();
+      if (!trimmed || trimmed === '#' || trimmed === '!' || trimmed.startsWith('#') || trimmed.startsWith('!')) continue;
+
+      const indent = lText.search(/\S/);
+      if (indent === 0) {
+        return cleanTitle(trimmed);
+      }
+    }
+    return 'Global Configuration';
+  }
+
+  const ifDefRegex = /^\s*interface\s+([a-zA-Z0-9\/\.\-]+)/i;
+  for (let i = 0; i < lineCount; i++) {
+    const match = ifDefRegex.exec(lines[i]);
+    if (match) {
+      const ifName = match[1];
+      if (!interfaceAnalysisMap.has(ifName.toLowerCase())) {
+        const defLineNum = i + 1;
+        const defBlockText = getDefinitionBlockText(model, defLineNum);
+        interfaceAnalysisMap.set(ifName.toLowerCase(), {
+          name: ifName,
+          defLineNum: defLineNum,
+          defText: lines[i].trim(),
+          defBlockText: defBlockText,
+          references: []
+        });
+      }
+    }
+  }
+
+  for (let i = 0; i < lineCount; i++) {
+    const lineNum = i + 1;
+    const lineText = lines[i];
+
+    interfaceAnalysisMap.forEach((ifInfo) => {
+      if (lineNum !== ifInfo.defLineNum) {
+        const escapedName = ifInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const refRegex = new RegExp(`\\b${escapedName}\\b`, 'i');
+        if (refRegex.test(lineText)) {
+          const sectionHeader = getSectionHeader(i);
+          ifInfo.references.push({
+            lineNum: lineNum,
+            text: lineText.trim(),
+            sectionHeader: sectionHeader
+          });
+        }
+      }
+    });
+  }
+}
+
+function escapeHoverText(str) {
+  if (!str) return '';
+  return str.replace(/`/g, "'").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function registerReferenceHoverProviders() {
   const languages = ['huawei-vrp', 'cisco-ios'];
 
   languages.forEach(langId => {
     monaco.languages.registerHoverProvider(langId, {
       provideHover: function(model, position) {
         const lineText = model.getLineContent(position.lineNumber);
-        const vpnMatch = /vpn-instance\s+([a-zA-Z0-9_\-]+)/i.exec(lineText);
+        const col = position.column;
 
-        if (!vpnMatch) return null;
+        // 1. VPN Instance Hover (column-position check)
+        const vpnRegex = /vpn-instance\s+([a-zA-Z0-9_\-]+)/gi;
+        let match;
+        while ((match = vpnRegex.exec(lineText)) !== null) {
+          const startCol = match.index + 1;
+          const endCol = match.index + 1 + match[0].length;
 
-        const vpnName = vpnMatch[1];
-        const vpnInfo = vpnAnalysisMap.get(vpnName.toLowerCase());
+          if (col >= startCol && col <= endCol) {
+            const vpnName = match[1];
+            const vpnInfo = vpnAnalysisMap.get(vpnName.toLowerCase());
+            if (vpnInfo) {
+              const refCount = vpnInfo.references.length;
+              const contents = [];
 
-        if (!vpnInfo) return null;
+              contents.push({ value: `**🔒 VPN Instance:** \`${escapeHoverText(vpnInfo.name)}\` (Referenced **${refCount}** times)` });
 
-        const refCount = vpnInfo.references.length;
-        const contents = [];
+              contents.push({
+                value: `**★ Definition Block (Line ${vpnInfo.defLineNum}):** [Jump to Definition](command:configReader.jumpToLine?${vpnInfo.defLineNum})\n\`\`\`\n${escapeHoverText(vpnInfo.defBlockText)}\n\`\`\``,
+                isTrusted: true
+              });
 
-        contents.push({ value: `**🔒 VPN Instance:** \`${vpnInfo.name}\` (Referenced **${refCount}** times)` });
+              if (refCount === 0) {
+                contents.push({ value: '_No usage references found in configuration._' });
+              } else {
+                let refMarkdown = '**Usage Locations by Section (click link to jump):**\n';
+                vpnInfo.references.forEach(ref => {
+                  refMarkdown += `- [📍 **${escapeHoverText(ref.sectionHeader)}** (L${ref.lineNum}): \`${escapeHoverText(ref.text)}\`](command:configReader.jumpToLine?${ref.lineNum})\n`;
+                });
+                contents.push({ value: refMarkdown, isTrusted: true });
+              }
 
-        if (refCount === 0) {
-          contents.push({ value: '_No usage references found in configuration._' });
-        } else {
-          let refMarkdown = '**Usage Locations by Section:**\n';
-          vpnInfo.references.forEach(ref => {
-            refMarkdown += `- 📍 **${ref.sectionHeader}** (Line ${ref.lineNum}): \`${ref.text}\`\n`;
-          });
-          contents.push({ value: refMarkdown });
+              return {
+                range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol),
+                contents: contents
+              };
+            }
+          }
         }
 
-        return {
-          range: new monaco.Range(
-            position.lineNumber,
-            vpnMatch.index + 1,
-            position.lineNumber,
-            vpnMatch.index + 1 + vpnMatch[0].length
-          ),
-          contents: contents
-        };
+        // 2. Interface Reference Hover (column-position check)
+        const ifRegex = /\b(GigabitEthernet|TenGigabitEthernet|FastEthernet|Eth-Trunk|Vlanif|Cellular|LoopBack|NULL)\d+(\/\d+)*(\.\d+)?\b/gi;
+        while ((match = ifRegex.exec(lineText)) !== null) {
+          const startCol = match.index + 1;
+          const endCol = match.index + 1 + match[0].length;
+
+          if (col >= startCol && col <= endCol) {
+            const ifName = match[0];
+            const ifInfo = interfaceAnalysisMap.get(ifName.toLowerCase());
+            if (ifInfo) {
+              const refCount = ifInfo.references.length;
+              const contents = [];
+
+              contents.push({ value: `**🔌 Interface:** \`${escapeHoverText(ifInfo.name)}\` (Referenced **${refCount}** times)` });
+
+              contents.push({
+                value: `**★ Definition Block (Line ${ifInfo.defLineNum}):** [Jump to Definition](command:configReader.jumpToLine?${ifInfo.defLineNum})\n\`\`\`\n${escapeHoverText(ifInfo.defBlockText)}\n\`\`\``,
+                isTrusted: true
+              });
+
+              if (refCount === 0) {
+                contents.push({ value: '_No usage references found in configuration._' });
+              } else {
+                let refMarkdown = '**Usage Locations by Section (click link to jump):**\n';
+                ifInfo.references.forEach(ref => {
+                  refMarkdown += `- [📍 **${escapeHoverText(ref.sectionHeader)}** (L${ref.lineNum}): \`${escapeHoverText(ref.text)}\`](command:configReader.jumpToLine?${ref.lineNum})\n`;
+                });
+                contents.push({ value: refMarkdown, isTrusted: true });
+              }
+
+              return {
+                range: new monaco.Range(position.lineNumber, startCol, position.lineNumber, endCol),
+                contents: contents
+              };
+            }
+          }
+        }
+
+        return null;
       }
     });
   });
@@ -1205,7 +1442,7 @@ function updateFoldingIndex() {
           count: block.length,
           icon: getSectionIcon(title)
         };
-        checkVpnInfo(item, block[0].text);
+        checkRefInfo(item, block[0].text);
         outItems.push(item);
       }
     } else {
@@ -1242,7 +1479,7 @@ function updateFoldingIndex() {
               count: j - i,
               icon: getSectionIcon(title)
             };
-            checkVpnInfo(item, b.text);
+            checkRefInfo(item, b.text);
             outItems.push(item);
           }
           i = j;
@@ -1256,7 +1493,7 @@ function updateFoldingIndex() {
                 count: 1,
                 icon: getSectionIcon(title)
               };
-              checkVpnInfo(item, b.text);
+              checkRefInfo(item, b.text);
               outItems.push(item);
             }
           }
@@ -1266,15 +1503,28 @@ function updateFoldingIndex() {
     }
   }
 
-  function checkVpnInfo(item, lineText) {
+  function checkRefInfo(item, lineText) {
+    // Check VPN Instance
     const vpnMatch = /ip\s+vpn-instance\s+([a-zA-Z0-9_\-]+)/i.exec(lineText);
     if (vpnMatch) {
       const vpnName = vpnMatch[1];
       const vpnInfo = vpnAnalysisMap.get(vpnName.toLowerCase());
       if (vpnInfo) {
         item.isVpn = true;
-        item.vpnName = vpnName;
+        item.refName = vpnName;
         item.refCount = vpnInfo.references.length;
+      }
+    }
+
+    // Check Interface
+    const ifMatch = /interface\s+([a-zA-Z0-9\/\.\-]+)/i.exec(lineText);
+    if (ifMatch) {
+      const ifName = ifMatch[1];
+      const ifInfo = interfaceAnalysisMap.get(ifName.toLowerCase());
+      if (ifInfo) {
+        item.isInterface = true;
+        item.refName = ifName;
+        item.refCount = ifInfo.references.length;
       }
     }
   }
@@ -1311,9 +1561,11 @@ function renderIndexList(items) {
   let html = '';
   items.forEach((item, idx) => {
     const countBadge = item.count > 1 ? `<span class="cr-index-count">${item.count}</span>` : '';
-    let vpnBadge = '';
+    let refBadge = '';
     if (item.isVpn) {
-      vpnBadge = `<span class="cr-vpn-ref-badge" onclick="openVpnModal('${escapeHtml(item.vpnName)}', event)" title="View VPN References">Ref: ${item.refCount}</span>`;
+      refBadge = `<span class="cr-vpn-ref-badge" onclick="openRefModal('vpn', '${escapeHtml(item.refName)}', event)" title="View VPN References">Ref: ${item.refCount}</span>`;
+    } else if (item.isInterface) {
+      refBadge = `<span class="cr-if-ref-badge" onclick="openRefModal('interface', '${escapeHtml(item.refName)}', event)" title="View Interface References">Ref: ${item.refCount}</span>`;
     }
 
     html += `
@@ -1322,7 +1574,7 @@ function renderIndexList(items) {
           <span class="cr-index-icon">${item.icon}</span>
           <span class="cr-index-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</span>
           ${countBadge}
-          ${vpnBadge}
+          ${refBadge}
         </div>
         <span class="cr-index-line">L${item.lineNum}</span>
       </div>
@@ -1331,34 +1583,50 @@ function renderIndexList(items) {
   listEl.innerHTML = html;
 }
 
-function openVpnModal(vpnName, event) {
+function openRefModal(type, refName, event) {
   if (event) event.stopPropagation();
 
-  const vpnInfo = vpnAnalysisMap.get(vpnName.toLowerCase());
+  let refInfo = null;
+  let icon = '🔒';
+  let titlePrefix = 'VPN Instance';
+
+  if (type === 'interface') {
+    refInfo = interfaceAnalysisMap.get(refName.toLowerCase());
+    icon = '🔌';
+    titlePrefix = 'Interface';
+  } else {
+    refInfo = vpnAnalysisMap.get(refName.toLowerCase());
+  }
+
   const modalBody = document.getElementById('crVpnModalBody');
   const modalTitle = document.getElementById('crVpnModalTitle');
   const modalOverlay = document.getElementById('crVpnModal');
 
-  if (!vpnInfo || !modalBody || !modalOverlay) return;
+  if (!refInfo || !modalBody || !modalOverlay) return;
 
-  modalTitle.innerText = `🔒 VPN Instance: ${vpnInfo.name}`;
+  modalTitle.innerText = `${icon} ${titlePrefix}: ${refInfo.name}`;
 
   let bodyHtml = `
-    <div style="margin-bottom: 1rem;">
-      <span style="font-weight: 600; color: #475569;">Defined on Line ${vpnInfo.defLineNum}:</span>
-      <div class="cr-vpn-ref-code" onclick="jumpToLine(${vpnInfo.defLineNum}); closeVpnModal();">
-        ${escapeHtml(vpnInfo.defText)}
+    <!-- Top Creation/Definition Block Section -->
+    <div class="cr-def-block-card">
+      <div class="cr-def-block-title">
+        <span>★ Definition Block (Line ${refInfo.defLineNum})</span>
+        <span class="cr-index-line" style="cursor: pointer;" onclick="jumpToLine(${refInfo.defLineNum}); closeVpnModal();">Jump to L${refInfo.defLineNum}</span>
+      </div>
+      <div class="cr-vpn-ref-code" onclick="jumpToLine(${refInfo.defLineNum}); closeVpnModal();">
+${escapeHtml(refInfo.defBlockText)}
       </div>
     </div>
+    
     <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: #0f172a;">
-      Usage References (${vpnInfo.references.length} found):
+      Usage References (${refInfo.references.length} found):
     </div>
   `;
 
-  if (vpnInfo.references.length === 0) {
+  if (refInfo.references.length === 0) {
     bodyHtml += `<div style="color: #94a3b8; font-style: italic;">No usage references found in this configuration.</div>`;
   } else {
-    vpnInfo.references.forEach(ref => {
+    refInfo.references.forEach(ref => {
       bodyHtml += `
         <div class="cr-vpn-ref-group">
           <div class="cr-vpn-ref-header">
@@ -1395,7 +1663,7 @@ function filterIndexList() {
     return;
   }
   const filtered = allIndexItems.filter(item => 
-    item.title.toLowerCase().includes(query) || (`l${item.lineNum}`).includes(query) || (item.vpnName && item.vpnName.toLowerCase().includes(query))
+    item.title.toLowerCase().includes(query) || (`l${item.lineNum}`).includes(query) || (item.refName && item.refName.toLowerCase().includes(query))
   );
   renderIndexList(filtered);
 }
@@ -1417,27 +1685,40 @@ function toggleSidebar() {
   const sidebar = document.getElementById('crSidebar');
   const toggleBtn = document.getElementById('crSidebarToggleBtn');
   if (!sidebar) return;
+
   const isCollapsed = sidebar.classList.toggle('collapsed');
   if (toggleBtn) {
     toggleBtn.innerText = isCollapsed ? '📑 Show Index' : '📑 Hide Index';
   }
+  localStorage.setItem('configReader_showIndex', isCollapsed ? 'false' : 'true');
+
   setTimeout(() => {
     if (editorInstance) editorInstance.layout();
-  }, 260);
+  }, 100);
 }
 
-function toggleFullWindow() {
+function toggleFullWindow(forceState) {
   const container = document.getElementById('crContainer');
   const btn = document.getElementById('fullWindowBtn');
   if (!container) return;
 
-  const isFull = container.classList.toggle('cr-full-window');
+  let isFull;
+  if (typeof forceState === 'boolean') {
+    if (forceState) container.classList.add('cr-full-window');
+    else container.classList.remove('cr-full-window');
+    isFull = forceState;
+  } else {
+    isFull = container.classList.toggle('cr-full-window');
+  }
+
   if (btn) {
     btn.innerText = isFull ? '⛶ Normal Window' : '⛶ Full Window';
   }
+  localStorage.setItem('configReader_fullWindow', isFull ? 'true' : 'false');
+
   setTimeout(() => {
     if (editorInstance) editorInstance.layout();
-  }, 200);
+  }, 150);
 }
 
 function foldAll() {
@@ -1462,6 +1743,7 @@ function onVendorChange() {
   };
   monaco.editor.setModelLanguage(editorInstance.getModel(), langMap[vendor] || 'huawei-vrp');
   analyzeVpnInstances();
+  analyzeInterfaceReferences();
   updateFoldingIndex();
   analyzeConfiguration();
 }
@@ -1495,12 +1777,17 @@ function loadCiscoSample() {
 
 function analyzeConfiguration() {
   if (!editorInstance) return;
-  const content = editorInstance.getValue();
+  const model = editorInstance.getModel();
+  if (!model) return;
+
+  const content = model.getValue();
   const lines = content.split('\n');
 
   const newDecorations = [];
   lines.forEach((lineText, idx) => {
     const lineNum = idx + 1;
+
+    // Encrypted cipher decoration
     const cipherRegex = /%^%#[^%]+%^%#/g;
     let match;
     while ((match = cipherRegex.exec(lineText)) !== null) {
@@ -1509,6 +1796,28 @@ function analyzeConfiguration() {
         options: {
           inlineClassName: 'monaco-cipher-highlight',
           hoverMessage: { value: '🔒 Encrypted Cipher Key String' }
+        }
+      });
+    }
+
+    // VPN Instance dashed underline decoration
+    const vpnRegex = /vpn-instance\s+([a-zA-Z0-9_\-]+)/gi;
+    while ((match = vpnRegex.exec(lineText)) !== null) {
+      newDecorations.push({
+        range: new monaco.Range(lineNum, match.index + 1, lineNum, match.index + 1 + match[0].length),
+        options: {
+          inlineClassName: 'monaco-vpn-underline'
+        }
+      });
+    }
+
+    // Interface dashed underline decoration
+    const ifRegex = /\b(GigabitEthernet|TenGigabitEthernet|FastEthernet|Eth-Trunk|Vlanif|Cellular|LoopBack|NULL)\d+(\/\d+)*(\.\d+)?\b/gi;
+    while ((match = ifRegex.exec(lineText)) !== null) {
+      newDecorations.push({
+        range: new monaco.Range(lineNum, match.index + 1, lineNum, match.index + 1 + match[0].length),
+        options: {
+          inlineClassName: 'monaco-interface-underline'
         }
       });
     }
@@ -1538,6 +1847,7 @@ function downloadConfig() {
 function clearConfig() {
   if (editorInstance) editorInstance.setValue('');
   analyzeVpnInstances();
+  analyzeInterfaceReferences();
   updateFoldingIndex();
 }
 </script>
