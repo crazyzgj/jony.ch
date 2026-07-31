@@ -190,6 +190,64 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
   .cr-hl-pink   { background-color: rgba(251, 207, 232, 0.7) !important; border-radius: 2px; }
   .cr-hl-orange { background-color: rgba(254, 215, 170, 0.7) !important; border-radius: 2px; }
   .cr-hl-red    { background-color: rgba(254, 202, 202, 0.7) !important; border-radius: 2px; }
+  /* Custom Context Menu */
+  .cr-context-menu {
+    display: none;
+    position: fixed;
+    z-index: 100002;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12), 0 8px 10px -6px rgba(0,0,0,0.06);
+    min-width: 190px;
+    padding: 4px 0;
+    font-size: 0.85rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .cr-context-menu.active {
+    display: block;
+  }
+  .cr-ctx-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 12px;
+    color: #334155;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s ease;
+  }
+  .cr-ctx-item:hover {
+    background: #eff6ff;
+    color: #1d4ed8;
+  }
+  .cr-ctx-title-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .cr-ctx-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 4px 0;
+  }
+  /* Submenu for Highlight Colors */
+  .cr-ctx-submenu {
+    display: none;
+    position: absolute;
+    top: -4px;
+    left: 100%;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12);
+    min-width: 150px;
+    padding: 4px 0;
+  }
+  .cr-ctx-has-sub:hover .cr-ctx-submenu {
+    display: block;
+  }
   /* Main Split Layout: Sidebar + Monaco Editor */
   .cr-main-layout {
     display: flex;
@@ -554,6 +612,20 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     background: #1e3a8a;
     color: #93c5fd;
   }
+  .cr-dark .cr-context-menu, .cr-dark .cr-ctx-submenu {
+    background: #0f172a;
+    border-color: #334155;
+  }
+  .cr-dark .cr-ctx-item {
+    color: #cbd5e1;
+  }
+  .cr-dark .cr-ctx-item:hover {
+    background: #1e3a8a;
+    color: #93c5fd;
+  }
+  .cr-dark .cr-ctx-divider {
+    background: #334155;
+  }
   .cr-dark .cr-main-layout {
     border-color: #334155;
     background: #1e1e1e;
@@ -645,8 +717,8 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
       </select>
       <span class="cr-label" style="margin-left: 0.4rem;">Theme:</span>
       <select id="themeSelect" class="cr-select" onchange="onThemeChange()">
-        <option value="vs">vs (Light)</option>
-        <option value="vs-dark">vs-dark (Dark)</option>
+        <option value="vs">Light</option>
+        <option value="vs-dark">Dark</option>
       </select>
     </div>
     <div class="cr-toolbar-group">
@@ -656,7 +728,6 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
       <button class="cr-btn" onclick="downloadConfig()">💾 Download</button>
     </div>
   </div>
-
   <!-- Main Split View Layout -->
   <div class="cr-main-layout">
     <!-- Config Index Sidebar (Default Visible) -->
@@ -691,6 +762,36 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     <div class="cr-modal-body" id="crVpnModalBody">
       <!-- Dynamically filled reference details -->
     </div>
+  </div>
+</div>
+
+<!-- Custom Context Menu for Selection Highlight & Search -->
+<div id="crContextMenu" class="cr-context-menu">
+  <div class="cr-ctx-item" onclick="execCopyFromCtx()">
+    <span>📋 Copy Text</span>
+  </div>
+  <div class="cr-ctx-item" id="crCtxSearchItem" onclick="execSearchFromCtx()">
+    <span>🔍 Search Text</span>
+  </div>
+  <div class="cr-ctx-divider"></div>
+  <div class="cr-ctx-item cr-ctx-has-sub">
+    <div class="cr-ctx-title-group">
+      <span>🎨 Highlight Text</span>
+      <span style="font-size: 0.7rem; color: #64748b;">▶</span>
+    </div>
+    <div class="cr-ctx-submenu">
+      <div class="cr-ctx-item" onclick="applyHighlightFromCtx('cr-hl-yellow')"><span>🟡 Yellow</span></div>
+      <div class="cr-ctx-item" onclick="applyHighlightFromCtx('cr-hl-green')"><span>🟢 Green</span></div>
+      <div class="cr-ctx-item" onclick="applyHighlightFromCtx('cr-hl-cyan')"><span>🩵 Cyan</span></div>
+      <div class="cr-ctx-item" onclick="applyHighlightFromCtx('cr-hl-blue')"><span>🟦 Blue</span></div>
+      <div class="cr-ctx-item" onclick="applyHighlightFromCtx('cr-hl-purple')"><span>🟣 Purple</span></div>
+      <div class="cr-ctx-item" onclick="applyHighlightFromCtx('cr-hl-pink')"><span>🩷 Pink</span></div>
+      <div class="cr-ctx-item" onclick="applyHighlightFromCtx('cr-hl-orange')"><span>🟧 Orange</span></div>
+      <div class="cr-ctx-item" onclick="applyHighlightFromCtx('cr-hl-red')"><span>🔴 Red</span></div>
+    </div>
+  </div>
+  <div class="cr-ctx-item" onclick="clearHighlightFromCtx()">
+    <span>❌ Clear Highlight</span>
   </div>
 </div>
 
@@ -911,6 +1012,7 @@ let interfaceAnalysisMap = new Map();
 let profileAnalysisMap = new Map();
 let showReferenceLinks = false; // Default hidden / OFF!
 let textHighlightMap = new Map(); // textSnippet.toLowerCase() -> colorClass
+let lastSelectedText = '';
 
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
 
@@ -940,10 +1042,11 @@ require(['vs/editor/editor.main'], function() {
     folding: true,
     foldingStrategy: 'auto',
     showFoldingControls: 'always',
-    lineNumbers: 'on'
+    lineNumbers: 'on',
+    contextmenu: false
   });
 
-  registerHighlightActions();
+  setupCustomContextMenu();
 
   // Listen to document changes to update folding index & reference analysis
   editorInstance.onDidChangeModelContent(() => {
@@ -955,17 +1058,19 @@ require(['vs/editor/editor.main'], function() {
     onConfigFindChange();
   });
 
-  // Listen to Esc key to exit full window
+  // Listen to Esc key to exit full window or close context menu
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       const crCont = document.getElementById('crContainer');
       if (crCont && crCont.classList.contains('cr-full-window')) {
         toggleFullWindow(false);
       }
+      const menu = document.getElementById('crContextMenu');
+      if (menu) menu.classList.remove('active');
     }
   });
 
-  // Restore user preferences (Full Window & Sidebar state)
+  // Restore user preferences (Full Window, Sidebar & Theme)
   restoreUserPreferences();
 
   // Initial analysis & index build
@@ -976,69 +1081,115 @@ require(['vs/editor/editor.main'], function() {
   analyzeConfiguration();
 });
 
-function registerHighlightActions() {
-  const colorOptions = [
-    { id: 'yellow', label: '🟡 Yellow Highlight', className: 'cr-hl-yellow' },
-    { id: 'green', label: '🟢 Green Highlight', className: 'cr-hl-green' },
-    { id: 'cyan', label: '🩵 Cyan Highlight', className: 'cr-hl-cyan' },
-    { id: 'blue', label: '🟦 Blue Highlight', className: 'cr-hl-blue' },
-    { id: 'purple', label: '🟣 Purple Highlight', className: 'cr-hl-purple' },
-    { id: 'pink', label: '🩷 Pink Highlight', className: 'cr-hl-pink' },
-    { id: 'orange', label: '🟧 Orange Highlight', className: 'cr-hl-orange' },
-    { id: 'red', label: '🔴 Red Highlight', className: 'cr-hl-red' }
-  ];
+function setupCustomContextMenu() {
+  const container = document.getElementById('monacoContainer');
+  if (!container) return;
 
-  colorOptions.forEach(opt => {
-    editorInstance.addAction({
-      id: `cr-highlight-${opt.id}`,
-      label: `🎨 Highlight Text: ${opt.label}`,
-      contextMenuGroupId: '1_cr_highlight',
-      contextMenuOrder: 1,
-      run: function(ed) {
-        const selection = ed.getSelection();
-        const model = ed.getModel();
-        if (!selection || !model) return;
+  container.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-        let selectedText = model.getValueInRange(selection).trim();
-        if (!selectedText) {
-          const position = ed.getPosition();
-          const word = model.getWordAtPosition(position);
-          if (word) selectedText = word.word;
-        }
+    if (!editorInstance) return;
+    const selection = editorInstance.getSelection();
+    const model = editorInstance.getModel();
+    if (!model) return;
 
-        if (selectedText) {
-          textHighlightMap.set(selectedText.toLowerCase(), opt.className);
-          analyzeConfiguration();
-        }
-      }
-    });
-  });
+    let selectedText = '';
+    if (selection && !selection.isEmpty()) {
+      selectedText = model.getValueInRange(selection).trim();
+    }
 
-  editorInstance.addAction({
-    id: 'cr-highlight-clear',
-    label: '❌ Clear Text Highlight',
-    contextMenuGroupId: '1_cr_highlight',
-    contextMenuOrder: 2,
-    run: function(ed) {
-      const selection = ed.getSelection();
-      const model = ed.getModel();
-      if (!selection || !model) return;
-
-      let selectedText = model.getValueInRange(selection).trim();
-      if (!selectedText) {
-        const position = ed.getPosition();
+    if (!selectedText) {
+      const position = editorInstance.getPosition();
+      if (position) {
         const word = model.getWordAtPosition(position);
         if (word) selectedText = word.word;
       }
+    }
 
-      if (selectedText) {
-        textHighlightMap.delete(selectedText.toLowerCase());
+    lastSelectedText = selectedText || '';
+
+    const searchItem = document.getElementById('crCtxSearchItem');
+    if (searchItem) {
+      if (lastSelectedText) {
+        const displayLabel = lastSelectedText.length > 14 ? lastSelectedText.substring(0, 14) + '...' : lastSelectedText;
+        searchItem.innerHTML = `<span>🔍 Search "${escapeHtml(displayLabel)}"</span>`;
+        searchItem.style.display = 'flex';
       } else {
-        textHighlightMap.clear();
+        searchItem.style.display = 'none';
       }
-      analyzeConfiguration();
+    }
+
+    const menu = document.getElementById('crContextMenu');
+    if (menu) {
+      let top = e.clientY;
+      let left = e.clientX;
+
+      const winWidth = window.innerWidth;
+      const winHeight = window.innerHeight;
+      if (left + 220 > winWidth) left = winWidth - 230;
+      if (top + 260 > winHeight) top = winHeight - 270;
+
+      menu.style.top = top + 'px';
+      menu.style.left = left + 'px';
+      menu.classList.add('active');
     }
   });
+
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('crContextMenu');
+    if (menu && !menu.contains(e.target)) {
+      menu.classList.remove('active');
+    }
+  });
+}
+
+function execCopyFromCtx() {
+  const menu = document.getElementById('crContextMenu');
+  if (menu) menu.classList.remove('active');
+
+  if (lastSelectedText) {
+    navigator.clipboard.writeText(lastSelectedText);
+  } else if (editorInstance) {
+    const model = editorInstance.getModel();
+    if (model) navigator.clipboard.writeText(model.getValue());
+  }
+}
+
+function execSearchFromCtx() {
+  const menu = document.getElementById('crContextMenu');
+  if (menu) menu.classList.remove('active');
+
+  if (lastSelectedText) {
+    const findInput = document.getElementById('configFindInput');
+    if (findInput) {
+      findInput.value = lastSelectedText;
+      onConfigFindChange();
+      findInput.focus();
+    }
+  }
+}
+
+function applyHighlightFromCtx(colorClass) {
+  const menu = document.getElementById('crContextMenu');
+  if (menu) menu.classList.remove('active');
+
+  if (lastSelectedText) {
+    textHighlightMap.set(lastSelectedText.toLowerCase(), colorClass);
+    analyzeConfiguration();
+  }
+}
+
+function clearHighlightFromCtx() {
+  const menu = document.getElementById('crContextMenu');
+  if (menu) menu.classList.remove('active');
+
+  if (lastSelectedText) {
+    textHighlightMap.delete(lastSelectedText.toLowerCase());
+  } else {
+    textHighlightMap.clear();
+  }
+  analyzeConfiguration();
 }
 
 function toggleReferenceLinks(forceState) {
@@ -1156,6 +1307,15 @@ function restoreUserPreferences() {
     const toggleBtn = document.getElementById('crSidebarToggleBtn');
     if (sidebar) sidebar.classList.add('collapsed');
     if (toggleBtn) toggleBtn.innerText = '📑 Show Index';
+  }
+
+  const savedTheme = localStorage.getItem('configReader_theme');
+  if (savedTheme) {
+    const themeSelect = document.getElementById('themeSelect');
+    if (themeSelect) {
+      themeSelect.value = savedTheme;
+      onThemeChange();
+    }
   }
 }
 
@@ -2237,7 +2397,9 @@ function onVendorChange() {
 function onThemeChange() {
   const theme = document.getElementById('themeSelect').value;
   if (!editorInstance) return;
+
   monaco.editor.setTheme(theme);
+  localStorage.setItem('configReader_theme', theme);
 
   const container = document.getElementById('crContainer');
   if (container) {
