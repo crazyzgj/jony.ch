@@ -176,6 +176,20 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     background: #1d4ed8;
     color: #ffffff;
   }
+  .cr-btn-active {
+    background: #dbeafe !important;
+    color: #1d4ed8 !important;
+    border-color: #93c5fd !important;
+  }
+  /* 8 Custom Highlight Background Colors */
+  .cr-hl-yellow { background-color: rgba(254, 240, 138, 0.7) !important; border-radius: 2px; }
+  .cr-hl-green  { background-color: rgba(187, 247, 208, 0.7) !important; border-radius: 2px; }
+  .cr-hl-cyan   { background-color: rgba(165, 243, 252, 0.7) !important; border-radius: 2px; }
+  .cr-hl-blue   { background-color: rgba(191, 219, 254, 0.7) !important; border-radius: 2px; }
+  .cr-hl-purple { background-color: rgba(233, 213, 255, 0.7) !important; border-radius: 2px; }
+  .cr-hl-pink   { background-color: rgba(251, 207, 232, 0.7) !important; border-radius: 2px; }
+  .cr-hl-orange { background-color: rgba(254, 215, 170, 0.7) !important; border-radius: 2px; }
+  .cr-hl-red    { background-color: rgba(254, 202, 202, 0.7) !important; border-radius: 2px; }
   /* Main Split Layout: Sidebar + Monaco Editor */
   .cr-main-layout {
     display: flex;
@@ -510,6 +524,19 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
   .cr-dark .cr-btn:hover {
     background: #1e293b;
   }
+  .cr-dark .cr-btn-active {
+    background: #1e3a8a !important;
+    color: #93c5fd !important;
+    border-color: #3b82f6 !important;
+  }
+  .cr-dark .cr-hl-yellow { background-color: rgba(161, 98, 7, 0.7) !important; color: #fef08a !important; }
+  .cr-dark .cr-hl-green  { background-color: rgba(21, 128, 61, 0.7) !important; color: #bbf7d0 !important; }
+  .cr-dark .cr-hl-cyan   { background-color: rgba(14, 116, 144, 0.7) !important; color: #a5f3fc !important; }
+  .cr-dark .cr-hl-blue   { background-color: rgba(29, 78, 216, 0.7) !important; color: #bfdbfe !important; }
+  .cr-dark .cr-hl-purple { background-color: rgba(126, 34, 206, 0.7) !important; color: #e9d5ff !important; }
+  .cr-dark .cr-hl-pink   { background-color: rgba(190, 24, 93, 0.7) !important; color: #fbcfe8 !important; }
+  .cr-dark .cr-hl-orange { background-color: rgba(194, 65, 12, 0.7) !important; color: #fed7aa !important; }
+  .cr-dark .cr-hl-red    { background-color: rgba(185, 28, 28, 0.7) !important; color: #fecaca !important; }
   .cr-dark .cr-search-input {
     background: #0f172a;
     color: #f1f5f9;
@@ -603,6 +630,7 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
     <div class="cr-toolbar-group">
       <button class="cr-btn" id="crSidebarToggleBtn" onclick="toggleSidebar()">📑 Hide Index</button>
       <button class="cr-btn" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
+      <button class="cr-btn" id="refToggleBtn" onclick="toggleReferenceLinks()">🔗 Show References</button>
       <div class="cr-find-container">
         <span class="cr-label" style="margin-left: 0.4rem;">Find:</span>
         <input type="text" id="configFindInput" class="cr-search-input" placeholder="🔍 Find in config..." oninput="onConfigFindChange()" onfocus="onConfigFindFocus()" onblur="onConfigFindBlur()">
@@ -670,9 +698,8 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
 
 <script>
-// Huawei sample configuration including user's specific Eth-Trunk, WLAN AC, AAA & Profile examples
-const HUAWEI_SAMPLE = `
-[V300R024C00SPC100]
+// Exact Huawei default sample configuration requested by user
+const HUAWEI_SAMPLE = `[V300R024C00SPC100]
 #
  drop illegal-mac alarm
 #
@@ -725,7 +752,7 @@ firewall zone Local
 mi-server
 #
 interface Vlanif1
- ip address 10.155.154.1 255.255.255.0
+ ip address 10.1.1.1 255.255.255.0
 #
 interface GigabitEthernet0/0/0
 #
@@ -882,6 +909,8 @@ let allIndexItems = [];
 let vpnAnalysisMap = new Map();
 let interfaceAnalysisMap = new Map();
 let profileAnalysisMap = new Map();
+let showReferenceLinks = false; // Default hidden / OFF!
+let textHighlightMap = new Map(); // textSnippet.toLowerCase() -> colorClass
 
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
 
@@ -914,6 +943,8 @@ require(['vs/editor/editor.main'], function() {
     lineNumbers: 'on'
   });
 
+  registerHighlightActions();
+
   // Listen to document changes to update folding index & reference analysis
   editorInstance.onDidChangeModelContent(() => {
     analyzeVpnInstances();
@@ -944,6 +975,91 @@ require(['vs/editor/editor.main'], function() {
   updateFoldingIndex();
   analyzeConfiguration();
 });
+
+function registerHighlightActions() {
+  const colorOptions = [
+    { id: 'yellow', label: '🟡 Yellow Highlight', className: 'cr-hl-yellow' },
+    { id: 'green', label: '🟢 Green Highlight', className: 'cr-hl-green' },
+    { id: 'cyan', label: '🩵 Cyan Highlight', className: 'cr-hl-cyan' },
+    { id: 'blue', label: '🟦 Blue Highlight', className: 'cr-hl-blue' },
+    { id: 'purple', label: '🟣 Purple Highlight', className: 'cr-hl-purple' },
+    { id: 'pink', label: '🩷 Pink Highlight', className: 'cr-hl-pink' },
+    { id: 'orange', label: '🟧 Orange Highlight', className: 'cr-hl-orange' },
+    { id: 'red', label: '🔴 Red Highlight', className: 'cr-hl-red' }
+  ];
+
+  colorOptions.forEach(opt => {
+    editorInstance.addAction({
+      id: `cr-highlight-${opt.id}`,
+      label: `🎨 Highlight Text: ${opt.label}`,
+      contextMenuGroupId: '1_cr_highlight',
+      contextMenuOrder: 1,
+      run: function(ed) {
+        const selection = ed.getSelection();
+        const model = ed.getModel();
+        if (!selection || !model) return;
+
+        let selectedText = model.getValueInRange(selection).trim();
+        if (!selectedText) {
+          const position = ed.getPosition();
+          const word = model.getWordAtPosition(position);
+          if (word) selectedText = word.word;
+        }
+
+        if (selectedText) {
+          textHighlightMap.set(selectedText.toLowerCase(), opt.className);
+          analyzeConfiguration();
+        }
+      }
+    });
+  });
+
+  editorInstance.addAction({
+    id: 'cr-highlight-clear',
+    label: '❌ Clear Text Highlight',
+    contextMenuGroupId: '1_cr_highlight',
+    contextMenuOrder: 2,
+    run: function(ed) {
+      const selection = ed.getSelection();
+      const model = ed.getModel();
+      if (!selection || !model) return;
+
+      let selectedText = model.getValueInRange(selection).trim();
+      if (!selectedText) {
+        const position = ed.getPosition();
+        const word = model.getWordAtPosition(position);
+        if (word) selectedText = word.word;
+      }
+
+      if (selectedText) {
+        textHighlightMap.delete(selectedText.toLowerCase());
+      } else {
+        textHighlightMap.clear();
+      }
+      analyzeConfiguration();
+    }
+  });
+}
+
+function toggleReferenceLinks(forceState) {
+  if (typeof forceState === 'boolean') {
+    showReferenceLinks = forceState;
+  } else {
+    showReferenceLinks = !showReferenceLinks;
+  }
+
+  const btn = document.getElementById('refToggleBtn');
+  if (btn) {
+    btn.innerText = showReferenceLinks ? '🔗 Hide References' : '🔗 Show References';
+    if (showReferenceLinks) {
+      btn.classList.add('cr-btn-active');
+    } else {
+      btn.classList.remove('cr-btn-active');
+    }
+  }
+
+  analyzeConfiguration();
+}
 
 function onConfigFindChange() {
   if (!editorInstance) return;
@@ -1555,6 +1671,8 @@ function registerReferenceHoverProviders() {
   languages.forEach(langId => {
     monaco.languages.registerHoverProvider(langId, {
       provideHover: function(model, position) {
+        if (!showReferenceLinks) return null;
+
         const lineText = model.getLineContent(position.lineNumber);
         const col = position.column;
 
@@ -2156,61 +2274,78 @@ function analyzeConfiguration() {
       });
     }
 
-    // VPN Instance dashed underline decoration
-    const vpnRegex = /vpn-instance\s+([a-zA-Z0-9_\-]+)/gi;
-    while ((match = vpnRegex.exec(lineText)) !== null) {
-      newDecorations.push({
-        range: new monaco.Range(lineNum, match.index + 1, lineNum, match.index + 1 + match[0].length),
-        options: {
-          inlineClassName: 'monaco-vpn-underline'
-        }
-      });
-    }
-
-    // Interface dashed underline decoration
-    interfaceAnalysisMap.forEach((ifInfo) => {
-      const escapedName = ifInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      const ifRegex = new RegExp(`(?<![a-zA-Z0-9_./-])${escapedName}(?![a-zA-Z0-9_./-])`, 'gi');
-      let ifMatch;
-      while ((ifMatch = ifRegex.exec(lineText)) !== null) {
+    // Apply User Selected Text Highlights across entire document
+    textHighlightMap.forEach((colorClass, textSnippet) => {
+      const escText = textSnippet.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      const hlRegex = new RegExp(escText, 'gi');
+      let hlMatch;
+      while ((hlMatch = hlRegex.exec(lineText)) !== null) {
         newDecorations.push({
-          range: new monaco.Range(lineNum, ifMatch.index + 1, lineNum, ifMatch.index + 1 + ifMatch[0].length),
+          range: new monaco.Range(lineNum, hlMatch.index + 1, lineNum, hlMatch.index + 1 + hlMatch[0].length),
           options: {
-            inlineClassName: 'monaco-interface-underline'
+            inlineClassName: colorClass
+          }
+        });
+      }
+    });
+
+    if (showReferenceLinks) {
+      // VPN Instance dashed underline decoration
+      const vpnRegex = /vpn-instance\s+([a-zA-Z0-9_\-]+)/gi;
+      while ((match = vpnRegex.exec(lineText)) !== null) {
+        newDecorations.push({
+          range: new monaco.Range(lineNum, match.index + 1, lineNum, match.index + 1 + match[0].length),
+          options: {
+            inlineClassName: 'monaco-vpn-underline'
           }
         });
       }
 
-      if (ifInfo.trunkId) {
-        const ethTrunkRegex = new RegExp(`\\beth-trunk\\s+${ifInfo.trunkId}\\b`, 'gi');
-        let trunkMatch;
-        while ((trunkMatch = ethTrunkRegex.exec(lineText)) !== null) {
+      // Interface dashed underline decoration
+      interfaceAnalysisMap.forEach((ifInfo) => {
+        const escapedName = ifInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const ifRegex = new RegExp(`(?<![a-zA-Z0-9_./-])${escapedName}(?![a-zA-Z0-9_./-])`, 'gi');
+        let ifMatch;
+        while ((ifMatch = ifRegex.exec(lineText)) !== null) {
           newDecorations.push({
-            range: new monaco.Range(lineNum, trunkMatch.index + 1, lineNum, trunkMatch.index + 1 + trunkMatch[0].length),
+            range: new monaco.Range(lineNum, ifMatch.index + 1, lineNum, ifMatch.index + 1 + ifMatch[0].length),
             options: {
               inlineClassName: 'monaco-interface-underline'
             }
           });
         }
-      }
-    });
 
-    // Profile & AAA Scheme dashed underline decoration
-    profileAnalysisMap.forEach((profInfo) => {
-      const escType = profInfo.type.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      const escBaseType = profInfo.baseType.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      const escName = profInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      const profRegex = new RegExp(`\\b(?:${escType}|${escBaseType})\\s+(?:name\\s+|template\\s+)?${escName}\\b`, 'gi');
-      let profMatch;
-      while ((profMatch = profRegex.exec(lineText)) !== null) {
-        newDecorations.push({
-          range: new monaco.Range(lineNum, profMatch.index + 1, lineNum, profMatch.index + 1 + profMatch[0].length),
-          options: {
-            inlineClassName: 'monaco-profile-underline'
+        if (ifInfo.trunkId) {
+          const ethTrunkRegex = new RegExp(`\\beth-trunk\\s+${ifInfo.trunkId}\\b`, 'gi');
+          let trunkMatch;
+          while ((trunkMatch = ethTrunkRegex.exec(lineText)) !== null) {
+            newDecorations.push({
+              range: new monaco.Range(lineNum, trunkMatch.index + 1, lineNum, trunkMatch.index + 1 + trunkMatch[0].length),
+              options: {
+                inlineClassName: 'monaco-interface-underline'
+              }
+            });
           }
-        });
-      }
-    });
+        }
+      });
+
+      // Profile & AAA Scheme dashed underline decoration
+      profileAnalysisMap.forEach((profInfo) => {
+        const escType = profInfo.type.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const escBaseType = profInfo.baseType.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const escName = profInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const profRegex = new RegExp(`\\b(?:${escType}|${escBaseType})\\s+(?:name\\s+|template\\s+)?${escName}\\b`, 'gi');
+        let profMatch;
+        while ((profMatch = profRegex.exec(lineText)) !== null) {
+          newDecorations.push({
+            range: new monaco.Range(lineNum, profMatch.index + 1, lineNum, profMatch.index + 1 + profMatch[0].length),
+            options: {
+              inlineClassName: 'monaco-profile-underline'
+            }
+          });
+        }
+      });
+    }
   });
 
   currentDecorations = editorInstance.deltaDecorations(currentDecorations, newDecorations);
