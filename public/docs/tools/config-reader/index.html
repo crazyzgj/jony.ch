@@ -862,7 +862,7 @@ https://github.com/alex-shpak/hugo-book
 <!-- RequireJS & Monaco Loader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
 <script>
-// Huawei sample configuration including user's specific Eth-Trunk & Profile examples
+// Huawei sample configuration including user's specific Eth-Trunk, WLAN AC & Profile examples
 const HUAWEI_SAMPLE = `[V300R024C00SPC100]
 #
  drop illegal-mac alarm
@@ -881,7 +881,186 @@ interface Eth-Trunk1
  undo port trunk allow-pass vlan 1
  port trunk allow-pass vlan 745 816 893 901 to 902
  mode lacp-static
-`;
+#
+interface 40GE0/0/1
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE0/0/2
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+# --- Example 3: Profiles (authentication-profile, security-profile, vap-profile) ---
+#
+authentication-profile name zephyros2
+ dot1x-access-profile zephyros2
+ access-domain zephyros2 force
+#
+security-profile name coopguest
+ security open
+#
+vap-profile name coopguest
+ forward-mode tunnel
+ service-vlan vlan-pool DMZ-Group
+ ssid-profile coopguest
+ security-profile coopguest
+ authentication-profile zephyros2
+ sac-profile default
+#
+# --- Example 4: WLAN AC Section Profiles ---
+#
+wlan ac
+ traffic-profile name default
+ security-profile name default
+ security-profile name default-wds
+  security wpa2 psk pass-phrase %^%#/6e3Sy(2D<@GzXGU&XXP>@])(3LI"8WL<zDnYWf)%^%# aes
+ ssid-profile name default
+ vap-profile name default
+ wds-profile name default
+ regulatory-domain-profile name default
+ air-scan-profile name default
+ rrm-profile name default
+ radio-2g-profile name default
+ radio-5g-profile name default
+ wids-spoof-profile name default
+ wids-profile name default
+ ap-system-profile name default
+ port-link-profile name default
+ wired-port-profile name default
+ ap-group name default
+#
+# --- Example 5: VPN Instance Creation & Reference Tracking ---
+#
+ip vpn-instance underlay_3
+ ipv4-family
+  route-distinguisher 1020:1020
+  vpn-target 1.20:20 export-extcommunity
+  vpn-target 1.20:20 import-extcommunity
+#
+ip vpn-instance underlay_Sunrise_R1
+ ipv4-family
+  route-distinguisher 1111:1111
+  vpn-target 11:11 export-extcommunity
+  vpn-target 11:11 import-extcommunity
+#
+Interface GE0/0/7
+#
+Interface vlanif10
+ ip address 10.0.0.1 255.255.255.0
+#
+ http secure-server ssl-policy default_policy
+ http secure-server enable
+ http server permit interface GE0/0/7
+#
+dns resolve 
+#
+dhcp enable
+#
+radius-server template default
+#
+pki realm default
+ certificate-check none
+#
+ssl policy default_policy type server
+ pki-realm default
+ version tls1.2 
+ ciphersuite rsa_aes_128_sha256 rsa_aes_256_sha256 ecdhe_rsa_aes128_gcm_sha256 ecdhe_rsa_aes256_gcm_sha384 
+#
+ike proposal default
+ encryption-algorithm aes-256 aes-192 aes-128 
+ dh group14 
+ authentication-algorithm sha2-512 sha2-384 sha2-256 
+ authentication-method pre-share
+ integrity-algorithm hmac-sha2-256 
+ prf hmac-sha2-256 
+#
+free-rule-template name default_free_rule
+#
+portal-access-profile name portal_access_profile
+#
+aaa
+ authentication-scheme default
+  authentication-mode local
+ authentication-scheme radius
+  authentication-mode radius
+ authorization-scheme default
+  authorization-mode local
+ accounting-scheme default
+  accounting-mode none
+ local-aaa-user password policy administrator
+ domain default
+  authentication-scheme default
+  accounting-scheme default
+  radius-server default
+ domain default_admin
+  authentication-scheme default
+  accounting-scheme default
+#
+web
+ set fast-configuration state disable
+#
+firewall zone Local
+#
+mi-server
+#
+interface GE0/0/0
+ ip binding vpn-instance underlay_3
+ ip address 77.73.243.205 255.255.255.248
+ qos lr cir 900000 kbps outbound
+ traffic tm-post-processing enable
+ tcp adjust-mss 1200
+#
+interface GE0/0/3
+#
+interface GE0/0/4
+#
+interface GE0/0/5
+#
+interface GE0/0/6
+#
+interface GE0/0/10
+#
+interface Cellular0/0/0
+#
+interface NULL0
+#
+cellular profile default
+ modem auto-recovery dial action modem-reboot fail-times 128
+ modem auto-recovery icmp-unreachable action modem-reboot
+ modem auto-recovery services-unavailable action modem-reboot test-times 0 interval 3600
+#
+undo icmp name timestamp-request receive
+#
+ snmp-agent trap enable
+#
+fib regularly-refresh disable
+#
+ agile controller host 80.158.50.5 port 10020 vpn-instance underlay_3
+#
+ip route-static vpn-instance underlay_Sunrise_R1 0.0.0.0 0.0.0.0 46.140.188.105
+ip route-static vpn-instance underlay_Sunrise_R1 80.158.50.5 255.255.255.255 GE0/0/10 46.140.188.105 tag 4400 description agile-controller
+ip route-static vpn-instance underlay_Sunrise_R1 90.84.184.170 255.255.255.255 NULL0 preference 1
+#
+user-interface con 0
+ authentication-mode aaa
+user-interface vty 0
+ authentication-mode aaa
+ user privilege level 15
+user-interface vty 1 4
+#
+dot1x-access-profile name dot1x_access_profile
+#
+mac-access-profile name mac_access_profile
+#
+ops
+#
+autostart
+#
+secelog
+#
+ ms-channel 
+#
+return`;
 
 const CISCO_SAMPLE = `! Cisco IOS Gateway Configuration Example
 version 15.6
@@ -1216,11 +1395,44 @@ function registerFoldingProviders() {
   });
 }
 
+function getIndent(lineText) {
+  let count = 0;
+  for (let i = 0; i < lineText.length; i++) {
+    if (lineText[i] === ' ') count += 1;
+    else if (lineText[i] === '\t') count += 4;
+    else break;
+  }
+  return count;
+}
+
+// Section-scoped definition block extraction
 function getDefinitionBlockText(model, startLineNum) {
   const lineCount = model.getLineCount();
   const startLine = model.getLineContent(startLineNum);
-  const blockLines = [startLine];
+  const currentIndent = getIndent(startLine);
+  
+  const blockLines = [];
 
+  // If current line is indented (e.g. child under "wlan ac"), find top parent section header
+  if (currentIndent > 0) {
+    for (let k = startLineNum - 1; k >= 1; k--) {
+      const pText = model.getLineContent(k);
+      const pTrimmed = pText.trim();
+      if (!pTrimmed || pTrimmed === '#' || pTrimmed === '!' || pTrimmed.startsWith('#') || pTrimmed.startsWith('!')) {
+        break;
+      }
+      const pIndent = getIndent(pText);
+      if (pIndent === 0) {
+        blockLines.push(pText);
+        break;
+      }
+    }
+  }
+
+  // Add the definition line itself
+  blockLines.push(startLine);
+
+  // Add any child sub-commands that belong directly to this line (indented further than currentIndent)
   for (let i = startLineNum; i < lineCount; i++) {
     const line = model.getLineContent(i + 1);
     const trimmed = line.trim();
@@ -1229,8 +1441,8 @@ function getDefinitionBlockText(model, startLineNum) {
       break;
     }
 
-    const indent = line.search(/\S/);
-    if (indent === 0 && i !== startLineNum - 1) {
+    const indent = getIndent(line);
+    if (indent <= currentIndent) {
       break;
     }
 
@@ -1368,10 +1580,8 @@ function analyzeInterfaceReferences() {
       if (lineNum !== ifInfo.defLineNum) {
         const escapedName = ifInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
-        // Match 1: Standard interface reference match
         const refRegex = new RegExp(`(?<![a-zA-Z0-9_./-])${escapedName}(?![a-zA-Z0-9_./-])`, 'i');
 
-        // Match 2: If Eth-Trunk<ID>, also match "eth-trunk <ID>" (e.g. eth-trunk 1, NOT eth-trunk 111)
         let ethTrunkMatch = false;
         if (ifInfo.trunkId) {
           const ethTrunkRegex = new RegExp(`\\beth-trunk\\s+${ifInfo.trunkId}\\b`, 'i');
@@ -1540,7 +1750,6 @@ function registerReferenceHoverProviders() {
             }
           }
 
-          // Check if Eth-Trunk member command on line: eth-trunk <ID>
           if (!hoverResult && ifInfo.trunkId) {
             const ethTrunkRegex = new RegExp(`\\beth-trunk\\s+${ifInfo.trunkId}\\b`, 'gi');
             let trunkMatch;
