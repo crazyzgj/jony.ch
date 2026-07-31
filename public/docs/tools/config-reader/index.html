@@ -8,14 +8,14 @@ https://github.com/alex-shpak/hugo-book
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Configuration Reader# Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like authentication-profile name or indented blocks), and use the interactive Config Index sidebar to search sections, inspect VPN Instance, Interface, and Profile References with full definition blocks, and maximize to browser full window with saved state.
+<meta name="description" content="Configuration Reader# Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like authentication-profile name or indented blocks), and use the interactive Config Index sidebar to search sections, inspect VPN Instance, Interface, AAA Scheme, and Profile References with full definition blocks, and maximize to browser full window with saved state.
 📑 Hide Index ⛶ Full Window Language: Huawei VRP Cisco IOS / NX-OS Juniper JunOS Arista EOS Theme: vs (Light) vs-dark (Dark) ↔️ Fold All ↕️ Unfold All 📋 Copy 💾 Download 📑 Config Index 0 🔒 Reference Details × ">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
 <meta name="color-scheme" content="light dark"><meta property="og:url" content="http://192.168.1.220:1313/docs/tools/config-reader/">
 	<meta property="og:site_name" content="Jonys-Book">
 	<meta property="og:title" content="Configuration Reader">
-	<meta property="og:description" content="Configuration Reader# Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like authentication-profile name or indented blocks), and use the interactive Config Index sidebar to search sections, inspect VPN Instance, Interface, and Profile References with full definition blocks, and maximize to browser full window with saved state.
+	<meta property="og:description" content="Configuration Reader# Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like authentication-profile name or indented blocks), and use the interactive Config Index sidebar to search sections, inspect VPN Instance, Interface, AAA Scheme, and Profile References with full definition blocks, and maximize to browser full window with saved state.
 📑 Hide Index ⛶ Full Window Language: Huawei VRP Cisco IOS / NX-OS Juniper JunOS Arista EOS Theme: vs (Light) vs-dark (Dark) ↔️ Fold All ↕️ Unfold All 📋 Copy 💾 Download 📑 Config Index 0 🔒 Reference Details ×">
 	<meta property="og:locale" content="en_us">
 	<meta property="og:type" content="article">
@@ -23,9 +23,9 @@ https://github.com/alex-shpak/hugo-book
 
 
 	<meta itemprop="name" content="Configuration Reader">
-	<meta itemprop="description" content="Configuration Reader# Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like authentication-profile name or indented blocks), and use the interactive Config Index sidebar to search sections, inspect VPN Instance, Interface, and Profile References with full definition blocks, and maximize to browser full window with saved state.
+	<meta itemprop="description" content="Configuration Reader# Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like authentication-profile name or indented blocks), and use the interactive Config Index sidebar to search sections, inspect VPN Instance, Interface, AAA Scheme, and Profile References with full definition blocks, and maximize to browser full window with saved state.
 📑 Hide Index ⛶ Full Window Language: Huawei VRP Cisco IOS / NX-OS Juniper JunOS Arista EOS Theme: vs (Light) vs-dark (Dark) ↔️ Fold All ↕️ Unfold All 📋 Copy 💾 Download 📑 Config Index 0 🔒 Reference Details ×">
-	<meta itemprop="wordCount" content="105">
+	<meta itemprop="wordCount" content="107">
 
 <title>Configuration Reader • Jonys-Book</title>
 <link rel="icon" href="/logo.svg" >
@@ -304,7 +304,7 @@ https://github.com/alex-shpak/hugo-book
       
       
   <article class="markdown book-article"><h1 id="configuration-reader">Configuration Reader<a class="anchor" href="#configuration-reader">#</a></h1>
-<p>Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like <code>authentication-profile name</code> or indented blocks), and use the interactive <strong>Config Index</strong> sidebar to search sections, inspect <strong>VPN Instance</strong>, <strong>Interface</strong>, and <strong>Profile References</strong> with full definition blocks, and maximize to browser full window with saved state.</p>
+<p>Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like <code>authentication-profile name</code> or indented blocks), and use the interactive <strong>Config Index</strong> sidebar to search sections, inspect <strong>VPN Instance</strong>, <strong>Interface</strong>, <strong>AAA Scheme</strong>, and <strong>Profile References</strong> with full definition blocks, and maximize to browser full window with saved state.</p>
 <style>
   .cr-container {
     margin-top: 1rem;
@@ -862,117 +862,30 @@ https://github.com/alex-shpak/hugo-book
 <!-- RequireJS & Monaco Loader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
 <script>
-// Huawei sample configuration including user's specific Eth-Trunk, WLAN AC & Profile examples
-const HUAWEI_SAMPLE = `[V300R024C00SPC100]
+// Huawei sample configuration including user's specific Eth-Trunk, WLAN AC, AAA & Profile examples
+const HUAWEI_SAMPLE = `
+[V300R024C00SPC100]
 #
  drop illegal-mac alarm
 #
 ipv6
 #
-# --- Example 1: 2-Word Prefix Folding ---
-#
-ip route-static vpn-instance underlay_1 80.158.50.5 255.255.255.255 GE0/0/8 10.0.0.1 tag 4400 description agile-controller
-ip route-static vpn-instance underlay_3 80.158.50.5 255.255.255.255 GE0/0/9 10.0.0.2 tag 4400 description agile-controller
-#
-# --- Example 2: Eth-Trunk & Member Interfaces ---
-#
-interface Eth-Trunk1
- port link-type trunk
- undo port trunk allow-pass vlan 1
- port trunk allow-pass vlan 745 816 893 901 to 902
- mode lacp-static
-#
-interface 40GE0/0/1
- eth-trunk 1
- device transceiver 40GBASE-FIBER
-#
-interface 40GE0/0/2
- eth-trunk 1
- device transceiver 40GBASE-FIBER
-#
-# --- Example 3: Profiles (authentication-profile, security-profile, vap-profile) ---
-#
-authentication-profile name zephyros2
- dot1x-access-profile zephyros2
- access-domain zephyros2 force
-#
-security-profile name coopguest
- security open
-#
-vap-profile name coopguest
- forward-mode tunnel
- service-vlan vlan-pool DMZ-Group
- ssid-profile coopguest
- security-profile coopguest
- authentication-profile zephyros2
- sac-profile default
-#
-# --- Example 4: WLAN AC Section Profiles ---
-#
-wlan ac
- traffic-profile name default
- security-profile name default
- security-profile name default-wds
-  security wpa2 psk pass-phrase %^%#/6e3Sy(2D<@GzXGU&XXP>@])(3LI"8WL<zDnYWf)%^%# aes
- ssid-profile name default
- vap-profile name default
- wds-profile name default
- regulatory-domain-profile name default
- air-scan-profile name default
- rrm-profile name default
- radio-2g-profile name default
- radio-5g-profile name default
- wids-spoof-profile name default
- wids-profile name default
- ap-system-profile name default
- port-link-profile name default
- wired-port-profile name default
- ap-group name default
-#
-# --- Example 5: VPN Instance Creation & Reference Tracking ---
-#
-ip vpn-instance underlay_3
- ipv4-family
-  route-distinguisher 1020:1020
-  vpn-target 1.20:20 export-extcommunity
-  vpn-target 1.20:20 import-extcommunity
-#
-ip vpn-instance underlay_Sunrise_R1
- ipv4-family
-  route-distinguisher 1111:1111
-  vpn-target 11:11 export-extcommunity
-  vpn-target 11:11 import-extcommunity
-#
-Interface GE0/0/7
-#
-Interface vlanif10
- ip address 10.0.0.1 255.255.255.0
-#
- http secure-server ssl-policy default_policy
- http secure-server enable
- http server permit interface GE0/0/7
+authentication-profile name default_authen_profile
 #
 dns resolve 
 #
 dhcp enable
 #
+ip vpn-instance vpn1
+ ipv4-family
+  route-distinguisher 1111:1111
+  vpn-target 11:11 export-extcommunity
+  vpn-target 11:11 import-extcommunity
+#
 radius-server template default
 #
 pki realm default
  certificate-check none
-#
-ssl policy default_policy type server
- pki-realm default
- version tls1.2 
- ciphersuite rsa_aes_128_sha256 rsa_aes_256_sha256 ecdhe_rsa_aes128_gcm_sha256 ecdhe_rsa_aes256_gcm_sha384 
-#
-ike proposal default
- encryption-algorithm aes-256 aes-192 aes-128 
- dh group14 
- authentication-algorithm sha2-512 sha2-384 sha2-256 
- authentication-method pre-share
- integrity-algorithm hmac-sha2-256 
- prf hmac-sha2-256 
 #
 free-rule-template name default_free_rule
 #
@@ -1003,22 +916,32 @@ firewall zone Local
 #
 mi-server
 #
-interface GE0/0/0
- ip binding vpn-instance underlay_3
- ip address 77.73.243.205 255.255.255.248
- qos lr cir 900000 kbps outbound
- traffic tm-post-processing enable
- tcp adjust-mss 1200
+interface Vlanif1
+ ip address 10.155.154.1 255.255.255.0
 #
-interface GE0/0/3
+interface GigabitEthernet0/0/0
 #
-interface GE0/0/4
+interface GigabitEthernet0/0/1
 #
-interface GE0/0/5
+interface GigabitEthernet0/0/2
 #
-interface GE0/0/6
+interface GigabitEthernet0/0/3
 #
-interface GE0/0/10
+interface GigabitEthernet0/0/4
+#
+interface GigabitEthernet0/0/5
+#
+interface GigabitEthernet0/0/6
+#
+interface GigabitEthernet0/0/7
+#
+interface GigabitEthernet0/0/8
+#
+interface GigabitEthernet0/0/9
+ ip binding vpn-instance vpn1
+ ip address dhcp-alloc
+#
+interface GigabitEthernet0/0/10
 #
 interface Cellular0/0/0
 #
@@ -1033,13 +956,15 @@ undo icmp name timestamp-request receive
 #
  snmp-agent trap enable
 #
+ http secure-server ssl-policy default_policy
+ http secure-server enable
+ http server permit interface GigabitEthernet0/0/0
+#
+ip route-static vpn-instance vpn1 80.158.50.5 255.255.255.255 GigabitEthernet0/0/9 dhcp tag 4400 description agile-controller
+#
 fib regularly-refresh disable
 #
- agile controller host 80.158.50.5 port 10020 vpn-instance underlay_3
-#
-ip route-static vpn-instance underlay_Sunrise_R1 0.0.0.0 0.0.0.0 46.140.188.105
-ip route-static vpn-instance underlay_Sunrise_R1 80.158.50.5 255.255.255.255 GE0/0/10 46.140.188.105 tag 4400 description agile-controller
-ip route-static vpn-instance underlay_Sunrise_R1 90.84.184.170 255.255.255.255 NULL0 preference 1
+ agile controller host 80.158.50.5 port 10020 vpn-instance vpn1
 #
 user-interface con 0
  authentication-mode aaa
@@ -1047,6 +972,26 @@ user-interface vty 0
  authentication-mode aaa
  user privilege level 15
 user-interface vty 1 4
+#
+wlan ac
+ traffic-profile name default
+ security-profile name default
+ security-profile name default-wds
+  security wpa2 psk pass-phrase ***** aes
+ ssid-profile name default
+ vap-profile name default
+ wds-profile name default
+ regulatory-domain-profile name default
+ air-scan-profile name default
+ rrm-profile name default
+ radio-2g-profile name default
+ radio-5g-profile name default
+ wids-spoof-profile name default
+ wids-profile name default
+ ap-system-profile name default
+ port-link-profile name default
+ wired-port-profile name default
+ ap-group name default
 #
 dot1x-access-profile name dot1x_access_profile
 #
@@ -1059,6 +1004,7 @@ autostart
 secelog
 #
  ms-channel 
+
 #
 return`;
 
@@ -1227,7 +1173,8 @@ function registerLanguages() {
       'ssl', 'policy', 'ike', 'proposal', 'firewall', 'zone', 'snmp-agent', 'user-interface',
       'cellular', 'profile', 'undo', 'return', 'quit', 'ipv6', 'dns', 'pki', 'realm',
       'portal-access-profile', 'free-rule-template', 'ops', 'autostart', 'secelog', 'agile',
-      'controller', 'fib', 'enable', 'disable', 'permit', 'description', 'bind', 'binding', 'eth-trunk'
+      'controller', 'fib', 'enable', 'disable', 'permit', 'description', 'bind', 'binding', 'eth-trunk',
+      'authentication-scheme', 'authorization-scheme', 'accounting-scheme', 'domain', 'radius-server'
     ],
     tokenizer: {
       root: [
@@ -1413,7 +1360,7 @@ function getDefinitionBlockText(model, startLineNum) {
   
   const blockLines = [];
 
-  // If current line is indented (e.g. child under "wlan ac"), find top parent section header
+  // If current line is indented (e.g. child under "wlan ac" or "aaa"), find top parent section header
   if (currentIndent > 0) {
     for (let k = startLineNum - 1; k >= 1; k--) {
       const pText = model.getLineContent(k);
@@ -1603,7 +1550,7 @@ function analyzeInterfaceReferences() {
   }
 }
 
-// Generic Profile Analyzer: "<profile-type> name <profile-name>" & references
+// Generic Profile & AAA Scheme Analyzer
 function analyzeProfiles() {
   profileAnalysisMap.clear();
   if (!editorInstance) return;
@@ -1631,23 +1578,59 @@ function analyzeProfiles() {
     return 'Global Configuration';
   }
 
-  // Profile Definition Regex: "<profile-type> name <profile-name>" or "radius-server template <name>"
-  const profDefRegex = /^\s*([a-zA-Z0-9_\-]+(?:\s+template|\s+profile)?)\s+name\s+([a-zA-Z0-9_\-]+)/i;
-  for (let i = 0; i < lineCount; i++) {
-    const match = profDefRegex.exec(lines[i]);
-    if (match) {
-      const profType = match[1].trim();
-      const profName = match[2].trim();
-      const key = `${profType.toLowerCase()}:${profName.toLowerCase()}`;
+  // Profile Definition Pattern 1: "<profile-type> name <profile-name>" or "<type> template <name>"
+  const profDefRegex1 = /^\s*([a-zA-Z0-9_\-]+(?:\s+template|\s+profile)?)\s+name\s+([a-zA-Z0-9_\-]+)/i;
+  const profDefRegex2 = /^\s*([a-zA-Z0-9_\-]+)\s+template\s+([a-zA-Z0-9_\-]+)/i;
+  
+  // AAA Level-1 Definition Pattern: 1 space indent under aaa (e.g. " authentication-scheme default", " domain default")
+  const aaaDefRegex = /^ ([a-zA-Z0-9_\-]+(?:-scheme|-user|domain))\s+([a-zA-Z0-9_\-]+)/i;
 
+  let inAaaSection = false;
+
+  for (let i = 0; i < lineCount; i++) {
+    const lineText = lines[i];
+    const trimmed = lineText.trim();
+
+    if (trimmed === 'aaa') {
+      inAaaSection = true;
+      continue;
+    } else if (trimmed === '#' || trimmed === '!' || (trimmed && lineText.search(/\S/) === 0)) {
+      if (trimmed !== 'aaa') inAaaSection = false;
+    }
+
+    let profType = null;
+    let profName = null;
+    let baseType = null;
+
+    let match1 = profDefRegex1.exec(lineText);
+    let match2 = profDefRegex2.exec(lineText);
+    let matchAaa = inAaaSection ? aaaDefRegex.exec(lineText) : null;
+
+    if (match1) {
+      profType = match1[1].trim();
+      profName = match1[2].trim();
+      baseType = profType.replace(/\s+template$/i, '');
+    } else if (match2) {
+      profType = match2[1].trim() + ' template';
+      profName = match2[2].trim();
+      baseType = match2[1].trim();
+    } else if (matchAaa) {
+      profType = matchAaa[1].trim();
+      profName = matchAaa[2].trim();
+      baseType = profType;
+    }
+
+    if (profType && profName) {
+      const key = `${profType.toLowerCase()}:${profName.toLowerCase()}`;
       if (!profileAnalysisMap.has(key)) {
         const defLineNum = i + 1;
         const defBlockText = getDefinitionBlockText(model, defLineNum);
         profileAnalysisMap.set(key, {
           type: profType,
+          baseType: baseType,
           name: profName,
           defLineNum: defLineNum,
-          defText: lines[i].trim(),
+          defText: lineText.trim(),
           defBlockText: defBlockText,
           references: []
         });
@@ -1662,10 +1645,11 @@ function analyzeProfiles() {
     profileAnalysisMap.forEach((profInfo) => {
       if (lineNum !== profInfo.defLineNum) {
         const escType = profInfo.type.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const escBaseType = profInfo.baseType.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
         const escName = profInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
-        // Usage pattern: "<profile-type> <profile-name>" OR "<profile-type> name <profile-name>"
-        const refRegex = new RegExp(`\\b${escType}\\s+(?:name\\s+)?${escName}\\b`, 'i');
+        // Usage pattern: "<type> <name>" OR "<baseType> <name>" OR "<type> name <name>" OR "<type> template <name>"
+        const refRegex = new RegExp(`\\b(?:${escType}|${escBaseType})\\s+(?:name\\s+|template\\s+)?${escName}\\b`, 'i');
         if (refRegex.test(lineText)) {
           const sectionHeader = getSectionHeader(i);
           profInfo.references.push({
@@ -1767,13 +1751,14 @@ function registerReferenceHoverProviders() {
 
         if (hoverResult) return hoverResult;
 
-        // 3. Profile Reference Hover
+        // 3. Profile & AAA Scheme Reference Hover
         profileAnalysisMap.forEach((profInfo) => {
           if (hoverResult) return;
 
           const escType = profInfo.type.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          const escBaseType = profInfo.baseType.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
           const escName = profInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-          const profRegex = new RegExp(`\\b${escType}\\s+(?:name\\s+)?${escName}\\b`, 'gi');
+          const profRegex = new RegExp(`\\b(?:${escType}|${escBaseType})\\s+(?:name\\s+|template\\s+)?${escName}\\b`, 'gi');
           let profMatch;
           while ((profMatch = profRegex.exec(lineText)) !== null) {
             const startCol = profMatch.index + 1;
@@ -1783,7 +1768,7 @@ function registerReferenceHoverProviders() {
               const refCount = profInfo.references.length;
               const contents = [];
 
-              contents.push({ value: `**🛡️ Profile:** \`${escapeHoverText(profInfo.type)} ${escapeHoverText(profInfo.name)}\` (Referenced **${refCount}** times)` });
+              contents.push({ value: `**🛡️ Profile / AAA Scheme:** \`${escapeHoverText(profInfo.type)} ${escapeHoverText(profInfo.name)}\` (Referenced **${refCount}** times)` });
 
               contents.push({
                 value: `[**★ Definition Block (Line ${profInfo.defLineNum}):**](command:configReader.jumpToLine?${profInfo.defLineNum})\n\`\`\`\n${escapeHoverText(profInfo.defBlockText)}\n\`\`\``,
@@ -1992,11 +1977,26 @@ function updateFoldingIndex() {
       }
     }
 
-    // Check Profile
-    const profMatch = /^\s*([a-zA-Z0-9_\-]+(?:\s+template|\s+profile)?)\s+name\s+([a-zA-Z0-9_\-]+)/i.exec(lineText);
-    if (profMatch) {
-      const profType = profMatch[1].trim();
-      const profName = profMatch[2].trim();
+    // Check Profile / AAA Scheme
+    const profMatch1 = /^\s*([a-zA-Z0-9_\-]+(?:\s+template|\s+profile)?)\s+name\s+([a-zA-Z0-9_\-]+)/i.exec(lineText);
+    const profMatch2 = /^\s*([a-zA-Z0-9_\-]+)\s+template\s+([a-zA-Z0-9_\-]+)/i.exec(lineText);
+    const aaaMatch = /^ ([a-zA-Z0-9_\-]+(?:-scheme|-user|domain))\s+([a-zA-Z0-9_\-]+)/i.exec(lineText);
+
+    let profType = null;
+    let profName = null;
+
+    if (profMatch1) {
+      profType = profMatch1[1].trim();
+      profName = profMatch1[2].trim();
+    } else if (profMatch2) {
+      profType = profMatch2[1].trim() + ' template';
+      profName = profMatch2[2].trim();
+    } else if (aaaMatch) {
+      profType = aaaMatch[1].trim();
+      profName = aaaMatch[2].trim();
+    }
+
+    if (profType && profName) {
       const key = `${profType.toLowerCase()}:${profName.toLowerCase()}`;
       const profInfo = profileAnalysisMap.get(key);
       if (profInfo) {
@@ -2016,7 +2016,7 @@ function getSectionIcon(title) {
   const t = title.toLowerCase();
   if (t.includes('interface') || t.includes('vlanif') || t.includes('gigabitethernet')) return '🔌';
   if (t.includes('route') || t.includes('bgp') || t.includes('ospf') || t.includes('vpn')) return '🌐';
-  if (t.includes('authen') || t.includes('user') || t.includes('aaa') || t.includes('line')) return '👤';
+  if (t.includes('authen') || t.includes('user') || t.includes('aaa') || t.includes('line') || t.includes('domain')) return '👤';
   if (t.includes('ssl') || t.includes('pki') || t.includes('ike') || t.includes('firewall') || t.includes('security')) return '🔒';
   if (t.includes('dhcp') || t.includes('dns') || t.includes('http')) return '⚡';
   if (t.includes('wlan') || t.includes('cellular')) return '📡';
@@ -2078,7 +2078,7 @@ function openRefModal(type, refName, event) {
   } else if (type === 'profile') {
     refInfo = profileAnalysisMap.get(refName.toLowerCase());
     icon = '🛡️';
-    titlePrefix = 'Profile';
+    titlePrefix = 'Profile / AAA Scheme';
   } else {
     refInfo = vpnAnalysisMap.get(refName.toLowerCase());
   }
@@ -2314,11 +2314,12 @@ function analyzeConfiguration() {
       }
     });
 
-    // Profile dashed underline decoration
+    // Profile & AAA Scheme dashed underline decoration
     profileAnalysisMap.forEach((profInfo) => {
       const escType = profInfo.type.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      const escBaseType = profInfo.baseType.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
       const escName = profInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      const profRegex = new RegExp(`\\b${escType}\\s+(?:name\\s+)?${escName}\\b`, 'gi');
+      const profRegex = new RegExp(`\\b(?:${escType}|${escBaseType})\\s+(?:name\\s+|template\\s+)?${escName}\\b`, 'gi');
       let profMatch;
       while ((profMatch = profRegex.exec(lineText)) !== null) {
         newDecorations.push({
