@@ -9,14 +9,15 @@ https://github.com/alex-shpak/hugo-book
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Configuration Reader# Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like authentication-profile name or indented blocks), and use the interactive Config Index sidebar to search sections, inspect VPN Instance, Interface, AAA Scheme, and Profile References with full definition blocks, and maximize to browser full window with saved state.
-📑 Hide Index ⛶ Full Window 🔗 Show References Find: Language: Huawei VRP Cisco IOS / NX-OS Juniper JunOS Arista EOS Theme: Light Dark ↔️ Fold All ↕️ Unfold All 📋 Copy 💾 Download 📑 Config Index 0 🔒 Reference Details × 📋 Copy Text 🔍 Search Text 🎨 Highlight Text ▶ 🟡 Yellow 🟢 Green 🩵 Cyan 🟦 Blue 🟣 Purple 🩷 Pink 🟧 Orange 🔴 Red ❌ Clear Highlight ">
+🔒 Privacy &amp; Security Note: This is a 100% static web application. Your configurations are cached locally in your browser (localStorage) and never leave your computer or upload to any server.
+">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
 <meta name="color-scheme" content="light dark"><meta property="og:url" content="https://jony.ch/docs/tools/config-reader/">
 	<meta property="og:site_name" content="Jonys-Book">
 	<meta property="og:title" content="Configuration Reader">
 	<meta property="og:description" content="Configuration Reader# Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like authentication-profile name or indented blocks), and use the interactive Config Index sidebar to search sections, inspect VPN Instance, Interface, AAA Scheme, and Profile References with full definition blocks, and maximize to browser full window with saved state.
-📑 Hide Index ⛶ Full Window 🔗 Show References Find: Language: Huawei VRP Cisco IOS / NX-OS Juniper JunOS Arista EOS Theme: Light Dark ↔️ Fold All ↕️ Unfold All 📋 Copy 💾 Download 📑 Config Index 0 🔒 Reference Details × 📋 Copy Text 🔍 Search Text 🎨 Highlight Text ▶ 🟡 Yellow 🟢 Green 🩵 Cyan 🟦 Blue 🟣 Purple 🩷 Pink 🟧 Orange 🔴 Red ❌ Clear Highlight">
+🔒 Privacy &amp; Security Note: This is a 100% static web application. Your configurations are cached locally in your browser (localStorage) and never leave your computer or upload to any server.">
 	<meta property="og:locale" content="en_us">
 	<meta property="og:type" content="article">
 		<meta property="article:section" content="docs">
@@ -24,8 +25,8 @@ https://github.com/alex-shpak/hugo-book
 
 	<meta itemprop="name" content="Configuration Reader">
 	<meta itemprop="description" content="Configuration Reader# Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like authentication-profile name or indented blocks), and use the interactive Config Index sidebar to search sections, inspect VPN Instance, Interface, AAA Scheme, and Profile References with full definition blocks, and maximize to browser full window with saved state.
-📑 Hide Index ⛶ Full Window 🔗 Show References Find: Language: Huawei VRP Cisco IOS / NX-OS Juniper JunOS Arista EOS Theme: Light Dark ↔️ Fold All ↕️ Unfold All 📋 Copy 💾 Download 📑 Config Index 0 🔒 Reference Details × 📋 Copy Text 🔍 Search Text 🎨 Highlight Text ▶ 🟡 Yellow 🟢 Green 🩵 Cyan 🟦 Blue 🟣 Purple 🩷 Pink 🟧 Orange 🔴 Red ❌ Clear Highlight">
-	<meta itemprop="wordCount" content="138">
+🔒 Privacy &amp; Security Note: This is a 100% static web application. Your configurations are cached locally in your browser (localStorage) and never leave your computer or upload to any server.">
+	<meta itemprop="wordCount" content="169">
 
 <title>Configuration Reader • Jonys-Book</title>
 <link rel="icon" href="/logo.svg" >
@@ -34,7 +35,7 @@ https://github.com/alex-shpak/hugo-book
 <link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
 
 
-  <script defer type="module" src="/en.search.min.d8d385d7bf7c787305784df0c579f833a4e33a5434aee0ba6f74dbd479234274.js" integrity="sha256-2NOF1798eHMFeE3wxXn4M6TjOlQ0ruC6b3Tb1HkjQnQ=" crossorigin="anonymous"></script>
+  <script defer type="module" src="/en.search.min.bb39120368a4ac685276e767fbffb4afc32ddd0e14e38a081f80bba0c39b67fc.js" integrity="sha256-uzkSA2ikrGhSdudn&#43;/&#43;0r8Mt3Q4U44oIH4C7oMObZ/w=" crossorigin="anonymous"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -324,7 +325,9 @@ https://github.com/alex-shpak/hugo-book
       
   <article class="markdown book-article"><h1 id="configuration-reader">Configuration Reader<a class="anchor" href="#configuration-reader">#</a></h1>
 <p>Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like <code>authentication-profile name</code> or indented blocks), and use the interactive <strong>Config Index</strong> sidebar to search sections, inspect <strong>VPN Instance</strong>, <strong>Interface</strong>, <strong>AAA Scheme</strong>, and <strong>Profile References</strong> with full definition blocks, and maximize to browser full window with saved state.</p>
-<style>
+<blockquote class='book-hint '>
+<p>🔒 <strong>Privacy &amp; Security Note</strong>: This is a 100% static web application. Your configurations are cached locally in your browser (<code>localStorage</code>) and never leave your computer or upload to any server.</p>
+</blockquote><style>
   .cr-container {
     margin-top: 1rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -1016,7 +1019,7 @@ https://github.com/alex-shpak/hugo-book
   <div class="cr-toolbar">
     <div class="cr-toolbar-group">
       <button class="cr-btn" id="crSidebarToggleBtn" onclick="toggleSidebar()">📑 Hide Index</button>
-      <button class="cr-btn" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
+      <button class="cr-btn cr-btn-primary" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
       <button class="cr-btn" id="refToggleBtn" onclick="toggleReferenceLinks()">🔗 Show References</button>
       <div class="cr-find-container">
         <span class="cr-label" style="margin-left: 0.4rem;">Find:</span>
@@ -1037,8 +1040,8 @@ https://github.com/alex-shpak/hugo-book
       </select>
     </div>
     <div class="cr-toolbar-group">
-      <button class="cr-btn cr-btn-primary" onclick="foldAll()">↔️ Fold All</button>
-      <button class="cr-btn cr-btn-primary" onclick="unfoldAll()">↕️ Unfold All</button>
+      <button class="cr-btn" onclick="foldAll()">↔️ Fold All</button>
+      <button class="cr-btn" onclick="unfoldAll()">↕️ Unfold All</button>
       <button class="cr-btn" onclick="copyConfig()">📋 Copy</button>
       <button class="cr-btn" onclick="downloadConfig()">💾 Download</button>
     </div>
@@ -2806,7 +2809,7 @@ function toggleFullWindow(forceState) {
   }
 
   if (btn) {
-    btn.innerText = isFull ? '⛶ Normal Window' : '⛶ Full Window';
+    btn.innerText = isFull ? '🗗 Exit Full Window' : '⛶ Full Window';
   }
   localStorage.setItem('configReader_fullWindow', isFull ? 'true' : 'false');
 

@@ -8,6 +8,8 @@ bookToC: false
 
 Interactive Monaco Diff Editor for comparing network device configurations side-by-side. Includes vendor syntax highlighting (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), **keyword color highlighting** (such as **`vpn-instance`** highlighted in a special color), visual code **minimap thumbnail**, and persistent **Full Window** view mode.
 
+> 🔒 **Privacy & Security Note**: This is a 100% static web application. All your configurations are compared and cached locally in your browser (`localStorage`) and never leave your computer or upload to any server.
+
 <style>
   .cc-container {
     margin-top: 1rem;
@@ -174,7 +176,7 @@ Interactive Monaco Diff Editor for comparing network device configurations side-
   <!-- Toolbar -->
   <div class="cc-toolbar">
     <div class="cc-toolbar-group">
-      <button class="cc-btn" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
+      <button class="cc-btn cc-btn-primary" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
       <span class="cc-label" style="margin-left: 0.4rem;">Language:</span>
       <select id="vendorSelect" class="cc-select" onchange="onVendorChange()">
         <option value="huawei">Huawei VRP</option>
@@ -197,7 +199,7 @@ Interactive Monaco Diff Editor for comparing network device configurations side-
       <span class="cc-badge cc-badge-success" id="diffAddCount">+0 Added</span>
       <span class="cc-badge cc-badge-danger" id="diffDelCount">-0 Deleted</span>
       <button class="cc-btn" onclick="swapConfigs()">🔀 Swap</button>
-      <button class="cc-btn cc-btn-primary" onclick="loadSampleConfig()">📑 Sample Config</button>
+      <button class="cc-btn" onclick="loadSampleConfig()">📑 Sample Config</button>
       <button class="cc-btn" onclick="clearAll()">🗑️ Clear</button>
     </div>
   </div>
@@ -315,7 +317,7 @@ require(['vs/editor/editor.main'], function() {
     renderSideBySide: true,
     folding: false, // Disables folding as requested
     minimap: {
-      enabled: true, // Enables thumbnail / minimap as requested
+      enabled: true,
       scale: 2,
       maxColumn: 120,
       showSlider: 'always',

@@ -8,6 +8,8 @@ bookToC: false
 
 Interactive Monaco Editor for Network Device Configurations. Select vendor syntax (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), automatically fold configurations by category (e.g., matching 2-word prefixes like `authentication-profile name` or indented blocks), and use the interactive **Config Index** sidebar to search sections, inspect **VPN Instance**, **Interface**, **AAA Scheme**, and **Profile References** with full definition blocks, and maximize to browser full window with saved state.
 
+> 🔒 **Privacy & Security Note**: This is a 100% static web application. Your configurations are cached locally in your browser (`localStorage`) and never leave your computer or upload to any server.
+
 <style>
   .cr-container {
     margin-top: 1rem;
@@ -701,7 +703,7 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
   <div class="cr-toolbar">
     <div class="cr-toolbar-group">
       <button class="cr-btn" id="crSidebarToggleBtn" onclick="toggleSidebar()">📑 Hide Index</button>
-      <button class="cr-btn" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
+      <button class="cr-btn cr-btn-primary" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
       <button class="cr-btn" id="refToggleBtn" onclick="toggleReferenceLinks()">🔗 Show References</button>
       <div class="cr-find-container">
         <span class="cr-label" style="margin-left: 0.4rem;">Find:</span>
@@ -722,8 +724,8 @@ Interactive Monaco Editor for Network Device Configurations. Select vendor synta
       </select>
     </div>
     <div class="cr-toolbar-group">
-      <button class="cr-btn cr-btn-primary" onclick="foldAll()">↔️ Fold All</button>
-      <button class="cr-btn cr-btn-primary" onclick="unfoldAll()">↕️ Unfold All</button>
+      <button class="cr-btn" onclick="foldAll()">↔️ Fold All</button>
+      <button class="cr-btn" onclick="unfoldAll()">↕️ Unfold All</button>
       <button class="cr-btn" onclick="copyConfig()">📋 Copy</button>
       <button class="cr-btn" onclick="downloadConfig()">💾 Download</button>
     </div>
@@ -2495,7 +2497,7 @@ function toggleFullWindow(forceState) {
   }
 
   if (btn) {
-    btn.innerText = isFull ? '⛶ Normal Window' : '⛶ Full Window';
+    btn.innerText = isFull ? '🗗 Exit Full Window' : '⛶ Full Window';
   }
   localStorage.setItem('configReader_fullWindow', isFull ? 'true' : 'false');
 

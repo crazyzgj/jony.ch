@@ -9,14 +9,15 @@ https://github.com/alex-shpak/hugo-book
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Configuration Compare# Interactive Monaco Diff Editor for comparing network device configurations side-by-side. Includes vendor syntax highlighting (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), keyword color highlighting (such as vpn-instance highlighted in a special color), visual code minimap thumbnail, and persistent Full Window view mode.
-⛶ Full Window Language: Huawei VRP Cisco IOS / NX-OS Juniper JunOS Arista EOS Theme: Light Dark View Mode: Side-by-Side Inline &#43;0 Added -0 Deleted 🔀 Swap 📑 Sample Config 🗑️ Clear ">
+🔒 Privacy &amp; Security Note: This is a 100% static web application. All your configurations are compared and cached locally in your browser (localStorage) and never leave your computer or upload to any server.
+">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
 <meta name="color-scheme" content="light dark"><meta property="og:url" content="https://jony.ch/docs/tools/config-compare/">
 	<meta property="og:site_name" content="Jonys-Book">
 	<meta property="og:title" content="Configuration Compare">
 	<meta property="og:description" content="Configuration Compare# Interactive Monaco Diff Editor for comparing network device configurations side-by-side. Includes vendor syntax highlighting (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), keyword color highlighting (such as vpn-instance highlighted in a special color), visual code minimap thumbnail, and persistent Full Window view mode.
-⛶ Full Window Language: Huawei VRP Cisco IOS / NX-OS Juniper JunOS Arista EOS Theme: Light Dark View Mode: Side-by-Side Inline &#43;0 Added -0 Deleted 🔀 Swap 📑 Sample Config 🗑️ Clear">
+🔒 Privacy &amp; Security Note: This is a 100% static web application. All your configurations are compared and cached locally in your browser (localStorage) and never leave your computer or upload to any server.">
 	<meta property="og:locale" content="en_us">
 	<meta property="og:type" content="article">
 		<meta property="article:section" content="docs">
@@ -24,8 +25,8 @@ https://github.com/alex-shpak/hugo-book
 
 	<meta itemprop="name" content="Configuration Compare">
 	<meta itemprop="description" content="Configuration Compare# Interactive Monaco Diff Editor for comparing network device configurations side-by-side. Includes vendor syntax highlighting (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), keyword color highlighting (such as vpn-instance highlighted in a special color), visual code minimap thumbnail, and persistent Full Window view mode.
-⛶ Full Window Language: Huawei VRP Cisco IOS / NX-OS Juniper JunOS Arista EOS Theme: Light Dark View Mode: Side-by-Side Inline &#43;0 Added -0 Deleted 🔀 Swap 📑 Sample Config 🗑️ Clear">
-	<meta itemprop="wordCount" content="77">
+🔒 Privacy &amp; Security Note: This is a 100% static web application. All your configurations are compared and cached locally in your browser (localStorage) and never leave your computer or upload to any server.">
+	<meta itemprop="wordCount" content="111">
 
 <title>Configuration Compare • Jonys-Book</title>
 <link rel="icon" href="/logo.svg" >
@@ -34,7 +35,7 @@ https://github.com/alex-shpak/hugo-book
 <link rel="stylesheet" href="/book.min.7512765e6f58ceabb7b0210daeb57904b19e462efb48cf89cffcdf0082bf4dbd.css" integrity="sha256-dRJ2Xm9Yzqu3sCENrrV5BLGeRi77SM&#43;Jz/zfAIK/Tb0=" crossorigin="anonymous">
 
 
-  <script defer type="module" src="/en.search.min.d8d385d7bf7c787305784df0c579f833a4e33a5434aee0ba6f74dbd479234274.js" integrity="sha256-2NOF1798eHMFeE3wxXn4M6TjOlQ0ruC6b3Tb1HkjQnQ=" crossorigin="anonymous"></script>
+  <script defer type="module" src="/en.search.min.bb39120368a4ac685276e767fbffb4afc32ddd0e14e38a081f80bba0c39b67fc.js" integrity="sha256-uzkSA2ikrGhSdudn&#43;/&#43;0r8Mt3Q4U44oIH4C7oMObZ/w=" crossorigin="anonymous"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -324,7 +325,9 @@ https://github.com/alex-shpak/hugo-book
       
   <article class="markdown book-article"><h1 id="configuration-compare">Configuration Compare<a class="anchor" href="#configuration-compare">#</a></h1>
 <p>Interactive Monaco Diff Editor for comparing network device configurations side-by-side. Includes vendor syntax highlighting (Huawei VRP, Cisco IOS, Juniper JunOS, Arista EOS), <strong>keyword color highlighting</strong> (such as <strong><code>vpn-instance</code></strong> highlighted in a special color), visual code <strong>minimap thumbnail</strong>, and persistent <strong>Full Window</strong> view mode.</p>
-<style>
+<blockquote class='book-hint '>
+<p>🔒 <strong>Privacy &amp; Security Note</strong>: This is a 100% static web application. All your configurations are compared and cached locally in your browser (<code>localStorage</code>) and never leave your computer or upload to any server.</p>
+</blockquote><style>
   .cc-container {
     margin-top: 1rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -489,7 +492,7 @@ https://github.com/alex-shpak/hugo-book
   <!-- Toolbar -->
   <div class="cc-toolbar">
     <div class="cc-toolbar-group">
-      <button class="cc-btn" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
+      <button class="cc-btn cc-btn-primary" id="fullWindowBtn" onclick="toggleFullWindow()">⛶ Full Window</button>
       <span class="cc-label" style="margin-left: 0.4rem;">Language:</span>
       <select id="vendorSelect" class="cc-select" onchange="onVendorChange()">
         <option value="huawei">Huawei VRP</option>
@@ -512,7 +515,7 @@ https://github.com/alex-shpak/hugo-book
       <span class="cc-badge cc-badge-success" id="diffAddCount">+0 Added</span>
       <span class="cc-badge cc-badge-danger" id="diffDelCount">-0 Deleted</span>
       <button class="cc-btn" onclick="swapConfigs()">🔀 Swap</button>
-      <button class="cc-btn cc-btn-primary" onclick="loadSampleConfig()">📑 Sample Config</button>
+      <button class="cc-btn" onclick="loadSampleConfig()">📑 Sample Config</button>
       <button class="cc-btn" onclick="clearAll()">🗑️ Clear</button>
     </div>
   </div>
@@ -627,7 +630,7 @@ require(['vs/editor/editor.main'], function() {
     renderSideBySide: true,
     folding: false, // Disables folding as requested
     minimap: {
-      enabled: true, // Enables thumbnail / minimap as requested
+      enabled: true,
       scale: 2,
       maxColumn: 120,
       showSlider: 'always',
