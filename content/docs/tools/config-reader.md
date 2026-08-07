@@ -1022,9 +1022,12 @@ require(['vs/editor/editor.main'], function() {
   registerMonacoJumpCommand();
   registerReferenceHoverProviders();
 
+  const savedText = localStorage.getItem('configReader_savedText');
+  const initialValue = (savedText !== null && savedText !== undefined) ? savedText : HUAWEI_SAMPLE;
+
   const container = document.getElementById('monacoContainer');
   editorInstance = monaco.editor.create(container, {
-    value: HUAWEI_SAMPLE,
+    value: initialValue,
     language: 'huawei-vrp',
     theme: 'vs',
     automaticLayout: true,
@@ -1048,8 +1051,11 @@ require(['vs/editor/editor.main'], function() {
 
   setupCustomContextMenu();
 
-  // Listen to document changes to update folding index & reference analysis
+  // Listen to document changes to save to localStorage and update folding index & reference analysis
   editorInstance.onDidChangeModelContent(() => {
+    const content = editorInstance.getValue();
+    localStorage.setItem('configReader_savedText', content);
+
     analyzeVpnInstances();
     analyzeInterfaceReferences();
     analyzeProfiles();
@@ -1319,19 +1325,66 @@ function restoreUserPreferences() {
   }
 }
 
+function defineMonacoThemes() {
+  monaco.editor.defineTheme('vs-config', {
+    base: 'vs',
+    inherit: true,
+    rules: [
+      { token: 'keyword.vpn', foreground: '9333EA', fontStyle: 'bold' },
+      { token: 'keyword.interface', foreground: '0284C7', fontStyle: 'bold' },
+      { token: 'keyword.vlan', foreground: '059669', fontStyle: 'bold' },
+      { token: 'keyword.route', foreground: '4F46E5', fontStyle: 'bold' },
+      { token: 'keyword.security', foreground: 'D97706', fontStyle: 'bold' },
+      { token: 'keyword.undo', foreground: 'DC2626', fontStyle: 'bold' },
+      { token: 'keyword.profile', foreground: '0891B2', fontStyle: 'bold' },
+      { token: 'keyword', foreground: '2563EB', fontStyle: 'bold' },
+      { token: 'comment', foreground: '64748B', fontStyle: 'italic' },
+      { token: 'string.cipher', foreground: 'E11D48', fontStyle: 'bold' },
+      { token: 'type.identifier', foreground: '0D9488' },
+      { token: 'number.float', foreground: 'D97706' }
+    ],
+    colors: {}
+  });
+
+  monaco.editor.defineTheme('vs-dark-config', {
+    base: 'vs-dark',
+    inherit: true,
+    rules: [
+      { token: 'keyword.vpn', foreground: 'C084FC', fontStyle: 'bold' },
+      { token: 'keyword.interface', foreground: '38BDF8', fontStyle: 'bold' },
+      { token: 'keyword.vlan', foreground: '34D399', fontStyle: 'bold' },
+      { token: 'keyword.route', foreground: '818CF8', fontStyle: 'bold' },
+      { token: 'keyword.security', foreground: 'FBBF24', fontStyle: 'bold' },
+      { token: 'keyword.undo', foreground: 'F87171', fontStyle: 'bold' },
+      { token: 'keyword.profile', foreground: '22D3EE', fontStyle: 'bold' },
+      { token: 'keyword', foreground: '60A5FA', fontStyle: 'bold' },
+      { token: 'comment', foreground: '94A3B8', fontStyle: 'italic' },
+      { token: 'string.cipher', foreground: 'FB7185', fontStyle: 'bold' },
+      { token: 'type.identifier', foreground: '2DD4BF' },
+      { token: 'number.float', foreground: 'FBBF24' }
+    ],
+    colors: {}
+  });
+}
+
 function registerLanguages() {
+  defineMonacoThemes();
+
+  // Huawei VRP Tokenizer
   monaco.languages.register({ id: 'huawei-vrp' });
   monaco.languages.setMonarchTokensProvider('huawei-vrp', {
     defaultToken: '',
     tokenPostfix: '.huawei',
+    vpnKeywords: ['vpn-instance', 'vpn', 'vrf'],
+    interfaceKeywords: ['interface', 'eth-trunk', 'port', 'GigabitEthernet', '10GE', '40GE', 'GE', 'XGigabitEthernet', 'Vlanif', 'vlanif', 'Cellular', 'NULL', 'LoopBack', 'Loopback'],
+    vlanKeywords: ['vlan', 'vlan-id'],
+    routeKeywords: ['route-static', 'route', 'router', 'ospf', 'bgp', 'isis', 'rip'],
+    securityKeywords: ['aaa', 'domain', 'radius-server', 'authentication-scheme', 'authorization-scheme', 'accounting-scheme', 'acl', 'rule', 'permit', 'deny', 'security-profile', 'firewall', 'zone', 'policy', 'ike', 'proposal', 'pki', 'ssl', 'local-user'],
+    undoKeywords: ['undo', 'no'],
+    profileKeywords: ['authentication-profile', 'vap-profile', 'ssid-profile', 'wds-profile', 'portal-access-profile', 'free-rule-template'],
     keywords: [
-      'interface', 'ip', 'route-static', 'aaa', 'vlan', 'vpn-instance', 'wlan', 'ac', 'dhcp',
-      'authentication-profile', 'security-profile', 'vap-profile', 'ssid-profile', 'wds-profile',
-      'ssl', 'policy', 'ike', 'proposal', 'firewall', 'zone', 'snmp-agent', 'user-interface',
-      'cellular', 'profile', 'undo', 'return', 'quit', 'ipv6', 'dns', 'pki', 'realm',
-      'portal-access-profile', 'free-rule-template', 'ops', 'autostart', 'secelog', 'agile',
-      'controller', 'fib', 'enable', 'disable', 'permit', 'description', 'bind', 'binding', 'eth-trunk',
-      'authentication-scheme', 'authorization-scheme', 'accounting-scheme', 'domain', 'radius-server',"deny","keywords","acl","local-user"
+      'ip', 'wlan', 'ac', 'dhcp', 'snmp-agent', 'user-interface', 'profile', 'return', 'quit', 'ipv6', 'dns', 'realm',
+      'ops', 'autostart', 'secelog', 'agile', 'controller', 'fib', 'enable', 'disable', 'description', 'bind', 'binding'
     ],
     tokenizer: {
       root: [
@@ -1342,6 +1395,13 @@ function registerLanguages() {
         [/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/, 'number.float'],
         [/[a-zA-Z0-9_\-]+/, {
           cases: {
+            '@vpnKeywords': 'keyword.vpn',
+            '@interfaceKeywords': 'keyword.interface',
+            '@vlanKeywords': 'keyword.vlan',
+            '@routeKeywords': 'keyword.route',
+            '@securityKeywords': 'keyword.security',
+            '@undoKeywords': 'keyword.undo',
+            '@profileKeywords': 'keyword.profile',
             '@keywords': 'keyword',
             '@default': 'identifier'
           }
@@ -1350,14 +1410,19 @@ function registerLanguages() {
     }
   });
 
+  // Cisco IOS / NX-OS Tokenizer
   monaco.languages.register({ id: 'cisco-ios' });
   monaco.languages.setMonarchTokensProvider('cisco-ios', {
     defaultToken: '',
     tokenPostfix: '.cisco',
+    vpnKeywords: ['vrf', 'definition'],
+    interfaceKeywords: ['interface', 'trunk', 'switchport', 'GigabitEthernet', 'TenGigabitEthernet', 'FastEthernet', 'Loopback', 'Vlan'],
+    vlanKeywords: ['vlan'],
+    routeKeywords: ['route', 'router', 'ospf', 'bgp', 'eigrp'],
+    securityKeywords: ['crypto', 'ipsec', 'isakmp', 'username', 'secret', 'enable', 'permit', 'deny'],
+    undoKeywords: ['no'],
     keywords: [
-      'interface', 'ip', 'route', 'router', 'ospf', 'bgp', 'line', 'vty', 'con', 'crypto',
-      'ipsec', 'isakmp', 'vlan', 'username', 'enable', 'secret', 'hostname', 'no', 'end', 'exit',
-      'vrf', 'definition', 'description', 'duplex', 'speed', 'switchport', 'mode', 'trunk', 'allowed'
+      'ip', 'line', 'vty', 'con', 'hostname', 'end', 'exit', 'description', 'duplex', 'speed', 'mode', 'allowed'
     ],
     tokenizer: {
       root: [
@@ -1366,6 +1431,78 @@ function registerLanguages() {
         [/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/, 'number.float'],
         [/[a-zA-Z0-9_\-]+/, {
           cases: {
+            '@vpnKeywords': 'keyword.vpn',
+            '@interfaceKeywords': 'keyword.interface',
+            '@vlanKeywords': 'keyword.vlan',
+            '@routeKeywords': 'keyword.route',
+            '@securityKeywords': 'keyword.security',
+            '@undoKeywords': 'keyword.undo',
+            '@keywords': 'keyword',
+            '@default': 'identifier'
+          }
+        }]
+      ]
+    }
+  });
+
+  // Juniper JunOS Tokenizer
+  monaco.languages.register({ id: 'juniper-junos' });
+  monaco.languages.setMonarchTokensProvider('juniper-junos', {
+    defaultToken: '',
+    tokenPostfix: '.junos',
+    vpnKeywords: ['routing-instances', 'instance-type', 'vrf'],
+    interfaceKeywords: ['interfaces', 'unit', 'family', 'inet'],
+    vlanKeywords: ['vlan-id', 'vlans'],
+    routeKeywords: ['routing-options', 'static', 'route', 'bgp', 'ospf'],
+    securityKeywords: ['security', 'policies', 'zones', 'policy', 'permit', 'deny'],
+    undoKeywords: ['delete'],
+    keywords: ['system', 'host-name', 'services', 'protocols', 'set'],
+    tokenizer: {
+      root: [
+        [/^\s*#.*$/, 'comment'],
+        [/^\s*\*.*$/, 'comment'],
+        [/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/, 'number.float'],
+        [/[a-zA-Z0-9_\-]+/, {
+          cases: {
+            '@vpnKeywords': 'keyword.vpn',
+            '@interfaceKeywords': 'keyword.interface',
+            '@vlanKeywords': 'keyword.vlan',
+            '@routeKeywords': 'keyword.route',
+            '@securityKeywords': 'keyword.security',
+            '@undoKeywords': 'keyword.undo',
+            '@keywords': 'keyword',
+            '@default': 'identifier'
+          }
+        }]
+      ]
+    }
+  });
+
+  // Arista EOS Tokenizer
+  monaco.languages.register({ id: 'arista-eos' });
+  monaco.languages.setMonarchTokensProvider('arista-eos', {
+    defaultToken: '',
+    tokenPostfix: '.arista',
+    vpnKeywords: ['vrf', 'instance'],
+    interfaceKeywords: ['interface', 'Ethernet', 'Management', 'Loopback', 'Vlan'],
+    vlanKeywords: ['vlan'],
+    routeKeywords: ['ip route', 'router', 'bgp', 'ospf'],
+    securityKeywords: ['enable', 'secret', 'username', 'role'],
+    undoKeywords: ['no'],
+    keywords: ['hostname', 'transceiver', 'spanning-tree', 'mode'],
+    tokenizer: {
+      root: [
+        [/^\s*!.*$/, 'comment'],
+        [/\b(Ethernet|Management|Loopback|Vlan)\d+(\/\d+)*\b/i, 'type.identifier'],
+        [/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/, 'number.float'],
+        [/[a-zA-Z0-9_\-]+/, {
+          cases: {
+            '@vpnKeywords': 'keyword.vpn',
+            '@interfaceKeywords': 'keyword.interface',
+            '@vlanKeywords': 'keyword.vlan',
+            '@routeKeywords': 'keyword.route',
+            '@securityKeywords': 'keyword.security',
+            '@undoKeywords': 'keyword.undo',
             '@keywords': 'keyword',
             '@default': 'identifier'
           }
@@ -1374,6 +1511,7 @@ function registerLanguages() {
     }
   });
 }
+
 
 function registerFoldingProviders() {
   const languages = ['huawei-vrp', 'cisco-ios'];
@@ -2398,7 +2536,8 @@ function onThemeChange() {
   const theme = document.getElementById('themeSelect').value;
   if (!editorInstance) return;
 
-  monaco.editor.setTheme(theme);
+  const targetTheme = theme.includes('dark') ? 'vs-dark-config' : 'vs-config';
+  monaco.editor.setTheme(targetTheme);
   localStorage.setItem('configReader_theme', theme);
 
   const container = document.getElementById('crContainer');

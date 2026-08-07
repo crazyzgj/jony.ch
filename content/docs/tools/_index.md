@@ -150,6 +150,13 @@ bookToC: false
     <p>Parse, organize, and analyze Huawei, Cisco, and network device configurations with Monaco Editor syntax highlighting and outline navigation.</p>
   </a>
 
+  <!-- Configuration Compare Tool -->
+  <a href="/docs/tools/config-compare/" class="tool-card">
+    <div class="tool-icon">⚖️</div>
+    <h3>Configuration Compare</h3>
+    <p>Compare network device configurations side-by-side with Monaco Diff Editor, syntax highlighting, and code minimap thumbnail.</p>
+  </a>
+
   <!-- Option 43 Tool -->
   <a href="/docs/tools/option43/" class="tool-card">
     <div class="tool-icon">🧮</div>
